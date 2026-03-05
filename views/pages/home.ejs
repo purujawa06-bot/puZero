@@ -1,4 +1,5 @@
-<div class="relative min-h-[80vh] flex items-center overflow-hidden">
+<title><%= title %></title>
+<div class="relative min-h-[80vh] flex items-center overflow-hidden fade-in">
     <!-- Background Accents -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none -z-10">
         <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[120px]"></div>
@@ -6,46 +7,56 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-4 py-20 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 border border-slate-200 text-slate-600 text-sm font-bold mb-8 shadow-sm">
-            <span class="flex h-2 w-2 rounded-full bg-primary animate-ping"></span>
+        <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/60 text-slate-600 text-sm font-bold mb-8 shadow-sm">
+            <span class="flex h-2.5 w-2.5 rounded-full bg-primary animate-ping relative">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+            </span>
             All-in-One AI Productivity Hub
         </div>
         
-        <h1 class="text-6xl md:text-7xl font-black text-secondary tracking-tighter mb-8 leading-[1.1]">
+        <h1 class="text-5xl md:text-7xl font-black text-secondary tracking-tighter mb-8 leading-[1.1]">
             Optimalkan Pekerjaan <br>
             Dengan <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">PuZero AI.</span>
         </h1>
         
-        <p class="max-w-2xl mx-auto text-xl text-slate-500 mb-12 leading-relaxed">
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-500 mb-12 leading-relaxed font-medium">
             Platform serba guna yang dirancang untuk membantu Anda mengunduh media, mengolah data, dan meningkatkan produktivitas menggunakan teknologi AI terbaru.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/category" class="px-10 py-5 bg-secondary text-white rounded-2xl font-black text-lg hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 flex items-center gap-3 active:scale-95">
+            <a hx-get="/category" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-10 py-5 bg-secondary text-white rounded-2xl font-black text-lg hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 w-full sm:w-auto active:scale-95 group">
                 Mulai Sekarang
-                <i class="ph-bold ph-arrow-right"></i>
+                <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </a>
-            <a href="#features" class="px-10 py-5 bg-white border-2 border-slate-100 text-slate-600 rounded-2xl font-bold text-lg hover:border-primary/30 transition-all active:scale-95">
+            <a href="#features" class="px-10 py-5 bg-white border-2 border-slate-100 text-slate-600 rounded-2xl font-bold text-lg hover:border-primary/30 hover:bg-slate-50 transition-all w-full sm:w-auto active:scale-95 flex items-center justify-center cursor-pointer">
                 Pelajari Fitur
             </a>
         </div>
         
-        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-40 grayscale group-hover:grayscale-0 transition-all">
-            <div class="flex flex-col items-center gap-2">
-                <i class="ph-bold ph-lightning text-3xl"></i>
-                <span class="font-bold text-sm uppercase tracking-widest">Fast Speed</span>
+        <div class="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60 hover:opacity-100 transition-opacity duration-500">
+            <div class="flex flex-col items-center gap-3 hover:-translate-y-1 transition-transform">
+                <div class="w-16 h-16 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
+                    <i class="ph-bold ph-lightning text-3xl text-amber-500"></i>
+                </div>
+                <span class="font-bold text-sm text-slate-600 uppercase tracking-widest">Fast Speed</span>
             </div>
-            <div class="flex flex-col items-center gap-2">
-                <i class="ph-bold ph-shield-check text-3xl"></i>
-                <span class="font-bold text-sm uppercase tracking-widest">Secure</span>
+            <div class="flex flex-col items-center gap-3 hover:-translate-y-1 transition-transform">
+                <div class="w-16 h-16 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
+                    <i class="ph-bold ph-shield-check text-3xl text-emerald-500"></i>
+                </div>
+                <span class="font-bold text-sm text-slate-600 uppercase tracking-widest">Secure</span>
             </div>
-            <div class="flex flex-col items-center gap-2">
-                <i class="ph-bold ph-infinity text-3xl"></i>
-                <span class="font-bold text-sm uppercase tracking-widest">Unlimited</span>
+            <div class="flex flex-col items-center gap-3 hover:-translate-y-1 transition-transform">
+                <div class="w-16 h-16 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
+                    <i class="ph-bold ph-infinity text-3xl text-blue-500"></i>
+                </div>
+                <span class="font-bold text-sm text-slate-600 uppercase tracking-widest">Unlimited</span>
             </div>
-            <div class="flex flex-col items-center gap-2">
-                <i class="ph-bold ph-currency-circle-dollar text-3xl"></i>
-                <span class="font-bold text-sm uppercase tracking-widest">100% Free</span>
+            <div class="flex flex-col items-center gap-3 hover:-translate-y-1 transition-transform">
+                <div class="w-16 h-16 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
+                    <i class="ph-bold ph-currency-circle-dollar text-3xl text-primary"></i>
+                </div>
+                <span class="font-bold text-sm text-slate-600 uppercase tracking-widest">100% Free</span>
             </div>
         </div>
     </div>

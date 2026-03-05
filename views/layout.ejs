@@ -15,11 +15,11 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://puzero.vercel.app/">
     <meta property="og:title" content="<%= title %>">
-    <meta property="og:description" content="Platform alat serbaguna bertenaga AI untuk produktivitas maksimal.">
+    <meta property="og:description" content="Platform alat serbaguna bertenaga AI for produktivitas maksimal.">
     <meta property="og:image" content="/favicon.jpg">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (with Typography Plugin for Markdown) -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -52,6 +52,13 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- NProgress (Navigation Loader) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+
+    <!-- Marked.js for Markdown Parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
         :root {
@@ -101,6 +108,11 @@
             width: 300%;
             height: 300%;
         }
+
+        /* Custom NProgress */
+        #nprogress .bar { background: #6366f1 !important; height: 3px !important; }
+        #nprogress .peg { box-shadow: 0 0 10px #6366f1, 0 0 5px #6366f1 !important; }
+        #nprogress .spinner-icon { border-top-color: #6366f1 !important; border-left-color: #6366f1 !important; }
     </style>
 </head>
 <body class="bg-[#f8fafc] text-slate-900 min-h-screen flex flex-col antialiased">
@@ -117,18 +129,76 @@
         </div>
     </main>
 
-    <%- include('partials/footer') %>
+    <% if (typeof page !== 'undefined' && page !== 'pages/ai-chat' && page !== 'pages/instagram-downloader') { %>
+        <%- include('partials/footer') %>
+    <% } %>
 
     <script>
-        // Mobile Menu Logic
-        document.addEventListener('click', (e) => {
+        // Global Windows State (Persistence with LocalStorage)
+        window.PuZeroState = {
+            chatHistory: JSON.parse(localStorage.getItem('puzero_chat_history') || '[]'),
+            systemPrompt: localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu.",
+            userId: localStorage.getItem('puzero_user_id') || ('user-' + Math.random().toString(36).substring(2, 15)),
+            save() {
+                // Keep only the last 20 messages
+                if (this.chatHistory.length > 20) {
+                    this.chatHistory = this.chatHistory.slice(-20);
+                }
+                localStorage.setItem('puzero_chat_history', JSON.stringify(this.chatHistory));
+                localStorage.setItem('puzero_system_prompt', this.systemPrompt);
+                localStorage.setItem('puzero_user_id', this.userId);
+            }
+        };
+        // Initial save to persist userId if it's new
+        window.PuZeroState.save();
+
+        // Setup NProgress integration with HTMX
+        NProgress.configure({ showSpinner: true, minimum: 0.2 });
+        document.addEventListener('htmx:beforeRequest', (e) => {
+            if (e.detail.headers && e.detail.headers['X-Skip-NProgress']) return;
+            NProgress.start();
+        });
+        document.addEventListener('htmx:afterOnLoad', () => NProgress.done());
+        document.addEventListener('htmx:afterRequest', (e) => {
+            if (e.detail.failed) NProgress.done();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-button');
             const menu = document.getElementById('mobile-menu');
-            if(btn && btn.contains(e.target)) {
-                menu.classList.toggle('hidden');
-            } else if (menu && !menu.contains(e.target)) {
-                menu.classList.add('hidden');
+            const icon = document.getElementById('mobile-icon');
+            
+            let isOpen = false;
+
+            window.toggleMobileMenu = function() {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    menu.style.maxHeight = menu.scrollHeight + 'px';
+                    if(icon) {
+                        icon.classList.replace('ph-list', 'ph-x');
+                        icon.classList.add('rotate-90');
+                    }
+                } else {
+                    menu.style.maxHeight = '0px';
+                    if(icon) {
+                        icon.classList.replace('ph-x', 'ph-list');
+                        icon.classList.remove('rotate-90');
+                    }
+                }
+            };
+
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.toggleMobileMenu();
+                });
             }
+
+            document.addEventListener('click', (e) => {
+                if (isOpen && menu && !menu.contains(e.target)) {
+                    window.toggleMobileMenu();
+                }
+            });
         });
     </script>
 </body>

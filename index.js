@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const indexRoutes = require('./routes/indexRoutes');
 const instagramRoutes = require('./routes/instagramRoutes');
 const fastUpdateRoutes = require('./routes/fastUpdateRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', indexRoutes);
 app.use('/instagram', instagramRoutes);
 app.use('/fastupdate', fastUpdateRoutes);
+app.use('/ai', aiRoutes);
 
 // 404 Handler
 app.use((req, res) => {

@@ -1,0 +1,245 @@
+<title><%= title %></title>
+<div class="max-w-5xl mx-auto h-screen flex flex-col bg-[#f8fafc] fade-in relative">
+    
+    <!-- Top Header -->
+    <div class="flex items-center justify-between p-6 bg-white/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 shrink-0">
+        <div class="flex items-center gap-4">
+            <button 
+                hx-get="/category" 
+                hx-target="#main-content" 
+                hx-push-url="true"
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all shadow-sm"
+            >
+                <i class="ph-bold ph-arrow-left text-xl"></i>
+            </button>
+            <div>
+                <h1 class="text-xl font-black text-secondary">Gemini 3 Flash</h1>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">System Online</span>
+                </div>
+            </div>
+        </div>
+
+        <button 
+            onclick="resetChat()" 
+            class="px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:border-primary hover:text-primary transition-all flex items-center gap-2"
+        >
+            <i class="ph-bold ph-plus"></i> New Chat
+        </button>
+    </div>
+
+    <!-- Chat Area -->
+    <div id="chat-window" class="flex-grow overflow-y-auto px-6 py-6 space-y-8 custom-scrollbar">
+        <!-- Welcome Message -->
+        <div id="welcome" class="text-center py-10">
+            <div class="w-20 h-20 bg-gradient-to-tr from-primary/10 to-accent/10 text-primary rounded-[2rem] mx-auto flex items-center justify-center mb-6 shadow-inner border border-white">
+                <i class="ph-fill ph-brain text-4xl"></i>
+            </div>
+            <h2 class="text-2xl font-black text-secondary">Apa yang bisa saya bantu hari ini?</h2>
+            <p class="text-slate-400 text-sm mt-2 max-w-md mx-auto">Tanyakan apapun, mulai dari coding, penulisan kreatif, hingga ringkasan data kompleks.</p>
+        </div>
+        
+        <div id="chat-messages" class="flex flex-col"></div>
+        
+        <!-- Loading State -->
+        <div id="chat-loading" class="htmx-indicator mb-4">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-slate-100 rounded-lg animate-pulse flex items-center justify-center">
+                    <i class="ph-bold ph-lightning text-slate-300"></i>
+                </div>
+                <div class="bg-white border border-slate-100 p-4 rounded-2xl rounded-tl-none w-24 shadow-sm">
+                    <div class="flex gap-1">
+                        <span class="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+                        <span class="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                        <span class="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Scroll Anchor -->
+        <div id="scroll-anchor" class="h-1 w-full"></div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="p-4 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc] to-transparent shrink-0">
+        <div class="max-w-4xl mx-auto">
+            <!-- Reply Preview -->
+            <div id="reply-container" class="hidden bg-white/80 border border-slate-200 border-b-0 rounded-t-2xl p-3 flex items-center justify-between backdrop-blur-sm">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <i class="ph-bold ph-arrow-u-up-left text-primary"></i>
+                    <p id="reply-text" class="text-xs text-slate-500 italic truncate"></p>
+                </div>
+                <button onclick="cancelReply()" class="text-slate-400 hover:text-red-500">
+                    <i class="ph-bold ph-x-circle text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Input Box -->
+            <div class="bg-white rounded-2xl shadow-2xl shadow-primary/5 border border-slate-200 p-2">
+                <form 
+                    id="chat-form" 
+                    class="relative"
+                    hx-post="/ai/chat"
+                    hx-target="#chat-messages"
+                    hx-swap="beforeend"
+                    hx-indicator="#chat-loading"
+                    hx-headers='{"X-Skip-NProgress": "true"}'
+                    hx-on::before-request="handleBeforeSend()"
+                    hx-on::after-request="handleAfterSend()"
+                >
+                    <input type="hidden" name="userid" id="session-id">
+                    <input type="hidden" name="replyTo" id="reply-input">
+                    
+                    <div class="flex items-end gap-2">
+                        <div class="flex-grow space-y-2 px-2 pb-2">
+                            <!-- Custom Instruction Toggle -->
+                            <details class="group">
+                                <summary class="list-none cursor-pointer flex items-center gap-1 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-colors">
+                                    <i class="ph-bold ph-gear"></i> Custom Instructions
+                                </summary>
+                                <textarea name="system" id="system-prompt" class="w-full mt-2 bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs focus:outline-none focus:border-primary/30" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
+                            </details>
+
+                            <textarea 
+                                name="prompt" 
+                                id="prompt-textarea"
+                                class="w-full bg-transparent border-none focus:ring-0 text-slate-700 text-sm py-2 resize-none max-h-40 overflow-y-auto" 
+                                rows="2" 
+                                placeholder="Ketik pesan di sini..."
+                                required
+                                onkeydown="if(event.keyCode == 13 && !event.shiftKey) { event.preventDefault(); this.dispatchEvent(new Event('submit')); }"
+                            ></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-12 h-12 bg-secondary text-white rounded-xl flex items-center justify-center hover:bg-primary transition-all shadow-lg active:scale-90 mb-1">
+                            <i class="ph-bold ph-paper-plane-right text-xl"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <p class="text-[10px] text-center text-slate-400 mt-2 font-medium">PuZero AI can make mistakes. Check important info.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const escapeHtml = (u) => (u || "").toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+        const chatWindow = document.getElementById('chat-window');
+        const chatMessages = document.getElementById('chat-messages');
+        const sessionInput = document.getElementById('session-id');
+        const systemInput = document.getElementById('system-prompt');
+        const promptInput = document.getElementById('prompt-textarea');
+        const welcomeDiv = document.getElementById('welcome');
+        const scrollAnchor = document.getElementById('scroll-anchor');
+
+        // Direct Load from LocalStorage
+        const localHistory = JSON.parse(localStorage.getItem('puzero_chat_history') || '[]');
+        const localSystem = localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu.";
+        const localUserId = localStorage.getItem('puzero_user_id') || ('user-' + Math.random().toString(36).substring(2, 15));
+
+        systemInput.value = localSystem;
+        sessionInput.value = localUserId;
+
+        const scrollToBottom = () => scrollAnchor.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        new MutationObserver(() => scrollToBottom()).observe(chatMessages, { childList: true, subtree: true });
+
+        systemInput.addEventListener('input', (e) => {
+            if(window.PuZeroState) {
+                window.PuZeroState.systemPrompt = e.target.value;
+                window.PuZeroState.save();
+            } else {
+                localStorage.setItem('puzero_system_prompt', e.target.value);
+            }
+        });
+
+        window.handleBeforeSend = function() {
+            const prompt = promptInput.value;
+            const replyTo = document.getElementById('reply-input').value;
+            if(!prompt.trim()) return;
+
+            welcomeDiv.classList.add('hidden');
+            
+            // Render user message immediately
+            const safePrompt = escapeHtml(prompt);
+            const safeReply = replyTo ? escapeHtml(replyTo).substring(0, 50) + "..." : "";
+            const html = `
+                <div class="flex flex-col items-end space-y-2 group mb-4">
+                    <div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm relative overflow-hidden">
+                        ${replyTo ? `<div class="text-[10px] opacity-70 border-l-2 border-white/30 pl-2 mb-2 italic truncate">Replying: ${safeReply}</div>` : ''}
+                        <p class="text-sm whitespace-pre-wrap">${safePrompt}</p>
+                    </div>
+                </div>`;
+            chatMessages.insertAdjacentHTML('beforeend', html);
+            
+            // History Management
+            if(window.PuZeroState) {
+                window.PuZeroState.chatHistory.push({ role: 'user', text: prompt, replyTo: replyTo });
+            }
+            
+            promptInput.value = '';
+            cancelReply();
+            promptInput.style.height = "auto";
+            scrollToBottom();
+        };
+
+        window.handleAfterSend = function() {
+            scrollToBottom();
+        };
+
+        window.resetChat = function() {
+            const newId = 'user-' + Math.random().toString(36).substring(2, 15);
+            if(window.PuZeroState) {
+                window.PuZeroState.userId = newId;
+                window.PuZeroState.chatHistory = [];
+                window.PuZeroState.save();
+            } else {
+                localStorage.setItem('puzero_user_id', newId);
+                localStorage.setItem('puzero_chat_history', '[]');
+            }
+            sessionInput.value = newId;
+            chatMessages.innerHTML = '';
+            welcomeDiv.classList.remove('hidden');
+            cancelReply();
+        };
+
+        window.setReply = function(text) {
+            const container = document.getElementById('reply-container');
+            document.getElementById('reply-text').innerText = text;
+            document.getElementById('reply-input').value = text;
+            container.classList.remove('hidden');
+            promptInput.focus();
+        };
+
+        window.cancelReply = function() {
+            document.getElementById('reply-container').classList.add('hidden');
+            document.getElementById('reply-input').value = '';
+        };
+
+        function renderHistory() {
+            const historyToRender = window.PuZeroState ? window.PuZeroState.chatHistory : localHistory;
+            if (historyToRender.length > 0) {
+                welcomeDiv.classList.add('hidden');
+                historyToRender.forEach(msg => {
+                    let html = '';
+                    if (msg.role === 'user') {
+                        html = `<div class="flex flex-col items-end space-y-2 mb-4"><div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm"><p class="text-sm whitespace-pre-wrap">${escapeHtml(msg.text)}</p></div></div>`;
+                    } else {
+                        html = `<div class="flex flex-col items-start space-y-2 mb-4"><div class="max-w-[85%] w-full bg-white border border-slate-100 p-5 rounded-2xl rounded-tl-none shadow-sm"><div class="prose prose-sm">${marked.parse(msg.text)}</div></div></div>`;
+                    }
+                    chatMessages.insertAdjacentHTML('beforeend', html);
+                });
+                setTimeout(scrollToBottom, 300);
+            }
+        }
+        renderHistory();
+    })();
+</script>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    .prose pre { background-color: #0f172a !important; color: #f8fafc !important; border-radius: 0.75rem !important; padding: 1rem !important; overflow-x: auto; }
+</style>
