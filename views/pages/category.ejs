@@ -23,6 +23,17 @@
                 <h3 class="text-xl font-black text-secondary mb-3">Downloader</h3>
                 <div class="space-y-3">
                     <button 
+                        hx-get="/youtube" 
+                        hx-target="#main-content" 
+                        hx-push-url="true"
+                        class="w-full flex items-center justify-between p-4 rounded-xl bg-slate-50 hover:bg-primary hover:text-white transition-all group/item shadow-sm cursor-pointer"
+                    >
+                        <span class="text-sm font-bold">YouTube</span>
+                        <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover/item:translate-x-1 transition-transform">
+                            <i class="ph-bold ph-caret-right text-xs"></i>
+                        </div>
+                    </button>
+                    <button 
                         hx-get="/instagram" 
                         hx-target="#main-content" 
                         hx-push-url="true"
@@ -79,6 +90,27 @@
                 </div>
             </div>
 
+            <!-- Category: AI-Video -->
+            <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 border-b-4 border-b-rose-500/20 hover:border-b-rose-500">
+                <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mb-6 text-3xl group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
+                    <i class="ph-bold ph-video-camera"></i>
+                </div>
+                <h3 class="text-xl font-black text-secondary mb-3">AI-Video</h3>
+                <div class="space-y-3">
+                    <button 
+                        hx-get="/tools/dubbing" 
+                        hx-target="#main-content" 
+                        hx-push-url="true"
+                        class="w-full flex items-center justify-between p-4 rounded-xl bg-slate-50 hover:bg-primary hover:text-white transition-all group/item shadow-sm cursor-pointer"
+                    >
+                        <span class="text-sm font-bold">AI Dubbing</span>
+                        <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover/item:translate-x-1 transition-transform">
+                            <i class="ph-bold ph-caret-right text-xs"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
             <!-- Category: AI-Image -->
             <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 border-b-4 border-b-indigo-500/20 hover:border-b-indigo-500">
                 <div class="w-16 h-16 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center mb-6 text-3xl group-hover:bg-indigo-500 group-hover:text-white transition-colors duration-300">
@@ -97,18 +129,6 @@
                             <i class="ph-bold ph-caret-right text-xs"></i>
                         </div>
                     </button>
-                </div>
-            </div>
-
-            <!-- Category: Tools -->
-            <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm transition-all opacity-60 grayscale hover:grayscale-0 cursor-not-allowed group">
-                <div class="w-16 h-16 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-6 text-3xl">
-                    <i class="ph-bold ph-wrench"></i>
-                </div>
-                <h3 class="text-xl font-black text-secondary mb-3">Utils Tools</h3>
-                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-400">
-                    <i class="ph-fill ph-lock-key text-xs"></i>
-                    <span class="text-[10px] font-black tracking-widest uppercase">Coming Soon</span>
                 </div>
             </div>
         </div>

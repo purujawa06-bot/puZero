@@ -10,6 +10,7 @@ const upload = multer({
 });
 
 router.get('/upscale', toolsController.getUpscalePage);
+router.get('/dubbing', toolsController.getDubbingPage);
 
 // Route untuk upload file sementara
 router.post('/upload', upload.single('image'), toolsController.uploadToTmp);

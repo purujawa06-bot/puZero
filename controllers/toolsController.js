@@ -11,6 +11,19 @@ exports.getUpscalePage = (req, res) => {
     }
 };
 
+exports.getDubbingPage = (req, res) => {
+    const data = {
+        title: 'PuZero | AI Video Dubbing',
+        page: 'pages/dubbing'
+    };
+
+    if (req.headers['hx-request']) {
+        res.render('pages/dubbing', data);
+    } else {
+        res.render('layout', data);
+    }
+};
+
 exports.uploadToTmp = async (req, res) => {
     try {
         if (!req.file) {
