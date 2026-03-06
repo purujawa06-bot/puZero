@@ -1,17 +1,8 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
-
-// Import Routes
-const indexRoutes = require('./routes/indexRoutes');
-const instagramRoutes = require('./routes/instagramRoutes');
-const tiktokRoutes = require('./routes/tiktokRoutes');
-const soundcloudRoutes = require('./routes/soundcloudRoutes');
-const youtubeRoutes = require('./routes/youtubeRoutes');
-const fastUpdateRoutes = require('./routes/fastUpdateRoutes');
-const aiRoutes = require('./routes/aiRoutes');
-const toolsRoutes = require('./routes/toolsRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,15 +18,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Gunakan Routes
-app.use('/', indexRoutes);
-app.use('/instagram', instagramRoutes);
-app.use('/tiktok', tiktokRoutes);
-app.use('/soundcloud', soundcloudRoutes);
-app.use('/youtube', youtubeRoutes);
-app.use('/fastupdate', fastUpdateRoutes);
-app.use('/ai', aiRoutes);
-app.use('/tools', toolsRoutes);
+// Autoload Routes
+const routesPath = path.join(__dirname, 'routes');
+fs.readdirSync(routesPath).forEach((file) => {
+    if (file.endsWith('.js')) {
+        const route = require(path.join(routesPath, file));
+        const routeName = file.replace('Routes.js', '').toLowerCase();
+        
+        // Map 'index' to root, others to their filename prefix
+        const endpoint = routeName === 'index' ? '/' : `/${routeName}`;
+        
+        app.use(endpoint, route);
+        console.log(`Bound route: ${endpoint} -> ${file}`);
+    }
+});
 
 // 404 Handler
 app.use((req, res) => {

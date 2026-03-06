@@ -236,9 +236,30 @@
                 hist.forEach(msg => {
                     let html = '';
                     if (msg.role === 'user') {
-                        html = `<div class="flex flex-col items-end space-y-2 mb-4"><div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm"><p class="text-sm whitespace-pre-wrap">${escapeHtml(msg.text)}</p></div></div>`;
+                        const safeReplyPreview = msg.replyTo ? escapeHtml(msg.replyTo).substring(0, 50) + "..." : "";
+                        html = `
+                            <div class="flex flex-col items-end space-y-2 mb-4">
+                                <div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm relative overflow-hidden">
+                                    ${msg.replyTo ? `<div class="text-[10px] opacity-70 border-l-2 border-white/30 pl-2 mb-2 italic truncate">Replying: ${safeReplyPreview}</div>` : ''}
+                                    <p class="text-sm whitespace-pre-wrap">${escapeHtml(msg.text)}</p>
+                                </div>
+                            </div>`;
                     } else {
-                        html = `<div class="flex flex-col items-start space-y-2 mb-4"><div class="max-w-[85%] w-full bg-white border border-slate-100 p-5 rounded-2xl rounded-tl-none shadow-sm"><div class="prose prose-sm">${marked.parse(msg.text)}</div></div></div>`;
+                        html = `
+                            <div class="flex flex-col items-start space-y-2 group mb-4">
+                                <div class="max-w-[85%] w-full bg-white border border-slate-100 p-5 rounded-2xl rounded-tl-none shadow-sm relative overflow-hidden">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <div class="w-6 h-6 bg-gradient-to-tr from-primary to-accent rounded-lg flex items-center justify-center shrink-0">
+                                            <i class="ph-fill ph-lightning text-white text-[10px]"></i>
+                                        </div>
+                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">PuZero AI</span>
+                                    </div>
+                                    <div class="prose prose-sm prose-slate max-w-none text-slate-700 leading-relaxed overflow-x-auto">${marked.parse(msg.text)}</div>
+                                </div>
+                                <button data-reply="${encodeURIComponent(msg.text.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity font-bold uppercase tracking-wider">
+                                    <i class="ph-bold ph-arrow-u-up-left"></i> Reply
+                                </button>
+                            </div>`;
                     }
                     chatMessages.insertAdjacentHTML('beforeend', html);
                 });
