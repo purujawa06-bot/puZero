@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
     <title><%= title %></title>
     
     <!-- SEO Meta Tags -->
@@ -15,7 +16,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://puzero.vercel.app/">
     <meta property="og:title" content="<%= title %>">
-    <meta property="og:description" content="Platform alat serbaguna bertenaga AI for produktivitas maksimal.">
+    <meta property="og:description" content="Platform alat serbaguna bertenaga AI untuk produktivitas maksimal.">
     <meta property="og:image" content="/favicon.jpg">
 
     <!-- Tailwind CSS -->
@@ -74,8 +75,8 @@
         }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
@@ -83,14 +84,12 @@
         .htmx-request.htmx-indicator, .htmx-request .htmx-indicator { display: block; }
 
         /* Global Animations */
-        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(15px); } 
+            from { opacity: 0; transform: translateY(10px); } 
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        
         .btn-hover-effect {
             position: relative;
             overflow: hidden;
@@ -126,12 +125,12 @@
         });
     </script>
 </head>
-<body class="bg-[#f8fafc] text-slate-900 min-h-screen flex flex-col antialiased">
+<body class="bg-[#f8fafc] text-slate-900 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary pb-safe">
 
     <%- include('partials/navbar') %>
 
-    <main id="main-content" class="flex-grow">
-        <div class="fade-in">
+    <main id="main-content" class="flex-grow flex flex-col">
+        <div class="fade-in flex-grow flex flex-col">
             <% if (typeof page !== 'undefined') { %>
                 <%- include(page) %>
             <% } else if (typeof body !== 'undefined') { %>
@@ -146,13 +145,11 @@
     <script src="/js/index.js" defer></script>
 
     <script>
-        // Global Windows State (Persistence with LocalStorage)
         window.PuZeroState = {
             chatHistory: JSON.parse(localStorage.getItem('puzero_chat_history') || '[]'),
             systemPrompt: localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu.",
             userId: localStorage.getItem('puzero_user_id') || ('user-' + Math.random().toString(36).substring(2, 15)),
             save() {
-                // Keep only the last 20 messages
                 if (this.chatHistory.length > 20) {
                     this.chatHistory = this.chatHistory.slice(-20);
                 }
@@ -161,10 +158,8 @@
                 localStorage.setItem('puzero_user_id', this.userId);
             }
         };
-        // Initial save to persist userId if it's new
         window.PuZeroState.save();
 
-        // Setup NProgress integration with HTMX
         NProgress.configure({ showSpinner: true, minimum: 0.2 });
         document.addEventListener('htmx:beforeRequest', (e) => {
             if (e.detail.headers && e.detail.headers['X-Skip-NProgress']) return;
@@ -194,8 +189,6 @@
                     menu.style.maxHeight = '0px';
                     if(icon) {
                         icon.classList.replace('ph-x', 'ph-list');
-                        icon.classList.remove('ph-x');
-                        icon.classList.add('ph-list');
                         icon.classList.remove('rotate-90');
                     }
                 }

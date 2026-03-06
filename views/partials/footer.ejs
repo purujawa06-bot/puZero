@@ -1,36 +1,37 @@
-<footer class="bg-secondary text-slate-400 py-12 border-t border-slate-800">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-            <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<footer class="bg-secondary text-slate-400 py-10 md:py-16 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-10 text-center sm:text-left">
+            <div class="space-y-4 md:col-span-2">
+                <div class="flex items-center justify-center sm:justify-start gap-2.5">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0">
                         <i class="ph-bold ph-lightning text-white"></i>
                     </div>
                     <span class="text-xl font-extrabold text-white">PuZero</span>
                 </div>
-                <p class="text-sm leading-relaxed">Platform serbaguna berbasis AI untuk meningkatkan alur kerja digital Anda secara gratis.</p>
+                <p class="text-sm leading-relaxed max-w-sm mx-auto sm:mx-0">Platform serbaguna berbasis AI untuk meningkatkan alur kerja digital Anda secara gratis dengan UI yang modern dan responsif.</p>
             </div>
             
             <div class="space-y-4">
-                <h4 class="text-white font-bold">Tautan Cepat</h4>
-                <ul class="text-sm space-y-2">
-                    <li><a hx-get="/features" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Fitur</a></li>
-                    <li><a hx-get="/category" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Kategori</a></li>
-                    <li><a hx-get="/ai" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">AI Chat</a></li>
+                <h4 class="text-white font-bold tracking-wide uppercase text-xs">Tautan Cepat</h4>
+                <ul class="text-sm space-y-2.5">
+                    <li><a hx-get="/features" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Fitur Utama</a></li>
+                    <li><a hx-get="/category" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Kategori Tools</a></li>
+                    <li><a hx-get="/ai" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">AI Chatbot</a></li>
                 </ul>
             </div>
 
             <div class="space-y-4">
-                <h4 class="text-white font-bold">Legal</h4>
-                <ul class="text-sm space-y-2">
-                    <li><a hx-get="/tos" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Terms of Service</a></li>
-                    <li><a hx-get="/privacy" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Privacy Policy</a></li>
+                <h4 class="text-white font-bold tracking-wide uppercase text-xs">Legal & Privasi</h4>
+                <ul class="text-sm space-y-2.5">
+                    <li><a hx-get="/tos" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Syarat & Ketentuan</a></li>
+                    <li><a hx-get="/privacy" hx-target="#main-content" hx-push-url="true" class="hover:text-primary transition-colors cursor-pointer">Kebijakan Privasi</a></li>
                 </ul>
             </div>
         </div>
         
-        <div class="pt-8 border-t border-slate-800 text-center text-xs">
-            <p>&copy; <%= new Date().getFullYear() %> <span class="text-white">PuZero</span> &bull; Puru Zero Website. All Rights Reserved.</p>
+        <div class="pt-8 border-t border-slate-800/60 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium">
+            <p>&copy; <%= new Date().getFullYear() %> <span class="text-white font-bold">PuZero</span>. All Rights Reserved.</p>
+            <p>Made with <i class="ph-fill ph-heart text-accent"></i> by Puru Zero</p>
         </div>
     </div>
 </footer>
