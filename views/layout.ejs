@@ -117,6 +117,14 @@
         #nprogress .peg { box-shadow: 0 0 10px #6366f1, 0 0 5px #6366f1 !important; }
         #nprogress .spinner-icon { border-top-color: #6366f1 !important; border-left-color: #6366f1 !important; }
     </style>
+    <script>
+        // Deteksi hasil cache dan force reload jika halaman dimuat dari cache browser
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-900 min-h-screen flex flex-col antialiased">
 
@@ -186,6 +194,8 @@
                     menu.style.maxHeight = '0px';
                     if(icon) {
                         icon.classList.replace('ph-x', 'ph-list');
+                        icon.classList.remove('ph-x');
+                        icon.classList.add('ph-list');
                         icon.classList.remove('rotate-90');
                     }
                 }

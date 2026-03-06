@@ -16,6 +16,7 @@
                 <a hx-get="/" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-5 py-2.5 rounded-xl text-slate-600 hover:text-primary hover:bg-primary/10 font-bold transition-all">Home</a>
                 <a hx-get="/category" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-5 py-2.5 rounded-xl text-slate-600 hover:text-primary hover:bg-primary/10 font-bold transition-all">Tools</a>
                 <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-5 py-2.5 rounded-xl text-slate-600 hover:text-primary hover:bg-primary/10 font-bold transition-all">Anime</a>
+                <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-5 py-2.5 rounded-xl text-slate-600 hover:text-primary hover:bg-primary/10 font-bold transition-all">Jadwal</a>
             </div>
 
             <!-- Mobile Toggle -->
@@ -38,6 +39,9 @@
             </a>
             <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-4 rounded-xl text-slate-700 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
                 <i class="ph-bold ph-television text-lg"></i> Anime
+            </a>
+            <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-4 rounded-xl text-slate-700 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
+                <i class="ph-bold ph-calendar text-lg"></i> Jadwal
             </a>
         </div>
     </div>

@@ -1,29 +1,32 @@
 const cloudscraper = require('cloudscraper');
 const cheerio = require('cheerio');
 
+const BASE_URL = 'https://v2.samehadaku.how/';
+
 exports.getAnimePage = async (req, res) => {
     try {
-        const url = 'https://v2.samehadaku.how/';
-        const response = await cloudscraper.get(url);
+        const response = await cloudscraper.get(BASE_URL);
         const $ = cheerio.load(response);
         const animeList = [];
 
         $('.post-show ul li').each((i, el) => {
             const title = $(el).find('.entry-title a').text().trim();
-            const link = $(el).find('.entry-title a').attr('href');
+            const link = $(el).find('.entry-title a').attr('href') || '';
             const thumb = $(el).find('.thumb img').attr('src');
             const ep = $(el).find('.dtla span author').first().text().trim();
             const uploaded = $(el).find('.dtla span').last().text().replace('Released on:', '').trim();
 
             if (title && link) {
-                animeList.push({ title, link, thumb, ep, uploaded });
+                const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+                animeList.push({ title, slug, thumb, ep, uploaded });
             }
         });
 
         const data = {
             title: 'PuZero | Anime Terbaru',
             page: 'pages/anime',
-            animeList
+            animeList,
+            query: ''
         };
 
         if (req.headers['hx-request']) {
@@ -37,11 +40,103 @@ exports.getAnimePage = async (req, res) => {
     }
 };
 
+exports.searchAnime = async (req, res) => {
+    try {
+        const query = req.query.q;
+        if (!query) return res.redirect('/anime');
+
+        const searchUrl = `${BASE_URL}?s=${encodeURIComponent(query)}`;
+        const response = await cloudscraper.get(searchUrl);
+        const $ = cheerio.load(response);
+        const animeList = [];
+
+        $('.relat .animpost').each((i, el) => {
+            const title = $(el).find('.data .title h2').text().trim();
+            const link = $(el).find('a').first().attr('href') || '';
+            const thumb = $(el).find('.content-thumb img').attr('src');
+            const score = $(el).find('.score').text().trim();
+            const type = $(el).find('.content-thumb .type').text().trim();
+            const status = $(el).find('.data .type').text().trim();
+
+            if (title && link) {
+                const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+                animeList.push({ 
+                    title, 
+                    slug, 
+                    thumb, 
+                    ep: score ? `⭐ ${score}` : type, 
+                    uploaded: status || type 
+                });
+            }
+        });
+
+        const data = {
+            title: `PuZero | Hasil Pencarian: ${query}`,
+            page: 'pages/anime',
+            animeList,
+            query
+        };
+
+        if (req.headers['hx-request']) {
+            res.render('pages/anime', data);
+        } else {
+            res.render('layout', data);
+        }
+    } catch (error) {
+        console.error('Search Error:', error);
+        res.status(500).send('Gagal melakukan pencarian anime.');
+    }
+};
+
+exports.getAnimeSchedule = async (req, res) => {
+    try {
+        const dayList = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        const daysMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const currentDay = daysMap[new Date().getDay()];
+        
+        const selectedDay = req.query.day || currentDay;
+
+        const apiUrl = `${BASE_URL}wp-json/custom/v1/all-schedule?perpage=50&day=${selectedDay}&type=schtml`;
+        
+        const response = await cloudscraper.get({
+            uri: apiUrl,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        });
+        
+        const rawData = JSON.parse(response);
+        const schedule = rawData.map(item => ({
+            ...item,
+            slug: item.url.replace(BASE_URL, '').replace(/\/$/, '')
+        }));
+
+        const data = {
+            title: 'PuZero | Jadwal Rilis Anime',
+            page: 'pages/anime-schedule',
+            schedule,
+            selectedDay,
+            dayList
+        };
+
+        if (req.headers['hx-request']) {
+            res.render('pages/anime-schedule', data);
+        } else {
+            res.render('layout', data);
+        }
+    } catch (error) {
+        console.error('Schedule Error:', error);
+        res.status(500).send('Gagal mengambil jadwal anime.');
+    }
+};
+
 exports.getAnimeDetail = async (req, res) => {
     try {
-        const animeUrl = req.query.url;
-        if (!animeUrl) return res.status(400).send('URL anime diperlukan.');
+        const path = req.params.path;
+        if (!path) return res.status(400).send('Path anime diperlukan.');
 
+        const animeUrl = `${BASE_URL}${path}/`;
         const response = await cloudscraper.get(animeUrl);
         const $ = cheerio.load(response);
 
@@ -68,10 +163,13 @@ exports.getAnimeDetail = async (req, res) => {
         });
 
         $('.lstepsiode ul li').each((i, el) => {
+            const link = $(el).find('.lchx a').attr('href') || '';
+            const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
             detail.episodes.push({
                 eps: $(el).find('.eps a').text().trim(),
                 title: $(el).find('.lchx a').text().trim(),
-                link: $(el).find('.lchx a').attr('href'),
+                slug: slug,
+                isEpisode: slug.includes('episode') || !slug.includes('anime'),
                 date: $(el).find('.date').text().trim()
             });
         });
@@ -90,5 +188,113 @@ exports.getAnimeDetail = async (req, res) => {
     } catch (error) {
         console.error('Detail Scraping Error:', error);
         res.status(500).send('Gagal mengambil detail anime.');
+    }
+};
+
+exports.getAnimeStream = async (req, res) => {
+    try {
+        const path = req.params.path;
+        if (!path) return res.status(400).send('Path streaming diperlukan.');
+
+        const streamUrl = `${BASE_URL}${path}/`;
+        const response = await cloudscraper.get(streamUrl);
+        const $ = cheerio.load(response);
+
+        const stream = {
+            title: $('.entry-title').text().trim(),
+            servers: [],
+            downloads: [],
+            episodes: [],
+            prevEps: null,
+            nextEps: null
+        };
+
+        $('.east_player_option').each((i, el) => {
+            stream.servers.push({
+                name: $(el).find('span').text().trim(),
+                post: $(el).attr('data-post'),
+                nume: $(el).attr('data-nume'),
+                type: $(el).attr('data-type')
+            });
+        });
+
+        $('.download-eps').each((i, el) => {
+            const format = $(el).find('p b').text().trim();
+            const items = [];
+            $(el).find('ul li').each((j, li) => {
+                const resolution = $(li).find('strong').text().trim();
+                const links = [];
+                $(li).find('span a').each((k, a) => {
+                    links.push({
+                        server: $(a).text().trim(),
+                        link: $(a).attr('href')
+                    });
+                });
+                if (resolution) items.push({ resolution, links });
+            });
+            if (format) stream.downloads.push({ format, items });
+        });
+
+        $('.lstepsiode ul li').each((i, el) => {
+            const link = $(el).find('.lchx a').attr('href') || '';
+            const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+            stream.episodes.push({
+                title: $(el).find('.lchx a').text().trim(),
+                slug: slug,
+                date: $(el).find('.date').text().trim(),
+                thumb: $(el).find('img').attr('src')
+            });
+        });
+
+        const currentIndex = stream.episodes.findIndex(ep => ep.slug === path);
+        if (currentIndex !== -1) {
+            if (currentIndex > 0) {
+                stream.nextEps = stream.episodes[currentIndex - 1].slug;
+            }
+            if (currentIndex < stream.episodes.length - 1) {
+                stream.prevEps = stream.episodes[currentIndex + 1].slug;
+            }
+        }
+
+        const data = {
+            title: `PuZero | Streaming ${stream.title}`,
+            page: 'pages/anime-stream',
+            stream
+        };
+
+        if (req.headers['hx-request']) {
+            res.render('pages/anime-stream', data);
+        } else {
+            res.render('layout', data);
+        }
+    } catch (error) {
+        console.error('Stream Scraping Error:', error);
+        res.status(500).send('Gagal mengambil data streaming.');
+    }
+};
+
+exports.getStreamPlayer = async (req, res) => {
+    try {
+        const { post, nume, type } = req.body;
+        if (!post || !nume || !type) return res.status(400).send('Parameter tidak lengkap.');
+
+        const response = await cloudscraper.post({
+            uri: `${BASE_URL}wp-admin/admin-ajax.php`,
+            form: {
+                action: 'player_ajax',
+                post,
+                nume,
+                type
+            },
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+        });
+
+        res.send(response);
+    } catch (error) {
+        console.error('Player Fetch Error:', error);
+        res.status(500).send('Gagal mengambil player video.');
     }
 };

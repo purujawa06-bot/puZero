@@ -3,6 +3,10 @@ const router = express.Router();
 const animeController = require('../controllers/animeController');
 
 router.get('/', animeController.getAnimePage);
-router.get('/detail', animeController.getAnimeDetail);
+router.get('/search', animeController.searchAnime);
+router.get('/schedule', animeController.getAnimeSchedule);
+router.get('/detail/:path(*)', animeController.getAnimeDetail);
+router.get('/stream/:path(*)', animeController.getAnimeStream);
+router.post('/player', animeController.getStreamPlayer);
 
 module.exports = router;

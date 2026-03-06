@@ -81,9 +81,10 @@
                     <div class="grid grid-cols-1 gap-3">
                         <% detail.episodes.forEach(ep => { %>
                             <a 
-                                href="<%= ep.link %>" 
-                                target="_blank"
-                                class="flex items-center justify-between p-5 bg-white border border-slate-100 rounded-2xl hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group"
+                                hx-get="/anime/<%= ep.isEpisode ? 'stream' : 'detail' %>/<%= ep.slug %>"
+                                hx-target="#main-content"
+                                hx-push-url="true"
+                                class="flex items-center justify-between p-5 bg-white border border-slate-100 rounded-2xl hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group cursor-pointer"
                             >
                                 <div class="flex items-center gap-5 overflow-hidden">
                                     <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all shrink-0">
