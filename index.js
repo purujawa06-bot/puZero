@@ -6,6 +6,7 @@ const morgan = require('morgan');
 // Import Routes
 const indexRoutes = require('./routes/indexRoutes');
 const instagramRoutes = require('./routes/instagramRoutes');
+const tiktokRoutes = require('./routes/tiktokRoutes');
 const fastUpdateRoutes = require('./routes/fastUpdateRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 
@@ -26,6 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Gunakan Routes
 app.use('/', indexRoutes);
 app.use('/instagram', instagramRoutes);
+app.use('/tiktok', tiktokRoutes);
 app.use('/fastupdate', fastUpdateRoutes);
 app.use('/ai', aiRoutes);
 

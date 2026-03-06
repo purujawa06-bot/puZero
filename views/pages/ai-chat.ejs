@@ -31,7 +31,6 @@
 
     <!-- Chat Area -->
     <div id="chat-window" class="flex-grow overflow-y-auto px-6 py-6 space-y-8 custom-scrollbar">
-        <!-- Welcome Message -->
         <div id="welcome" class="text-center py-10">
             <div class="w-20 h-20 bg-gradient-to-tr from-primary/10 to-accent/10 text-primary rounded-[2rem] mx-auto flex items-center justify-center mb-6 shadow-inner border border-white">
                 <i class="ph-fill ph-brain text-4xl"></i>
@@ -42,8 +41,7 @@
         
         <div id="chat-messages" class="flex flex-col"></div>
         
-        <!-- Loading State -->
-        <div id="chat-loading" class="htmx-indicator mb-4">
+        <div id="chat-loading" class="hidden mb-4">
             <div class="flex items-start gap-3">
                 <div class="w-8 h-8 bg-slate-100 rounded-lg animate-pulse flex items-center justify-center">
                     <i class="ph-bold ph-lightning text-slate-300"></i>
@@ -57,14 +55,12 @@
                 </div>
             </div>
         </div>
-        <!-- Scroll Anchor -->
         <div id="scroll-anchor" class="h-1 w-full"></div>
     </div>
 
     <!-- Input Area -->
     <div class="p-4 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc] to-transparent shrink-0">
         <div class="max-w-4xl mx-auto">
-            <!-- Reply Preview -->
             <div id="reply-container" class="hidden bg-white/80 border border-slate-200 border-b-0 rounded-t-2xl p-3 flex items-center justify-between backdrop-blur-sm">
                 <div class="flex items-center gap-3 overflow-hidden">
                     <i class="ph-bold ph-arrow-u-up-left text-primary"></i>
@@ -75,48 +71,31 @@
                 </button>
             </div>
 
-            <!-- Input Box -->
             <div class="bg-white rounded-2xl shadow-2xl shadow-primary/5 border border-slate-200 p-2">
-                <form 
-                    id="chat-form" 
-                    class="relative"
-                    hx-post="/ai/chat"
-                    hx-target="#chat-messages"
-                    hx-swap="beforeend"
-                    hx-indicator="#chat-loading"
-                    hx-headers='{"X-Skip-NProgress": "true"}'
-                    hx-on::before-request="handleBeforeSend()"
-                    hx-on::after-request="handleAfterSend()"
-                >
-                    <input type="hidden" name="userid" id="session-id">
-                    <input type="hidden" name="replyTo" id="reply-input">
-                    
+                <div class="relative">
                     <div class="flex items-end gap-2">
                         <div class="flex-grow space-y-2 px-2 pb-2">
-                            <!-- Custom Instruction Toggle -->
                             <details class="group">
                                 <summary class="list-none cursor-pointer flex items-center gap-1 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-colors">
                                     <i class="ph-bold ph-gear"></i> Custom Instructions
                                 </summary>
-                                <textarea name="system" id="system-prompt" class="w-full mt-2 bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs focus:outline-none focus:border-primary/30" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
+                                <textarea id="system-prompt" class="w-full mt-2 bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs focus:outline-none focus:border-primary/30" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
                             </details>
 
                             <textarea 
-                                name="prompt" 
                                 id="prompt-textarea"
                                 class="w-full bg-transparent border-none focus:ring-0 text-slate-700 text-sm py-2 resize-none max-h-40 overflow-y-auto" 
                                 rows="2" 
                                 placeholder="Ketik pesan di sini..."
-                                required
-                                onkeydown="if(event.keyCode == 13 && !event.shiftKey) { event.preventDefault(); this.dispatchEvent(new Event('submit')); }"
+                                onkeydown="if(event.keyCode == 13 && !event.shiftKey) { event.preventDefault(); sendMessage(); }"
                             ></textarea>
                         </div>
                         
-                        <button type="submit" class="w-12 h-12 bg-secondary text-white rounded-xl flex items-center justify-center hover:bg-primary transition-all shadow-lg active:scale-90 mb-1">
+                        <button onclick="sendMessage()" class="w-12 h-12 bg-secondary text-white rounded-xl flex items-center justify-center hover:bg-primary transition-all shadow-lg active:scale-90 mb-1">
                             <i class="ph-bold ph-paper-plane-right text-xl"></i>
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
             <p class="text-[10px] text-center text-slate-400 mt-2 font-medium">PuZero AI can make mistakes. Check important info.</p>
         </div>
@@ -127,102 +106,134 @@
     (function() {
         const escapeHtml = (u) => (u || "").toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 
-        const chatWindow = document.getElementById('chat-window');
         const chatMessages = document.getElementById('chat-messages');
-        const sessionInput = document.getElementById('session-id');
         const systemInput = document.getElementById('system-prompt');
         const promptInput = document.getElementById('prompt-textarea');
         const welcomeDiv = document.getElementById('welcome');
         const scrollAnchor = document.getElementById('scroll-anchor');
+        const loadingDiv = document.getElementById('chat-loading');
+        const replyText = document.getElementById('reply-text');
+        const replyContainer = document.getElementById('reply-container');
 
-        // Direct Load from LocalStorage
-        const localHistory = JSON.parse(localStorage.getItem('puzero_chat_history') || '[]');
-        const localSystem = localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu.";
-        const localUserId = localStorage.getItem('puzero_user_id') || ('user-' + Math.random().toString(36).substring(2, 15));
+        let currentReply = "";
 
-        systemInput.value = localSystem;
-        sessionInput.value = localUserId;
-
-        const scrollToBottom = () => scrollAnchor.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        new MutationObserver(() => scrollToBottom()).observe(chatMessages, { childList: true, subtree: true });
-
-        systemInput.addEventListener('input', (e) => {
-            if(window.PuZeroState) {
-                window.PuZeroState.systemPrompt = e.target.value;
-                window.PuZeroState.save();
-            } else {
-                localStorage.setItem('puzero_system_prompt', e.target.value);
-            }
-        });
-
-        window.handleBeforeSend = function() {
-            const prompt = promptInput.value;
-            const replyTo = document.getElementById('reply-input').value;
-            if(!prompt.trim()) return;
-
-            welcomeDiv.classList.add('hidden');
-            
-            // Render user message immediately
-            const safePrompt = escapeHtml(prompt);
-            const safeReply = replyTo ? escapeHtml(replyTo).substring(0, 50) + "..." : "";
-            const html = `
-                <div class="flex flex-col items-end space-y-2 group mb-4">
-                    <div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm relative overflow-hidden">
-                        ${replyTo ? `<div class="text-[10px] opacity-70 border-l-2 border-white/30 pl-2 mb-2 italic truncate">Replying: ${safeReply}</div>` : ''}
-                        <p class="text-sm whitespace-pre-wrap">${safePrompt}</p>
-                    </div>
-                </div>`;
-            chatMessages.insertAdjacentHTML('beforeend', html);
-            
-            // History Management
-            if(window.PuZeroState) {
-                window.PuZeroState.chatHistory.push({ role: 'user', text: prompt, replyTo: replyTo });
-            }
-            
-            promptInput.value = '';
-            cancelReply();
-            promptInput.style.height = "auto";
-            scrollToBottom();
+        // Direct LocalStorage access for isolation
+        const getLocalState = () => {
+            return {
+                history: JSON.parse(localStorage.getItem('puzero_chat_history') || '[]'),
+                system: localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu.",
+                uid: localStorage.getItem('puzero_user_id') || ('user-' + Math.random().toString(36).substring(2, 15))
+            };
         };
 
-        window.handleAfterSend = function() {
-            scrollToBottom();
+        const saveLocalState = (data) => {
+            if (data.history) localStorage.setItem('puzero_chat_history', JSON.stringify(data.history.slice(-20)));
+            if (data.system) localStorage.setItem('puzero_system_prompt', data.system);
+            if (data.uid) localStorage.setItem('puzero_user_id', data.uid);
+        };
+
+        const state = getLocalState();
+        systemInput.value = state.system;
+        
+        const scrollToBottom = () => scrollAnchor.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+        window.setReply = function(text) {
+            currentReply = text;
+            replyText.innerText = text;
+            replyContainer.classList.remove('hidden');
+            promptInput.focus();
+        };
+
+        window.cancelReply = function() {
+            currentReply = "";
+            replyContainer.classList.add('hidden');
         };
 
         window.resetChat = function() {
-            const newId = 'user-' + Math.random().toString(36).substring(2, 15);
-            if(window.PuZeroState) {
-                window.PuZeroState.userId = newId;
-                window.PuZeroState.chatHistory = [];
-                window.PuZeroState.save();
-            } else {
-                localStorage.setItem('puzero_user_id', newId);
-                localStorage.setItem('puzero_chat_history', '[]');
-            }
-            sessionInput.value = newId;
+            const newUid = 'user-' + Math.random().toString(36).substring(2, 15);
+            saveLocalState({ history: [], uid: newUid });
             chatMessages.innerHTML = '';
             welcomeDiv.classList.remove('hidden');
             cancelReply();
         };
 
-        window.setReply = function(text) {
-            const container = document.getElementById('reply-container');
-            document.getElementById('reply-text').innerText = text;
-            document.getElementById('reply-input').value = text;
-            container.classList.remove('hidden');
-            promptInput.focus();
-        };
+        window.sendMessage = async function() {
+            const prompt = promptInput.value.trim();
+            if(!prompt) return;
 
-        window.cancelReply = function() {
-            document.getElementById('reply-container').classList.add('hidden');
-            document.getElementById('reply-input').value = '';
+            const currentState = getLocalState();
+            welcomeDiv.classList.add('hidden');
+            const safePrompt = escapeHtml(prompt);
+            const safeReplyPreview = currentReply ? escapeHtml(currentReply).substring(0, 50) + "..." : "";
+            
+            chatMessages.insertAdjacentHTML('beforeend', `
+                <div class="flex flex-col items-end space-y-2 group mb-4 animate-fade-in">
+                    <div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm relative overflow-hidden">
+                        ${currentReply ? `<div class="text-[10px] opacity-70 border-l-2 border-white/30 pl-2 mb-2 italic truncate">Replying: ${safeReplyPreview}</div>` : ''}
+                        <p class="text-sm whitespace-pre-wrap">${safePrompt}</p>
+                    </div>
+                </div>
+            `);
+
+            const finalPrompt = currentReply ? `[Replying to: ${currentReply}]\n\n${prompt}` : prompt;
+            promptInput.value = '';
+            const replyToSnapshot = currentReply;
+            cancelReply();
+            scrollToBottom();
+            loadingDiv.classList.remove('hidden');
+
+            try {
+                const res = await fetch('https://puruboy-api.vercel.app/api/ai/puruai', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userid: currentState.uid,
+                        prompt: finalPrompt,
+                        model: "puruboy-flash",
+                        system: systemInput.value
+                    })
+                });
+
+                const data = await res.json();
+                if (!data.success) throw new Error("Gagal mendapatkan respon");
+
+                const aiText = data.result[0].parts[0].text;
+                const aiHtml = `
+                    <div class="flex flex-col items-start space-y-2 group mb-4 opacity-0 animate-fade-in" style="animation: fadeIn 0.5s forwards">
+                        <div class="max-w-[85%] w-full bg-white border border-slate-100 p-5 rounded-2xl rounded-tl-none shadow-sm relative overflow-hidden">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-6 h-6 bg-gradient-to-tr from-primary to-accent rounded-lg flex items-center justify-center shrink-0">
+                                     <i class="ph-fill ph-lightning text-white text-[10px]"></i>
+                                </div>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">PuZero AI</span>
+                            </div>
+                            <div class="prose prose-sm prose-slate max-w-none text-slate-700 leading-relaxed overflow-x-auto ai-content">${marked.parse(aiText)}</div>
+                        </div>
+                        <button data-reply="${encodeURIComponent(aiText.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity font-bold uppercase tracking-wider">
+                            <i class="ph-bold ph-arrow-u-up-left"></i> Reply
+                        </button>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', aiHtml);
+                
+                const updatedHistory = currentState.history;
+                updatedHistory.push({ role: 'user', text: prompt, replyTo: replyToSnapshot });
+                updatedHistory.push({ role: 'model', text: aiText });
+                saveLocalState({ history: updatedHistory, system: systemInput.value });
+                
+            } catch (err) {
+                chatMessages.insertAdjacentHTML('beforeend', `<div class="p-4 text-red-500 text-xs">❌ Error: ${err.message}</div>`);
+            } finally {
+                loadingDiv.classList.add('hidden');
+                scrollToBottom();
+            }
         };
 
         function renderHistory() {
-            const historyToRender = window.PuZeroState ? window.PuZeroState.chatHistory : localHistory;
-            if (historyToRender.length > 0) {
+            const hist = getLocalState().history;
+            if (hist.length > 0) {
                 welcomeDiv.classList.add('hidden');
-                historyToRender.forEach(msg => {
+                hist.forEach(msg => {
                     let html = '';
                     if (msg.role === 'user') {
                         html = `<div class="flex flex-col items-end space-y-2 mb-4"><div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-sm"><p class="text-sm whitespace-pre-wrap">${escapeHtml(msg.text)}</p></div></div>`;
@@ -231,7 +242,7 @@
                     }
                     chatMessages.insertAdjacentHTML('beforeend', html);
                 });
-                setTimeout(scrollToBottom, 300);
+                scrollToBottom();
             }
         }
         renderHistory();
