@@ -33,6 +33,7 @@
                     animation: {
                         'blob': 'blob 7s infinite',
                         'spin-slow': 'spin 3s linear infinite',
+                        'loading-bar': 'loading-bar 1.5s infinite linear',
                     },
                     keyframes: {
                         blob: {
@@ -40,6 +41,10 @@
                             '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
                             '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                             '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        'loading-bar': {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' }
                         }
                     }
                 }
@@ -49,15 +54,13 @@
     
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- NProgress (Navigation Loader) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
-
     <!-- Marked.js for Markdown Parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
@@ -110,13 +113,28 @@
             width: 300%;
             height: 300%;
         }
-
-        /* Custom NProgress */
-        #nprogress .bar { background: #22c55e !important; height: 3px !important; }
-        #nprogress .peg { box-shadow: 0 0 10px #22c55e, 0 0 5px #22c55e !important; }
     </style>
 </head>
-<body class="bg-[#f8fafc] text-slate-900 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary pb-safe">
+<body 
+    x-data="{ loading: false }" 
+    @htmx:before-request.window="loading = true" 
+    @htmx:after-request.window="loading = false"
+    class="bg-[#f8fafc] text-slate-900 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary pb-safe"
+>
+
+    <!-- Global Loading Bar -->
+    <div 
+        x-show="loading" 
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed top-0 left-0 w-full h-1 z-[200] pointer-events-none bg-slate-100 overflow-hidden"
+    >
+        <div class="h-full bg-emerald-500 w-1/3 animate-loading-bar"></div>
+    </div>
 
     <%- include('partials/navbar') %>
 
@@ -150,29 +168,6 @@
             }
         };
         window.PuZeroState.save();
-
-        // Konfigurasi NProgress
-        NProgress.configure({ showSpinner: false, speed: 400 });
-
-        // 1. START: Jalankan saat HTMX mulai request
-        document.addEventListener('htmx:beforeRequest', function(evt) {
-            // CEK OTOMATIS: Jika ini navigasi BACK/FORWARD (history), JANGAN jalankan loading bar
-            if (evt.detail.historyRestoreRequest) return;
-            
-            NProgress.start();
-        });
-
-        // 2. STOP: Berhenti saat request selesai (Berhasil/Error)
-        document.addEventListener('htmx:afterRequest', function() {
-            NProgress.done();
-        });
-
-        // 3. FIX BUG HP (BFCache): Paksa stop jika user tekan tombol 'Back' di HP
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                NProgress.done();
-            }
-        });
 
         window.toggleMobileMenu = function(e) {
             if (e) e.stopPropagation();
