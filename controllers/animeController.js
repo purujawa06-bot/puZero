@@ -292,7 +292,32 @@ exports.getStreamPlayer = async (req, res) => {
             }
         });
 
-        res.send(response);
+        const $ = cheerio.load(response);
+        let src = $('iframe').attr('src');
+
+        if (src) {
+            if (src.startsWith('//')) src = 'https:' + src;
+            
+            try {
+                const headRes = await cloudscraper.head(src, { followRedirect: true });
+                const contentType = headRes['content-type'] || '';
+
+                if (contentType.includes('video') || contentType.includes('application/octet-stream')) {
+                    return res.json({ type: 'enhanced', src });
+                }
+
+                const pageContent = await cloudscraper.get(src);
+                const videoMatch = pageContent.match(/https?:\/\/[^"']+\.(mp4|m3u8|webm|mkv)[^"']*/i);
+                
+                if (videoMatch) {
+                    return res.json({ type: 'enhanced', src: videoMatch[0] });
+                }
+            } catch (e) {
+                console.log("Head check failed for enhancement, fallback to raw.");
+            }
+        }
+
+        res.json({ type: 'raw', html: response });
     } catch (error) {
         console.error('Player Fetch Error:', error);
         res.status(500).send('Gagal mengambil player video.');

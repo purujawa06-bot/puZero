@@ -15,15 +15,14 @@
         </div>
     </div>
 
-    <!-- Video Player Container -->
-    <div class="bg-slate-900 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative mb-6 border-4 border-white">
-        <div id="player-container" class="w-full h-full flex items-center justify-center">
+    <!-- Video Player Container (Standard Browser Player) -->
+    <div id="main-player-wrapper" class="bg-slate-900 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative mb-6 border-4 border-white">
+        <div id="player-container" class="w-full h-full flex items-center justify-center relative bg-black">
             <div class="text-center p-10">
                 <div class="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
                     <i class="ph-fill ph-play text-4xl"></i>
                 </div>
-                <h3 class="text-white font-bold text-lg">Memuat Player...</h3>
-                <p class="text-slate-500 text-sm mt-2">Mencari server terbaik untuk Anda.</p>
+                <h3 class="text-white font-bold text-lg">Siap Memutar...</h3>
             </div>
         </div>
     </div>
@@ -37,10 +36,8 @@
                 hx-push-url="true"
                 class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm"
             >
-                <i class="ph-bold ph-caret-left"></i> Episode Sebelumnya
+                <i class="ph-bold ph-caret-left"></i> Sebelumnya
             </button>
-        <% } else { %>
-            <div class="flex-1"></div>
         <% } %>
 
         <% if (stream.nextEps) { %>
@@ -50,17 +47,15 @@
                 hx-push-url="true"
                 class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm"
             >
-                Episode Berikutnya <i class="ph-bold ph-caret-right"></i>
+                Berikutnya <i class="ph-bold ph-caret-right"></i>
             </button>
-        <% } else { %>
-            <div class="flex-1"></div>
         <% } %>
     </div>
 
     <!-- Server Selector -->
     <div class="mb-12">
         <h3 class="text-sm font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-            <i class="ph-bold ph-hard-drives text-primary"></i> Pilih Server / Resolusi
+            <i class="ph-bold ph-hard-drives text-primary"></i> Pilih Server
         </h3>
         <div class="flex flex-wrap gap-2">
             <% stream.servers.forEach((srv, idx) => { %>
@@ -114,9 +109,9 @@
         <div class="space-y-6">
             <h3 class="text-xl font-black text-secondary flex items-center gap-2">
                 <i class="ph-bold ph-squares-four text-primary"></i>
-                Episode Lainnya
+                Daftar Episode
             </h3>
-            <div class="space-y-3">
+            <div class="space-y-3 h-[600px] overflow-y-auto custom-scrollbar pr-2">
                 <% stream.episodes.forEach(ep => { %>
                     <a 
                         hx-get="/anime/stream/<%= ep.slug %>"
@@ -150,14 +145,8 @@
             b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
         });
         btn.classList.add('bg-primary', 'text-white', 'border-primary');
-        btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
 
-        container.innerHTML = `
-            <div class="flex flex-col items-center gap-4">
-                <div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-                <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Memproses Video...</span>
-            </div>
-        `;
+        container.innerHTML = `<div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>`;
 
         try {
             const res = await fetch('/anime/player', {
@@ -165,35 +154,28 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ post, nume, type })
             });
-            const html = await res.text();
+            const data = await res.json();
             
-            const match = html.match(/src="([^"]+)"/);
-            if (match && match[1]) {
-                container.innerHTML = `<iframe src="${match[1]}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+            if (data.type === 'enhanced') {
+                const proxyUrl = '/stream?url=' + encodeURIComponent(data.src);
+                container.innerHTML = `
+                    <video class="w-full h-full" controls playsinline autoplay>
+                        <source src="${proxyUrl}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
             } else {
-                container.innerHTML = html; 
+                container.innerHTML = data.html;
             }
         } catch (e) {
-            container.innerHTML = `<div class="text-red-500 text-xs font-bold">Gagal memuat player. Silakan coba server lain.</div>`;
+            container.innerHTML = `<div class="text-red-500 text-xs font-bold">Gagal memuat player.</div>`;
         }
     }
 
     (function autoSelectServer() {
         const serverButtons = document.querySelectorAll('.server-btn');
         if (serverButtons.length === 0) return;
-
-        let target = null;
-        for (const btn of serverButtons) {
-            if (btn.innerText.includes('720p')) {
-                target = btn;
-                break;
-            }
-        }
-
-        if (!target) target = serverButtons[0];
-        
-        if (target) {
-            changeServer(target);
-        }
+        let target = Array.from(serverButtons).find(btn => btn.innerText.includes('720p')) || serverButtons[0];
+        if (target) changeServer(target);
     })();
 </script>
