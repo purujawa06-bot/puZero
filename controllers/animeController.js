@@ -292,9 +292,45 @@ exports.getStreamPlayer = async (req, res) => {
             }
         });
 
-        res.send(response);
+        const iframeMatch = response.match(/src="([^"]+)"/);
+        let finalType = 'html';
+        let finalContent = response;
+
+        if (iframeMatch && iframeMatch[1]) {
+            const streamUrl = iframeMatch[1];
+
+            if (/\.(mp4|m3u8|webm|mkv)(\?|$)/i.test(streamUrl)) {
+                finalType = 'video';
+                finalContent = streamUrl;
+            } else {
+                try {
+                    const streamPage = await cloudscraper.get(streamUrl);
+                    const videoMatch = streamPage.match(/(https?:\/\/[^\s"'<>]+\.(?:mp4|m3u8|webm))/i) || streamPage.match(/<source[^>]+src="([^"]+)"/i) || streamPage.match(/file:\s*["']([^"']+)["']/i);
+                    
+                    if (videoMatch && videoMatch[1] && /\.(mp4|m3u8|webm)/i.test(videoMatch[1])) {
+                        finalType = 'video';
+                        finalContent = videoMatch[1];
+                    } else {
+                        finalType = 'iframe';
+                        finalContent = streamUrl;
+                    }
+                } catch (e) {
+                    finalType = 'iframe';
+                    finalContent = streamUrl;
+                }
+            }
+        } else {
+            const rawVideoMatch = response.match(/(https?:\/\/[^\s"'<>]+\.(?:mp4|m3u8|webm))/i);
+            if (rawVideoMatch && rawVideoMatch[1]) {
+                finalType = 'video';
+                finalContent = rawVideoMatch[1];
+            }
+        }
+
+        res.json({ type: finalType, content: finalContent });
+
     } catch (error) {
         console.error('Player Fetch Error:', error);
-        res.status(500).send('Gagal mengambil player video.');
+        res.status(500).json({ type: 'error', content: 'Gagal mengambil player video.' });
     }
 };

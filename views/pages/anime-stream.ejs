@@ -1,4 +1,5 @@
 <title><%= title %></title>
+
 <div class="max-w-6xl mx-auto px-4 py-10 fade-in">
     <!-- Header -->
     <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -16,14 +17,14 @@
     </div>
 
     <!-- Video Player Container -->
-    <div class="bg-slate-900 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative mb-6 border-4 border-white">
+    <div class="bg-slate-900 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative mb-6 group/player">
         <div id="player-container" class="w-full h-full flex items-center justify-center">
             <div class="text-center p-10">
-                <div class="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl animate-pulse">
                     <i class="ph-fill ph-play text-4xl"></i>
                 </div>
-                <h3 class="text-white font-bold text-lg">Memuat Player...</h3>
-                <p class="text-slate-500 text-sm mt-2">Mencari server terbaik untuk Anda.</p>
+                <h3 class="text-white font-black text-2xl tracking-tighter">PuZero <span class="text-primary">Play</span></h3>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-3">Mempersiapkan Streaming...</p>
             </div>
         </div>
     </div>
@@ -152,10 +153,14 @@
         btn.classList.add('bg-primary', 'text-white', 'border-primary');
         btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
 
+        if (window.videojs && videojs.getPlayer('puzero-player')) {
+            videojs.getPlayer('puzero-player').dispose();
+        }
+
         container.innerHTML = `
-            <div class="flex flex-col items-center gap-4">
+            <div class="flex flex-col items-center justify-center gap-4 h-full w-full">
                 <div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-                <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Memproses Video...</span>
+                <span class="text-xs font-black text-slate-500 uppercase tracking-widest">PuZero Play Engine...</span>
             </div>
         `;
 
@@ -165,16 +170,39 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ post, nume, type })
             });
-            const html = await res.text();
-            
-            const match = html.match(/src="([^"]+)"/);
-            if (match && match[1]) {
-                container.innerHTML = `<iframe src="${match[1]}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const data = await res.json();
+                
+                if (data.type === 'video') {
+                    const vidType = data.content.includes('.m3u8') ? 'application/x-mpegURL' : 'video/mp4';
+                    container.innerHTML = `
+                        <video id="puzero-player" class="video-js vjs-default-skin vjs-big-play-centered w-full h-full" controls preload="auto" data-setup='{"fluid": true}'>
+                            <source src="${data.content}" type="${vidType}">
+                        </video>
+                    `;
+                    if (window.videojs) {
+                        videojs('puzero-player');
+                    }
+                } else if (data.type === 'iframe') {
+                    container.innerHTML = `<iframe src="${data.content}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+                } else if (data.type === 'html') {
+                    container.innerHTML = data.content;
+                } else {
+                    container.innerHTML = `<div class="text-red-500 text-xs font-bold text-center">${data.content}</div>`;
+                }
             } else {
-                container.innerHTML = html; 
+                const html = await res.text();
+                const match = html.match(/src="([^"]+)"/);
+                if (match && match[1]) {
+                    container.innerHTML = `<iframe src="${match[1]}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+                } else {
+                    container.innerHTML = html; 
+                }
             }
         } catch (e) {
-            container.innerHTML = `<div class="text-red-500 text-xs font-bold">Gagal memuat player. Silakan coba server lain.</div>`;
+            container.innerHTML = `<div class="text-red-500 text-xs font-bold text-center">Gagal memuat player. Silakan coba server lain.</div>`;
         }
     }
 
