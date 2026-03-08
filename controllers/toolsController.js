@@ -24,6 +24,19 @@ exports.getDubbingPage = (req, res) => {
     }
 };
 
+exports.getGhibliPage = (req, res) => {
+    const data = {
+        title: 'PuZero | AI Ghibli Filter',
+        page: 'pages/ghibli'
+    };
+
+    if (req.headers['hx-request']) {
+        res.render('pages/ghibli', data);
+    } else {
+        res.render('layout', data);
+    }
+};
+
 exports.uploadToTmp = async (req, res) => {
     try {
         if (!req.file) {
@@ -42,7 +55,6 @@ exports.uploadToTmp = async (req, res) => {
         const data = await response.json();
 
         if (response.ok && data.status === 'success') {
-            // Mengubah URL view menjadi URL download langsung untuk API
             const downloadUrl = data.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
             return res.json({ success: true, url: downloadUrl });
         } else {

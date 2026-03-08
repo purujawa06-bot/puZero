@@ -1,0 +1,215 @@
+<title><%= title %></title>
+<div class="max-w-3xl mx-auto py-16 px-4 fade-in">
+    <div class="mb-8">
+        <button 
+            hx-get="/category" 
+            hx-target="#main-content" 
+            hx-push-url="true"
+            class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-all group"
+        >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 group-hover:border-primary/30 group-hover:bg-primary/5">
+                <i class="ph-bold ph-arrow-left"></i>
+            </div>
+            Kembali ke Kategori
+        </button>
+    </div>
+
+    <div class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-teal-500/10 text-teal-500 mb-6 shadow-inner relative">
+            <div class="absolute inset-0 bg-teal-500/20 blur-xl rounded-full animate-pulse"></div>
+            <i class="ph-bold ph-paint-brush-broad text-4xl relative z-10"></i>
+        </div>
+        <h1 class="text-4xl font-black text-secondary tracking-tight">AI Ghibli Filter</h1>
+        <p class="text-slate-500 mt-3 text-lg">Ubah gambar Anda menjadi mahakarya gaya Studio Ghibli.</p>
+    </div>
+
+    <div class="bg-white p-2 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden relative">
+        <div class="p-8">
+            <div class="flex p-1 bg-slate-100 rounded-2xl mb-8">
+                <button onclick="switchTab('url')" id="tab-url" class="flex-1 py-3 text-sm font-bold rounded-xl transition-all bg-white shadow-sm text-primary">URL Gambar</button>
+                <button onclick="switchTab('file')" id="tab-file" class="flex-1 py-3 text-sm font-bold rounded-xl transition-all text-slate-500 hover:text-secondary">Upload File</button>
+            </div>
+
+            <div class="space-y-4">
+                <div id="input-url-container" class="group">
+                    <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Image URL</label>
+                    <div class="relative">
+                        <i class="ph-bold ph-link absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-teal-500 transition-colors"></i>
+                        <input 
+                            type="url" 
+                            id="ghibli-url" 
+                            placeholder="https://example.com/image.jpg" 
+                            class="w-full pl-14 pr-6 py-5 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all font-medium"
+                        >
+                    </div>
+                </div>
+
+                <div id="input-file-container" class="hidden group">
+                    <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Pilih Gambar</label>
+                    <div class="relative">
+                        <input 
+                            type="file" 
+                            id="ghibli-file" 
+                            accept="image/*"
+                            class="w-full px-6 py-5 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all font-medium text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 cursor-pointer"
+                        >
+                    </div>
+                </div>
+
+                <div class="group">
+                    <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Custom Prompt (Opsional)</label>
+                    <input 
+                        type="text" 
+                        id="ghibli-prompt" 
+                        placeholder="Contoh: Jadikan ghibli yang estetik" 
+                        class="w-full px-6 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-teal-500 outline-none transition-all font-medium text-sm"
+                    >
+                </div>
+
+                <button onclick="startGhibli()" id="ghibli-btn" class="w-full py-5 bg-secondary hover:bg-slate-800 text-white font-black rounded-2xl flex items-center justify-center gap-3 transition-all hover:shadow-xl active:scale-[0.98] btn-hover-effect">
+                    <i class="ph-bold ph-sparkle text-xl"></i>
+                    Transformasi Ghibli
+                </button>
+            </div>
+
+            <div id="loading" class="hidden mt-10">
+                <div class="flex flex-col items-center justify-center space-y-6">
+                    <div class="relative">
+                        <div class="w-20 h-20 border-4 border-slate-100 rounded-full"></div>
+                        <div class="absolute inset-0 w-20 h-20 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <div id="logs" class="w-full max-w-md bg-slate-900 rounded-xl p-4 font-mono text-[10px] text-teal-400 space-y-1 overflow-y-auto max-h-40 custom-scrollbar">
+                        <p>> Menunggu input...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-container" class="mt-8"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentMode = 'url';
+
+    function switchTab(mode) {
+        currentMode = mode;
+        const urlCont = document.getElementById('input-url-container');
+        const fileCont = document.getElementById('input-file-container');
+        const urlTab = document.getElementById('tab-url');
+        const fileTab = document.getElementById('tab-file');
+
+        if (mode === 'url') {
+            urlCont.classList.remove('hidden');
+            fileCont.classList.add('hidden');
+            urlTab.classList.add('bg-white', 'shadow-sm', 'text-primary');
+            urlTab.classList.remove('text-slate-500');
+            fileTab.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+            fileTab.classList.add('text-slate-500');
+        } else {
+            urlCont.classList.add('hidden');
+            fileCont.classList.remove('hidden');
+            fileTab.classList.add('bg-white', 'shadow-sm', 'text-primary');
+            fileTab.classList.remove('text-slate-500');
+            urlTab.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+            urlTab.classList.add('text-slate-500');
+        }
+    }
+
+    async function startGhibli() {
+        const resultContainer = document.getElementById('result-container');
+        const loading = document.getElementById('loading');
+        const logs = document.getElementById('logs');
+        const btn = document.getElementById('ghibli-btn');
+        
+        let imageUrl = document.getElementById('ghibli-url').value;
+        const prompt = document.getElementById('ghibli-prompt').value || "Jadikan ghibli";
+        const fileInput = document.getElementById('ghibli-file');
+
+        if (currentMode === 'url' && !imageUrl) return alert('Masukkan URL Gambar dulu!');
+        if (currentMode === 'file' && (!fileInput.files || fileInput.files.length === 0)) return alert('Pilih file gambar dulu!');
+
+        resultContainer.innerHTML = '';
+        logs.innerHTML = '<p class="text-slate-500">> Memulai proses Ghibli...</p>';
+        loading.classList.remove('hidden');
+        btn.disabled = true;
+
+        try {
+            if (currentMode === 'file') {
+                logs.insertAdjacentHTML('beforeend', '<p class="text-yellow-400">> Mengupload gambar ke server temporary...</p>');
+                const formData = new FormData();
+                formData.append('image', fileInput.files[0]);
+
+                const uploadRes = await fetch('/tools/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const uploadData = await uploadRes.json();
+                if (!uploadData.success) throw new Error(uploadData.message);
+                imageUrl = uploadData.url;
+                logs.insertAdjacentHTML('beforeend', `<p class="text-emerald-400">> Gambar siap: ${imageUrl.substring(0, 25)}...</p>`);
+            }
+
+            logs.insertAdjacentHTML('beforeend', '<p class="text-teal-400">> Memproses gambar ke gaya Ghibli...</p>');
+            
+            const response = await fetch('https://www.puruboy.kozow.com/api/tools/ghibli', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: imageUrl, prompt })
+            });
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let tempUrl = "";
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value);
+                const lines = chunk.split('\n').filter(l => l.trim() !== "");
+                
+                for (const line of lines) {
+                    const logEl = document.createElement('p');
+                    logEl.textContent = `> ${line}`;
+                    logs.appendChild(logEl);
+                    logs.scrollTop = logs.scrollHeight;
+
+                    if (line.includes('[true]')) {
+                        tempUrl = line.replace('[true]', '').trim();
+                    }
+                }
+            }
+
+            if (!tempUrl) throw new Error("Gagal memproses gambar.");
+
+            logs.insertAdjacentHTML('beforeend', '<p class="text-teal-400">> Mendownload hasil akhir...</p>');
+            
+            const finalRes = await fetch(tempUrl);
+            const finalData = await finalRes.json();
+
+            if (!finalData.output) throw new Error("Output tidak valid.");
+
+            resultContainer.innerHTML = `
+                <div class="animation-fade-in space-y-6">
+                    <div class="relative">
+                        <img src="${finalData.output}" class="w-full rounded-3xl shadow-xl border-4 border-white">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-teal-500 text-white text-[10px] font-black rounded-full shadow-lg">GHIBLI STYLE</span>
+                        </div>
+                    </div>
+                    <a href="${finalData.output}" target="_blank" class="w-full py-4 bg-primary hover:bg-indigo-700 text-white font-black rounded-2xl flex items-center justify-center gap-3 transition-all">
+                        <i class="ph-bold ph-download-simple"></i>
+                        Simpan Gambar
+                    </a>
+                </div>
+            `;
+            loading.classList.add('hidden');
+        } catch (err) {
+            resultContainer.innerHTML = `<div class="p-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200">❌ Error: ${err.message}</div>`;
+            loading.classList.add('hidden');
+        } finally {
+            btn.disabled = false;
+        }
+    }
+</script>
