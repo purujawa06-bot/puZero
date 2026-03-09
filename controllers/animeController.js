@@ -88,6 +88,87 @@ exports.searchAnime = async (req, res) => {
     }
 };
 
+exports.getAnimeFilter = async (req, res) => {
+    try {
+        const { title, status, type, order, page } = req.query;
+        const genres = req.query.genre || [];
+        const genreArr = Array.isArray(genres) ? genres : [genres];
+
+        let filterUrl = `${BASE_URL}daftar-anime-2/`;
+        if (page && page > 1) filterUrl += `page/${page}/`;
+
+        const params = new URLSearchParams();
+        params.append('title', title || '');
+        params.append('status', status || '');
+        params.append('type', type || '');
+        params.append('order', order || 'title');
+        genreArr.forEach(g => {
+            if (g) params.append('genre[]', g);
+        });
+
+        const finalUrl = `${filterUrl}?${params.toString()}`;
+        const response = await cloudscraper.get(finalUrl);
+        const $ = cheerio.load(response);
+        const animeList = [];
+
+        $('.relat .animpost').each((i, el) => {
+            const titleText = $(el).find('.data .title h2').text().trim();
+            const link = $(el).find('a').first().attr('href') || '';
+            const thumb = $(el).find('.content-thumb img').attr('src');
+            const score = $(el).find('.score').text().trim();
+            const typeText = $(el).find('.content-thumb .type').text().trim();
+            const statusText = $(el).find('.data .type').text().trim();
+
+            if (titleText && link) {
+                const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+                animeList.push({ 
+                    title: titleText, 
+                    slug, 
+                    thumb, 
+                    ep: score ? `⭐ ${score}` : typeText, 
+                    uploaded: statusText || typeText 
+                });
+            }
+        });
+
+        const pagination = [];
+        $('.pagination .page-numbers').each((i, el) => {
+            const text = $(el).text().trim();
+            const href = $(el).attr('href');
+            const isCurrent = $(el).hasClass('current');
+            
+            let pageNum = null;
+            if (href) {
+                const match = href.match(/page\/(\d+)/);
+                pageNum = match ? match[1] : (text.match(/\d+/) ? text : null);
+            } else if (isCurrent) {
+                pageNum = text;
+            }
+
+            if (text) {
+                pagination.push({ text, pageNum, isCurrent });
+            }
+        });
+
+        const data = {
+            title: 'PuZero | Filter Anime',
+            page: 'pages/anime-filter',
+            animeList,
+            filters: { title, status, type, order, genre: genreArr },
+            pagination
+        };
+
+        if (req.headers['hx-request']) {
+            res.render('pages/anime-filter', data);
+        } else {
+            res.render('layout', data);
+        }
+    } catch (error) {
+        console.error('Filter Error:', error);
+        res.status(500).send('Gagal mengambil data filter.');
+    }
+};
+
 exports.getAnimeSchedule = async (req, res) => {
     try {
         const dayList = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
