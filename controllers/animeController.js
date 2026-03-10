@@ -476,35 +476,11 @@ exports.streamFiledon = async (req, res) => {
         
         const actualVideoUrl = extractRes.data.url;
         
-        const headers = {
-            'Referer': 'https://filedon.co/',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        };
-        
-        if (req.headers.range) {
-            headers['Range'] = req.headers.range;
-        }
-
-        const response = await axios({
-            method: 'get',
-            url: actualVideoUrl,
-            headers: headers,
-            responseType: 'stream'
-        });
-
-        res.status(response.status);
-        Object.entries(response.headers).forEach(([key, value]) => {
-            res.setHeader(key, value);
-        });
-
-        response.data.pipe(res);
+        // Redirect langsung ke URL video asli tanpa proxying data di server PuZero
+        res.redirect(actualVideoUrl);
         
     } catch (error) {
-        console.error('Filedon Proxy Error:', error.message);
-        if (error.response) {
-            res.status(error.response.status).send('Terjadi kesalahan saat streaming video.');
-        } else {
-            res.status(500).send('Terjadi kesalahan saat streaming video.');
-        }
+        console.error('Filedon Redirect Error:', error.message);
+        res.status(500).send('Terjadi kesalahan saat mengalihkan ke server video.');
     }
 };
