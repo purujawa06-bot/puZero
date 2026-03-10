@@ -1,5 +1,6 @@
 const cloudscraper = require('cloudscraper');
 const cheerio = require('cheerio');
+const axios = require('axios');
 
 const BASE_URL = 'https://v2.samehadaku.how/';
 
@@ -316,6 +317,47 @@ exports.getAnimeStream = async (req, res) => {
             if (format) stream.downloads.push({ format, items });
         });
 
+        // Terapkan logik FiledonExtractor Server PuruZero ⭐
+        // Filter Hanya cari kategori MP4 (Bukan MKV atau x265) dan resolusi MP4HD atau FULLHD
+        let filedonLink = null;
+        let filedonRes = null;
+
+        const mp4Dl = stream.downloads.find(dl => dl.format && dl.format.trim().toUpperCase() === 'MP4');
+        if (mp4Dl) {
+            // Prioritas 1: MP4HD
+            const mp4hd = mp4Dl.items.find(item => item.resolution && item.resolution.toUpperCase().includes('MP4HD'));
+            if (mp4hd) {
+                const link = mp4hd.links.find(l => l.link && l.link.includes('filedon.co/'));
+                if (link) {
+                    filedonLink = link.link;
+                    filedonRes = '720p';
+                }
+            }
+
+            // Prioritas 2: FULLHD (Jika MP4HD tidak ada)
+            if (!filedonLink) {
+                const fullhd = mp4Dl.items.find(item => item.resolution && item.resolution.toUpperCase().includes('FULLHD'));
+                if (fullhd) {
+                    const link = fullhd.links.find(l => l.link && l.link.includes('filedon.co/'));
+                    if (link) {
+                        filedonLink = link.link;
+                        filedonRes = '1080p';
+                    }
+                }
+            }
+        }
+
+        // Tambahkan server PuruZero ke daftar servers (Paling Depan) jika ditemukan di MP4HD/FULLHD
+        if (filedonLink) {
+            const embedUrl = filedonLink.includes('/view/') ? filedonLink.replace('/view/', '/embed/') : filedonLink;
+            stream.servers.unshift({
+                name: `PuruZero ⭐ (${filedonRes})`,
+                post: embedUrl,
+                nume: '1',
+                type: 'filedon'
+            });
+        }
+
         $('.lstepsiode ul li').each((i, el) => {
             const link = $(el).find('.lchx a').attr('href') || '';
             const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
@@ -358,6 +400,11 @@ exports.getStreamPlayer = async (req, res) => {
     try {
         const { post, nume, type } = req.body;
         if (!post || !nume || !type) return res.status(400).send('Parameter tidak lengkap.');
+
+        // Handler khusus untuk Filedon Server
+        if (type === 'filedon') {
+            return res.json({ type: 'video', content: `/anime/filedon-stream?url=${encodeURIComponent(post)}` });
+        }
 
         const response = await cloudscraper.post({
             uri: `${BASE_URL}wp-admin/admin-ajax.php`,
@@ -413,5 +460,51 @@ exports.getStreamPlayer = async (req, res) => {
     } catch (error) {
         console.error('Player Fetch Error:', error);
         res.status(500).json({ type: 'error', content: 'Gagal mengambil player video.' });
+    }
+};
+
+exports.streamFiledon = async (req, res) => {
+    try {
+        const url = req.query.url;
+        if (!url) return res.status(400).send('URL diperlukan.');
+        
+        const FiledonExtractor = require('../utils/FiledonExtractor');
+        const extractor = new FiledonExtractor();
+        const extractRes = await extractor.extract(url);
+        
+        if (!extractRes.success) return res.status(500).send('Gagal mengekstrak video: ' + extractRes.msg);
+        
+        const actualVideoUrl = extractRes.data.url;
+        
+        const headers = {
+            'Referer': 'https://filedon.co/',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        };
+        
+        if (req.headers.range) {
+            headers['Range'] = req.headers.range;
+        }
+
+        const response = await axios({
+            method: 'get',
+            url: actualVideoUrl,
+            headers: headers,
+            responseType: 'stream'
+        });
+
+        res.status(response.status);
+        Object.entries(response.headers).forEach(([key, value]) => {
+            res.setHeader(key, value);
+        });
+
+        response.data.pipe(res);
+        
+    } catch (error) {
+        console.error('Filedon Proxy Error:', error.message);
+        if (error.response) {
+            res.status(error.response.status).send('Terjadi kesalahan saat streaming video.');
+        } else {
+            res.status(500).send('Terjadi kesalahan saat streaming video.');
+        }
     }
 };

@@ -212,9 +212,18 @@
 
         let target = null;
         for (const btn of serverButtons) {
-            if (btn.innerText.includes('720p')) {
+            if (btn.innerText.includes('PuruZero')) {
                 target = btn;
                 break;
+            }
+        }
+
+        if (!target) {
+            for (const btn of serverButtons) {
+                if (btn.innerText.includes('720p')) {
+                    target = btn;
+                    break;
+                }
             }
         }
 
