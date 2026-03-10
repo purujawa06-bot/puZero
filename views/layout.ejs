@@ -140,7 +140,7 @@
     x-data="{ loading: false, darkMode: localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) }" 
     @htmx:before-request.window="loading = true" 
     @htmx:after-request.window="loading = false"
-    class="bg-[#f8fafc] text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary pb-safe"
+    class="bg-[#f8fafc] text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary md:pb-0 pb-bottom-nav"
 >
 
     <!-- Global Loading Bar -->
@@ -190,45 +190,25 @@
         };
         window.PuZeroState.save();
 
-        window.toggleMobileMenu = function(e) {
-            if (e) e.stopPropagation();
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('mobile-icon');
-            if (!menu) return;
-
-            const isCurrentlyOpen = menu.style.maxHeight && menu.style.maxHeight !== '0px';
-            
-            if (!isCurrentlyOpen) {
-                menu.style.maxHeight = menu.scrollHeight + 'px';
-                if(icon) {
-                    icon.classList.replace('ph-list', 'ph-x');
-                    icon.classList.add('rotate-90');
-                }
-            } else {
-                menu.style.maxHeight = '0px';
-                if(icon) {
-                    icon.classList.replace('ph-x', 'ph-list');
-                    icon.classList.remove('rotate-90');
-                }
-            }
-        };
-
         window.toggleTheme = function() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.theme = isDark ? 'dark' : 'light';
             return isDark;
         };
 
-        document.addEventListener('click', (e) => {
-            const menu = document.getElementById('mobile-menu');
-            const btn = document.getElementById('mobile-menu-button');
-            
-            if (menu && menu.style.maxHeight && menu.style.maxHeight !== '0px') {
-                if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
-                    window.toggleMobileMenu();
-                }
-            }
-        });
+        // Bottom nav active state
+        function updateBottomNav() {
+            const path = window.location.pathname;
+            document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                item.classList.remove('active');
+                const href = item.getAttribute('hx-get') || '';
+                if (href === '/' && path === '/') item.classList.add('active');
+                else if (href !== '/' && path.startsWith(href)) item.classList.add('active');
+            });
+        }
+        updateBottomNav();
+        document.addEventListener('htmx:pushUrl', updateBottomNav);
+        document.addEventListener('htmx:replaceUrl', updateBottomNav);
     </script>
 </body>
 </html>

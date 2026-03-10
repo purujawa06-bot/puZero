@@ -1,62 +1,88 @@
-<nav class="bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 sticky top-0 z-[100] transition-all duration-300">
+<!-- Top Navbar -->
+<nav class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800/60 sticky top-0 z-[100] transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16 md:h-20">
+        <div class="flex justify-between items-center h-14 sm:h-16 md:h-18">
             <!-- Logo -->
-            <div hx-get="/" hx-target="#main-content" hx-push-url="true" class="flex items-center gap-2.5 group cursor-pointer shrink-0">
-                <div class="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-tr from-primary to-accent rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 group-hover:scale-105 transition-all duration-300">
-                    <i class="ph-bold ph-lightning text-white text-lg md:text-xl"></i>
+            <div hx-get="/" hx-target="#main-content" hx-push-url="true"
+                class="flex items-center gap-2.5 group cursor-pointer shrink-0">
+                <div class="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-tr from-primary to-accent rounded-xl flex items-center justify-center shadow-md shadow-primary/20 group-hover:rotate-12 group-hover:scale-110 transition-all duration-300">
+                    <i class="ph-bold ph-lightning text-white text-base md:text-lg"></i>
                 </div>
-                <span class="text-xl md:text-2xl font-extrabold text-secondary dark:text-white tracking-tight">
-                    Pu<span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Zero</span>
+                <span class="text-lg md:text-xl font-extrabold text-secondary dark:text-white tracking-tight">
+                    Pu<span class="gradient-text">Zero</span>
                 </span>
             </div>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
-                <a hx-get="/" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Home</a>
-                <a hx-get="/category" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Tools</a>
-                <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Latest</a>
-                <a hx-get="/anime/filter" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Daftar</a>
-                <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Jadwal</a>
-                
-                <!-- Theme Toggle Desktop -->
-                <button @click="darkMode = window.toggleTheme()" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-all border border-slate-100 dark:border-slate-700">
-                    <i :class="darkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'" class="text-xl"></i>
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center gap-1">
+                <a hx-get="/" hx-target="#main-content" hx-push-url="true"
+                   class="cursor-pointer px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/8 font-semibold transition-all text-sm">
+                   <i class="ph-bold ph-house mr-1"></i>Home
+                </a>
+                <a hx-get="/category" hx-target="#main-content" hx-push-url="true"
+                   class="cursor-pointer px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/8 font-semibold transition-all text-sm">
+                   <i class="ph-bold ph-wrench mr-1"></i>Tools
+                </a>
+                <a hx-get="/anime" hx-target="#main-content" hx-push-url="true"
+                   class="cursor-pointer px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/8 font-semibold transition-all text-sm">
+                   <i class="ph-bold ph-television mr-1"></i>Anime
+                </a>
+                <a hx-get="/anime/filter" hx-target="#main-content" hx-push-url="true"
+                   class="cursor-pointer px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/8 font-semibold transition-all text-sm">
+                   <i class="ph-bold ph-list-magnifying-glass mr-1"></i>Daftar
+                </a>
+                <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true"
+                   class="cursor-pointer px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary hover:bg-primary/8 font-semibold transition-all text-sm">
+                   <i class="ph-bold ph-calendar mr-1"></i>Jadwal
+                </a>
+                <a hx-get="/ai" hx-target="#main-content" hx-push-url="true"
+                   class="cursor-pointer ml-1 px-4 py-2 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all shadow-md shadow-primary/20 flex items-center gap-1.5">
+                   <i class="ph-bold ph-brain text-sm"></i>AI Chat
+                </a>
+                <!-- Theme Toggle -->
+                <button @click="darkMode = window.toggleTheme()"
+                    class="ml-1 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-all border border-slate-100 dark:border-slate-700">
+                    <i :class="darkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'" class="text-base"></i>
                 </button>
             </div>
 
-            <!-- Mobile Actions -->
+            <!-- Mobile Right Actions -->
             <div class="md:hidden flex items-center gap-2">
-                <!-- Theme Toggle Mobile -->
-                <button @click="darkMode = window.toggleTheme()" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-all border border-slate-100 dark:border-slate-700">
-                    <i :class="darkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'" class="text-xl"></i>
+                <button @click="darkMode = window.toggleTheme()"
+                    class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-slate-700 transition-all">
+                    <i :class="darkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'" class="text-lg"></i>
                 </button>
-
-                <button id="mobile-menu-button" onclick="window.toggleMobileMenu && window.toggleMobileMenu(event)" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary focus:outline-none transition-all active:scale-95 border border-slate-100 dark:border-slate-700">
-                    <i id="mobile-icon" class="ph-bold ph-list text-2xl transition-transform duration-300"></i>
-                </button>
+                <a hx-get="/ai" hx-target="#main-content" hx-push-url="true"
+                   class="p-2 rounded-xl bg-gradient-to-tr from-primary to-accent text-white shadow-sm shadow-primary/30 transition-all active:scale-95">
+                    <i class="ph-bold ph-brain text-lg"></i>
+                </a>
             </div>
         </div>
     </div>
+</nav>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="absolute top-16 left-0 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 shadow-2xl transition-all duration-300 max-h-0 overflow-hidden md:hidden">
-        <div class="p-4 space-y-1">
-            <a hx-get="/" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
-                <i class="ph-bold ph-house text-xl text-slate-400"></i> Home
-            </a>
-            <a hx-get="/category" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
-                <i class="ph-bold ph-wrench text-xl text-slate-400"></i> Tools
-            </a>
-            <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
-                <i class="ph-bold ph-television text-xl text-slate-400"></i> Anime
-            </a>
-            <a hx-get="/anime/filter" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
-                <i class="ph-bold ph-magnifying-glass text-xl text-slate-400"></i> Daftar
-            </a>
-            <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
-                <i class="ph-bold ph-calendar text-xl text-slate-400"></i> Jadwal
-            </a>
-        </div>
+<!-- Mobile Bottom Navigation -->
+<nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-[99] md:hidden h-bottom-nav bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800/60 shadow-[0_-4px_24px_-4px_rgba(0,0,0,0.08)] dark:shadow-[0_-4px_24px_-4px_rgba(0,0,0,0.3)]">
+    <div class="flex items-center justify-around px-2 pt-2 pb-safe">
+        <a hx-get="/" hx-target="#main-content" hx-push-url="true" class="bottom-nav-item">
+            <i class="ph-bold ph-house text-[18px]"></i>
+            <span>Home</span>
+        </a>
+        <a hx-get="/category" hx-target="#main-content" hx-push-url="true" class="bottom-nav-item">
+            <i class="ph-bold ph-squares-four text-[18px]"></i>
+            <span>Tools</span>
+        </a>
+        <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" class="bottom-nav-item">
+            <i class="ph-bold ph-television text-[18px]"></i>
+            <span>Anime</span>
+        </a>
+        <a hx-get="/anime/filter" hx-target="#main-content" hx-push-url="true" class="bottom-nav-item">
+            <i class="ph-bold ph-magnifying-glass text-[18px]"></i>
+            <span>Daftar</span>
+        </a>
+        <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true" class="bottom-nav-item">
+            <i class="ph-bold ph-calendar text-[18px]"></i>
+            <span>Jadwal</span>
+        </a>
     </div>
 </nav>
