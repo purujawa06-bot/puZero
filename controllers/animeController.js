@@ -327,9 +327,10 @@ exports.getAnimeStream = async (req, res) => {
             // Prioritas 1: MP4HD
             const mp4hd = mp4Dl.items.find(item => item.resolution && item.resolution.toUpperCase().includes('MP4HD'));
             if (mp4hd) {
-                const link = mp4hd.links.find(l => l.link && l.link.includes('filedon.co/'));
-                if (link) {
-                    filedonLink = link.link;
+                const linkObj = mp4hd.links.find(l => l.link && l.link.includes('filedon.co/'));
+                if (linkObj) {
+                    const match = linkObj.link.match(/https:\/\/filedon\.co\/[^\s"']+/);
+                    filedonLink = match ? match[0] : linkObj.link;
                     filedonRes = '720p';
                 }
             }
@@ -338,9 +339,10 @@ exports.getAnimeStream = async (req, res) => {
             if (!filedonLink) {
                 const fullhd = mp4Dl.items.find(item => item.resolution && item.resolution.toUpperCase().includes('FULLHD'));
                 if (fullhd) {
-                    const link = fullhd.links.find(l => l.link && l.link.includes('filedon.co/'));
-                    if (link) {
-                        filedonLink = link.link;
+                    const linkObj = fullhd.links.find(l => l.link && l.link.includes('filedon.co/'));
+                    if (linkObj) {
+                        const match = linkObj.link.match(/https:\/\/filedon\.co\/[^\s"']+/);
+                        filedonLink = match ? match[0] : linkObj.link;
                         filedonRes = '1080p';
                     }
                 }
