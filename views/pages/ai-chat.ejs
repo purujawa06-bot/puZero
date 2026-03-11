@@ -1,0 +1,278 @@
+<title><%= title %></title>
+<div class="max-w-4xl mx-auto h-[100dvh] flex flex-col bg-[#f8fafc] fade-in relative overflow-hidden">
+    
+    <!-- Top Header -->
+    <div class="flex items-center justify-between px-4 sm:px-6 py-4 bg-white/90 backdrop-blur-md sticky top-0 z-10 border-b border-slate-200/50 shadow-sm shrink-0">
+        <div class="flex items-center gap-3 md:gap-4">
+            <button 
+                hx-get="/category" 
+                hx-target="#main-content" 
+                hx-push-url="true"
+                class="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-600 hover:bg-primary hover:text-white transition-all border border-slate-100"
+            >
+                <i class="ph-bold ph-arrow-left text-lg md:text-xl"></i>
+            </button>
+            <div>
+                <h1 class="text-lg md:text-xl font-black text-secondary tracking-tight">Gemini 3 Flash</h1>
+                <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Online</span>
+                </div>
+            </div>
+        </div>
+
+        <button 
+            onclick="resetChat()" 
+            class="px-3 md:px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:border-primary hover:text-primary transition-all flex items-center gap-2 active:scale-95 shadow-sm"
+        >
+            <i class="ph-bold ph-plus"></i> <span class="hidden sm:inline">New Chat</span>
+        </button>
+    </div>
+
+    <!-- Chat Area -->
+    <div id="chat-window" class="flex-grow overflow-y-auto px-4 sm:px-6 py-6 space-y-6 custom-scrollbar pb-32">
+        <div id="welcome" class="text-center py-12 md:py-20 max-w-lg mx-auto">
+            <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-tr from-primary/10 to-accent/10 text-primary rounded-3xl mx-auto flex items-center justify-center mb-6 border border-white shadow-sm">
+                <i class="ph-fill ph-brain text-3xl md:text-4xl"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-black text-secondary tracking-tight">Apa yang bisa saya bantu?</h2>
+            <p class="text-slate-500 text-sm md:text-base mt-3 leading-relaxed">Tanyakan apapun, mulai dari coding, penulisan kreatif, hingga ringkasan data kompleks.</p>
+        </div>
+        
+        <div id="chat-messages" class="flex flex-col space-y-6"></div>
+        
+        <div id="chat-loading" class="hidden mb-4">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-slate-100 rounded-xl animate-pulse flex items-center justify-center shrink-0">
+                    <i class="ph-bold ph-lightning text-slate-400"></i>
+                </div>
+                <div class="bg-white border border-slate-100 p-4 rounded-2xl rounded-tl-none w-24 shadow-sm">
+                    <div class="flex gap-1.5 justify-center">
+                        <span class="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style="animation-delay: 0s"></span>
+                        <span class="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+                        <span class="w-2 h-2 bg-primary/80 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="scroll-anchor" class="h-4 w-full"></div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc] to-transparent shrink-0">
+        <div class="max-w-3xl mx-auto">
+            <div id="reply-container" class="hidden bg-white border border-slate-200 border-b-0 rounded-t-2xl p-3 flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <i class="ph-bold ph-arrow-u-up-left text-primary shrink-0"></i>
+                    <p id="reply-text" class="text-xs text-slate-500 italic truncate font-medium"></p>
+                </div>
+                <button onclick="cancelReply()" class="text-slate-400 hover:text-red-500 transition-colors shrink-0">
+                    <i class="ph-bold ph-x-circle text-lg"></i>
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200 p-2 md:p-3 transition-all focus-within:border-primary/40 focus-within:shadow-primary/5">
+                <div class="flex flex-col gap-2">
+                    <details class="group px-2">
+                        <summary class="list-none cursor-pointer flex items-center gap-1.5 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-colors select-none">
+                            <i class="ph-bold ph-gear text-sm transition-transform group-open:rotate-90"></i> Custom Instructions
+                        </summary>
+                        <textarea id="system-prompt" class="w-full mt-2 bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs md:text-sm focus:outline-none focus:border-primary/30 transition-colors" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
+                    </details>
+
+                    <div class="flex items-end gap-2 px-2 pb-1">
+                        <textarea 
+                            id="prompt-textarea"
+                            class="w-full bg-transparent border-none focus:ring-0 text-slate-700 text-base md:text-sm py-2 resize-none max-h-32 overflow-y-auto custom-scrollbar placeholder:text-slate-400" 
+                            rows="1" 
+                            placeholder="Ketik pesan di sini..."
+                            oninput="this.style.height = ''; this.style.height = Math.min(this.scrollHeight, 120) + 'px'"
+                            onkeydown="if(event.keyCode == 13 && !event.shiftKey) { event.preventDefault(); sendMessage(); }"
+                        ></textarea>
+                        
+                        <button onclick="sendMessage()" class="w-10 h-10 md:w-12 md:h-12 bg-secondary text-white rounded-xl flex items-center justify-center hover:bg-primary transition-all shadow-md active:scale-90 shrink-0 mb-1">
+                            <i class="ph-bold ph-paper-plane-right text-lg md:text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-center text-slate-400 mt-2 font-medium">AI can make mistakes. Check important info.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const escapeHtml = (u) => (u || "").toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+        const chatMessages = document.getElementById('chat-messages');
+        const systemInput = document.getElementById('system-prompt');
+        const promptInput = document.getElementById('prompt-textarea');
+        const welcomeDiv = document.getElementById('welcome');
+        const scrollAnchor = document.getElementById('scroll-anchor');
+        const loadingDiv = document.getElementById('chat-loading');
+        const replyText = document.getElementById('reply-text');
+        const replyContainer = document.getElementById('reply-container');
+
+        let currentReply = "";
+
+        const getLocalState = () => {
+            return {
+                history: JSON.parse(localStorage.getItem('puzero_chat_history') || '[]'),
+                system: localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu.",
+                uid: localStorage.getItem('puzero_user_id') || ('user-' + Math.random().toString(36).substring(2, 15))
+            };
+        };
+
+        const saveLocalState = (data) => {
+            if (data.history) localStorage.setItem('puzero_chat_history', JSON.stringify(data.history.slice(-20)));
+            if (data.system) localStorage.setItem('puzero_system_prompt', data.system);
+            if (data.uid) localStorage.setItem('puzero_user_id', data.uid);
+        };
+
+        const state = getLocalState();
+        systemInput.value = state.system;
+        
+        const scrollToBottom = () => scrollAnchor.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+        window.setReply = function(text) {
+            currentReply = text;
+            replyText.innerText = text;
+            replyContainer.classList.remove('hidden');
+            promptInput.focus();
+        };
+
+        window.cancelReply = function() {
+            currentReply = "";
+            replyContainer.classList.add('hidden');
+        };
+
+        window.resetChat = function() {
+            if(confirm('Mulai chat baru? Riwayat chat ini akan dihapus.')) {
+                const newUid = 'user-' + Math.random().toString(36).substring(2, 15);
+                saveLocalState({ history: [], uid: newUid });
+                chatMessages.innerHTML = '';
+                welcomeDiv.classList.remove('hidden');
+                cancelReply();
+            }
+        };
+
+        window.sendMessage = async function() {
+            const prompt = promptInput.value.trim();
+            if(!prompt) return;
+
+            const currentState = getLocalState();
+            welcomeDiv.classList.add('hidden');
+            const safePrompt = escapeHtml(prompt);
+            const safeReplyPreview = currentReply ? escapeHtml(currentReply).substring(0, 50) + "..." : "";
+            
+            chatMessages.insertAdjacentHTML('beforeend', `
+                <div class="flex flex-col items-end space-y-1.5 group animate-fade-in w-full">
+                    <div class="max-w-[90%] md:max-w-[80%] bg-primary text-white p-3.5 md:p-4 rounded-2xl rounded-tr-sm shadow-sm relative overflow-hidden">
+                        ${currentReply ? `<div class="text-[10px] opacity-70 border-l-2 border-white/40 pl-2 mb-2 italic truncate">Replying: ${safeReplyPreview}</div>` : ''}
+                        <p class="text-sm md:text-base whitespace-pre-wrap break-words">${safePrompt}</p>
+                    </div>
+                </div>
+            `);
+
+            const finalPrompt = currentReply ? `[Replying to: ${currentReply}]\n\n${prompt}` : prompt;
+            promptInput.value = '';
+            promptInput.style.height = 'auto'; // reset height
+            const replyToSnapshot = currentReply;
+            cancelReply();
+            scrollToBottom();
+            loadingDiv.classList.remove('hidden');
+
+            try {
+                const res = await fetch('https://puruboy-api.vercel.app/api/ai/puruai', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userid: currentState.uid,
+                        prompt: finalPrompt,
+                        model: "puruboy-flash",
+                        system: systemInput.value
+                    })
+                });
+
+                const data = await res.json();
+                if (!data.success) throw new Error("Gagal mendapatkan respon");
+
+                const aiText = data.result[0].parts[0].text;
+                const aiHtml = `
+                    <div class="flex flex-col items-start space-y-1.5 group opacity-0 animate-fade-in w-full" style="animation: fadeIn 0.4s forwards">
+                        <div class="max-w-[95%] md:max-w-[85%] bg-white border border-slate-200/60 p-4 md:p-5 rounded-2xl rounded-tl-sm shadow-sm relative overflow-hidden">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-6 h-6 bg-gradient-to-tr from-primary to-accent rounded-[0.4rem] flex items-center justify-center shrink-0">
+                                     <i class="ph-fill ph-lightning text-white text-[10px]"></i>
+                                </div>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">PuZero AI</span>
+                            </div>
+                            <div class="prose prose-sm md:prose-base prose-slate max-w-none text-slate-700 leading-relaxed overflow-x-auto break-words ai-content">${marked.parse(aiText)}</div>
+                        </div>
+                        <button data-reply="${encodeURIComponent(aiText.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-400 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity font-bold uppercase tracking-wider ml-2 flex items-center gap-1">
+                            <i class="ph-bold ph-arrow-u-up-left"></i> Reply
+                        </button>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', aiHtml);
+                
+                const updatedHistory = currentState.history;
+                updatedHistory.push({ role: 'user', text: prompt, replyTo: replyToSnapshot });
+                updatedHistory.push({ role: 'model', text: aiText });
+                saveLocalState({ history: updatedHistory, system: systemInput.value });
+                
+            } catch (err) {
+                chatMessages.insertAdjacentHTML('beforeend', `<div class="p-3 text-red-500 text-xs md:text-sm bg-red-50 rounded-xl max-w-[80%] border border-red-100">❌ Error: ${err.message}</div>`);
+            } finally {
+                loadingDiv.classList.add('hidden');
+                scrollToBottom();
+            }
+        };
+
+        function renderHistory() {
+            const hist = getLocalState().history;
+            if (hist.length > 0) {
+                welcomeDiv.classList.add('hidden');
+                hist.forEach(msg => {
+                    let html = '';
+                    if (msg.role === 'user') {
+                        const safeReplyPreview = msg.replyTo ? escapeHtml(msg.replyTo).substring(0, 50) + "..." : "";
+                        html = `
+                            <div class="flex flex-col items-end space-y-1.5 w-full mb-4">
+                                <div class="max-w-[90%] md:max-w-[80%] bg-primary text-white p-3.5 md:p-4 rounded-2xl rounded-tr-sm shadow-sm relative overflow-hidden">
+                                    ${msg.replyTo ? `<div class="text-[10px] opacity-70 border-l-2 border-white/40 pl-2 mb-2 italic truncate">Replying: ${safeReplyPreview}</div>` : ''}
+                                    <p class="text-sm md:text-base whitespace-pre-wrap break-words">${escapeHtml(msg.text)}</p>
+                                </div>
+                            </div>`;
+                    } else {
+                        html = `
+                            <div class="flex flex-col items-start space-y-1.5 group w-full mb-4">
+                                <div class="max-w-[95%] md:max-w-[85%] bg-white border border-slate-200/60 p-4 md:p-5 rounded-2xl rounded-tl-sm shadow-sm relative overflow-hidden">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="w-6 h-6 bg-gradient-to-tr from-primary to-accent rounded-[0.4rem] flex items-center justify-center shrink-0">
+                                            <i class="ph-fill ph-lightning text-white text-[10px]"></i>
+                                        </div>
+                                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">PuZero AI</span>
+                                    </div>
+                                    <div class="prose prose-sm md:prose-base prose-slate max-w-none text-slate-700 leading-relaxed overflow-x-auto break-words">${marked.parse(msg.text)}</div>
+                                </div>
+                                <button data-reply="${encodeURIComponent(msg.text.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-400 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity font-bold uppercase tracking-wider ml-2 flex items-center gap-1">
+                                    <i class="ph-bold ph-arrow-u-up-left"></i> Reply
+                                </button>
+                            </div>`;
+                    }
+                    chatMessages.insertAdjacentHTML('beforeend', html);
+                });
+                setTimeout(scrollToBottom, 100);
+            }
+        }
+        renderHistory();
+    })();
+</script>
+
+<style>
+    .prose pre { background-color: #0f172a !important; color: #f8fafc !important; border-radius: 0.75rem !important; padding: 1rem !important; overflow-x: auto; margin-top: 0.5rem; margin-bottom: 0.5rem;}
+    .prose code { color: #db2777; background-color: #f1f5f9; padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.85em; }
+    .prose pre code { color: inherit; background-color: transparent; padding: 0; }
+</style>
