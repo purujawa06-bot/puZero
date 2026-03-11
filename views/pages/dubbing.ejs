@@ -1,0 +1,188 @@
+<title><%= title %></title>
+<div class="max-w-3xl mx-auto py-16 px-4 fade-in">
+    <div class="mb-8">
+        <button 
+            hx-get="/category" 
+            hx-target="#main-content" 
+            hx-push-url="true"
+            class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-all group"
+        >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 group-hover:border-primary/30 group-hover:bg-primary/5">
+                <i class="ph-bold ph-arrow-left"></i>
+            </div>
+            Kembali ke Kategori
+        </button>
+    </div>
+
+    <div class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-rose-500/10 text-rose-500 mb-6 shadow-inner relative">
+            <div class="absolute inset-0 bg-rose-500/20 blur-xl rounded-full animate-pulse"></div>
+            <i class="ph-bold ph-microphone-stage text-4xl relative z-10"></i>
+        </div>
+        <h1 class="text-4xl font-black text-secondary tracking-tight">AI Video Dubbing</h1>
+        <p class="text-slate-500 mt-3 text-lg">Ubah suara video Anda ke berbagai bahasa menggunakan AI.</p>
+    </div>
+
+    <div class="bg-white p-2 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden relative">
+        <div class="p-8">
+            <div class="space-y-6">
+                <!-- Video URL -->
+                <div class="group">
+                    <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Video Direct URL / YouTube Link</label>
+                    <div class="relative">
+                        <i class="ph-bold ph-link absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-rose-500 transition-colors"></i>
+                        <input 
+                            type="url" 
+                            id="dub-url" 
+                            placeholder="https://example.com/video.mp4 atau link YouTube" 
+                            class="w-full pl-14 pr-6 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-rose-500 outline-none transition-all font-medium text-sm"
+                        >
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Voice Selection -->
+                    <div class="group">
+                        <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Voice / Language</label>
+                        <select id="dub-voice" class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-rose-500 outline-none transition-all font-bold text-sm text-slate-700">
+                            <option value="id-ID">Bahasa Indonesia (id-ID)</option>
+                            <option value="en-US">English (en-US)</option>
+                            <option value="ja-JP">Japanese (ja-JP)</option>
+                            <option value="ko-KR">Korean (ko-KR)</option>
+                            <option value="ar-SA">Arabic (ar-SA)</option>
+                        </select>
+                    </div>
+
+                    <!-- Prompt -->
+                    <div class="group">
+                        <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Dubbing Prompt (Style)</label>
+                        <input 
+                            type="text" 
+                            id="dub-prompt" 
+                            placeholder="Contoh: Santai Dan Gaul Bro" 
+                            class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-rose-500 outline-none transition-all font-medium text-sm"
+                        >
+                    </div>
+                </div>
+
+                <button onclick="startDubbing()" id="dub-btn" class="w-full py-5 bg-secondary hover:bg-slate-800 text-white font-black rounded-2xl flex items-center justify-center gap-3 transition-all hover:shadow-xl active:scale-[0.98] btn-hover-effect">
+                    <i class="ph-bold ph-magic-wand text-xl"></i>
+                    Proses Dubbing
+                </button>
+            </div>
+
+            <div id="loading" class="hidden mt-10">
+                <div class="flex flex-col items-center justify-center space-y-6">
+                    <div class="relative">
+                        <div class="w-20 h-20 border-4 border-slate-100 rounded-full"></div>
+                        <div class="absolute inset-0 w-20 h-20 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <div id="logs" class="w-full max-w-md bg-slate-900 rounded-xl p-4 font-mono text-[10px] text-rose-400 space-y-1 overflow-y-auto max-h-40 custom-scrollbar">
+                        <p>> Menunggu perintah...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-container" class="mt-8"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function startDubbing() {
+        let inputUrl = document.getElementById('dub-url').value;
+        const voice = document.getElementById('dub-voice').value;
+        const prompt = document.getElementById('dub-prompt').value;
+        const resultContainer = document.getElementById('result-container');
+        const loading = document.getElementById('loading');
+        const logs = document.getElementById('logs');
+        const btn = document.getElementById('dub-btn');
+
+        if (!inputUrl) return alert('Masukkan URL Video dulu!');
+
+        resultContainer.innerHTML = '';
+        logs.innerHTML = '<p class="text-slate-500">> Memulai request dubbing...</p>';
+        loading.classList.remove('hidden');
+        btn.disabled = true;
+
+        try {
+            // Check if it's a YouTube link
+            if (inputUrl.includes('youtube.com') || inputUrl.includes('youtu.be')) {
+                logs.insertAdjacentHTML('beforeend', `<p class="text-red-400">> Terdeteksi link YouTube. Mengonversi ke link direct...</p>`);
+                logs.scrollTop = logs.scrollHeight;
+
+                const ytRes = await fetch('https://www.puruboy.kozow.com/api/downloader/savetube', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: inputUrl, quality: "480", type: "video" })
+                });
+                const ytData = await ytRes.json();
+                
+                if (ytData.success && ytData.result.downloadUrl) {
+                    inputUrl = ytData.result.downloadUrl;
+                    logs.insertAdjacentHTML('beforeend', `<p class="text-emerald-400">> Konversi YouTube berhasil. Menggunakan MP4: ${ytData.result.title.substring(0, 20)}...</p>`);
+                } else {
+                    throw new Error("Gagal mengunduh video dari YouTube sebagai input.");
+                }
+            }
+
+            const response = await fetch('https://www.puruboy.kozow.com/api/tools/dubbing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: inputUrl, voice, prompt })
+            });
+
+            const data = await response.json();
+            if (data.status !== 'queued') throw new Error("Gagal antri ke server.");
+
+            let pollingUrl = data.pollingUrl;
+            logs.insertAdjacentHTML('beforeend', `<p class="text-blue-400">> Tugas masuk antrean. Polling dimulai...</p>`);
+
+            // Polling Logic
+            let completed = false;
+            let attempts = 0;
+            const maxAttempts = 120; // 10 Menit (5 detik * 120)
+
+            while (!completed && attempts < maxAttempts) {
+                attempts++;
+                logs.insertAdjacentHTML('beforeend', `<p class="text-slate-400">> Mengecek status... (${attempts})</p>`);
+                logs.scrollTop = logs.scrollHeight;
+
+                const pollRes = await fetch(pollingUrl);
+                const pollData = await pollRes.json();
+
+                if (pollData.success && pollData.result.status === "Selesai") {
+                    completed = true;
+                    logs.insertAdjacentHTML('beforeend', `<p class="text-emerald-400">> Selesai! Mengambil link download...</p>`);
+                    
+                    resultContainer.innerHTML = `
+                        <div class="animation-fade-in space-y-6">
+                            <div class="p-6 bg-emerald-50 border border-emerald-100 rounded-3xl text-center">
+                                <div class="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                    <i class="ph-bold ph-check text-2xl"></i>
+                                </div>
+                                <h3 class="text-lg font-black text-emerald-900">Dubbing Berhasil!</h3>
+                                <p class="text-emerald-600 text-sm mt-1">Video Anda telah berhasil diproses.</p>
+                            </div>
+                            <a href="${pollData.result.downloadUrl}" target="_blank" class="w-full py-5 bg-rose-500 hover:bg-rose-600 text-white font-black rounded-2xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-rose-200">
+                                <i class="ph-bold ph-download-simple text-xl"></i>
+                                Download Video Dubbing
+                            </a>
+                        </div>
+                    `;
+                    loading.classList.add('hidden');
+                } else {
+                    await new Promise(r => setTimeout(r, 5000));
+                }
+            }
+
+            if (!completed) throw new Error("Waktu tunggu habis.");
+
+        } catch (err) {
+            resultContainer.innerHTML = `<div class="p-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200">❌ Error: ${err.message}</div>`;
+            loading.classList.add('hidden');
+        } finally {
+            btn.disabled = false;
+        }
+    }
+</script>
