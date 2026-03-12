@@ -1,4 +1,14 @@
 /* PuZero Custom Stylesheet */
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    text-rendering: optimizeSpeed;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
 }
@@ -17,12 +27,24 @@
 }
 
 .fade-in {
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.3s ease-out forwards;
+    will-change: opacity, transform;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(10px) translateZ(0); }
+    to { opacity: 1; transform: translateY(0) translateZ(0); }
+}
+
+.content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 300px;
+}
+
+.hw-accelerate {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 /* Dark mode specific adjustments for EJS hardcoded whites */

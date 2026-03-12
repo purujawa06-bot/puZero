@@ -5,7 +5,7 @@
             hx-get="/category" 
             hx-target="#main-content" 
             hx-push-url="true"
-            class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-all group"
+            class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-all group hw-accelerate"
         >
             <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 group-hover:border-primary/30 group-hover:bg-primary/5 shadow-sm transition-all">
                 <i class="ph-bold ph-arrow-left"></i>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="text-center mb-10 md:mb-12">
-        <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-pink-500/10 text-pink-500 mb-4 md:mb-6 shadow-inner relative">
+        <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-pink-500/10 text-pink-500 mb-4 md:mb-6 shadow-inner relative hw-accelerate">
             <div class="absolute inset-0 bg-pink-500/20 blur-xl rounded-full animate-pulse"></div>
             <i class="ph-bold ph-instagram-logo text-3xl md:text-4xl relative z-10"></i>
         </div>
@@ -23,7 +23,7 @@
         <p class="text-slate-500 mt-2 md:mt-3 text-base md:text-lg">Download Reels, Video, dan Foto Instagram dengan mudah.</p>
     </div>
 
-    <div class="bg-white p-1.5 md:p-2 rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 relative">
+    <div class="bg-white p-1.5 md:p-2 rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 relative hw-accelerate">
         <div class="p-6 md:p-8">
             <div class="space-y-4 md:space-y-5">
                 <div class="group">
@@ -92,7 +92,7 @@
 
             const result = data.result;
             const mediaHtml = result.medias.map(media => `
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl shadow-sm mb-3 gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl shadow-sm mb-3 gap-4 hw-accelerate">
                     <div class="flex flex-col">
                         <span class="text-xs font-black text-slate-500 uppercase tracking-wider">${media.quality} ${media.format}</span>
                         <span class="text-sm font-bold text-slate-700">Ukuran: ${media.size}</span>
@@ -105,13 +105,13 @@
 
             resultContainer.innerHTML = `
                 <div class="animation-fade-in space-y-6">
-                    <div class="relative group rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-                        <img src="${result.thumbnail}" class="w-full h-48 sm:h-64 object-cover">
+                    <div class="relative group rounded-2xl overflow-hidden shadow-lg border-4 border-white hw-accelerate">
+                        <img src="${result.thumbnail}" loading="lazy" decoding="async" class="w-full h-48 sm:h-64 object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-5">
                             <p class="text-white font-medium text-sm line-clamp-2">${result.title}</p>
                         </div>
                     </div>
-                    <div class="space-y-3">
+                    <div class="space-y-3 content-auto">
                         <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Pilih Kualitas Media</h4>
                         ${mediaHtml}
                     </div>

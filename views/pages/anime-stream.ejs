@@ -8,7 +8,7 @@
                 hx-get="/anime" 
                 hx-target="#main-content" 
                 hx-push-url="true"
-                class="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-all mb-2"
+                class="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-all mb-2 hw-accelerate"
             >
                 <i class="ph-bold ph-arrow-left"></i> Kembali ke Daftar
             </button>
@@ -17,7 +17,7 @@
     </div>
 
     <!-- Video Player Container -->
-    <div class="bg-slate-900 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative mb-6 group/player">
+    <div class="bg-slate-900 aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative mb-6 group/player hw-accelerate">
         <div id="player-container" class="w-full h-full flex items-center justify-center">
             <div class="text-center p-10">
                 <div class="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl animate-pulse">
@@ -36,7 +36,7 @@
                 hx-get="/anime/stream/<%= stream.prevEps %>"
                 hx-target="#main-content"
                 hx-push-url="true"
-                class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm"
+                class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm hw-accelerate"
             >
                 <i class="ph-bold ph-caret-left"></i> Episode Sebelumnya
             </button>
@@ -49,7 +49,7 @@
                 hx-get="/anime/stream/<%= stream.nextEps %>"
                 hx-target="#main-content"
                 hx-push-url="true"
-                class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm"
+                class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm hw-accelerate"
             >
                 Episode Berikutnya <i class="ph-bold ph-caret-right"></i>
             </button>
@@ -70,7 +70,7 @@
                     data-post="<%= srv.post %>"
                     data-nume="<%= srv.nume %>"
                     data-type="<%= srv.type %>"
-                    class="server-btn px-5 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-600 hover:border-primary hover:text-primary transition-all shadow-sm"
+                    class="server-btn px-5 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-600 hover:border-primary hover:text-primary transition-all shadow-sm hw-accelerate"
                 >
                     <%= srv.name %>
                 </button>
@@ -80,14 +80,14 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <!-- Download Links -->
-        <div class="lg:col-span-2 space-y-8">
+        <div class="lg:col-span-2 space-y-8 content-auto">
             <h3 class="text-xl font-black text-secondary flex items-center gap-2">
                 <i class="ph-bold ph-download-simple text-primary"></i>
                 Link Download
             </h3>
 
             <% stream.downloads.forEach(dl => { %>
-                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden hw-accelerate">
                     <div class="bg-slate-50 px-6 py-3 border-b border-slate-100">
                         <span class="text-xs font-black text-slate-400 uppercase tracking-widest"><%= dl.format %></span>
                     </div>
@@ -112,7 +112,7 @@
         </div>
 
         <!-- Episodes List -->
-        <div class="space-y-6">
+        <div class="space-y-6 content-auto">
             <h3 class="text-xl font-black text-secondary flex items-center gap-2">
                 <i class="ph-bold ph-squares-four text-primary"></i>
                 Episode Lainnya
@@ -123,10 +123,10 @@
                         hx-get="/anime/stream/<%= ep.slug %>"
                         hx-target="#main-content"
                         hx-push-url="true"
-                        class="flex items-center gap-4 p-3 bg-white border border-slate-100 rounded-2xl hover:border-primary/30 transition-all group cursor-pointer"
+                        class="flex items-center gap-4 p-3 bg-white border border-slate-100 rounded-2xl hover:border-primary/30 transition-all group cursor-pointer hw-accelerate"
                     >
                         <div class="w-16 h-10 shrink-0 rounded-lg overflow-hidden bg-slate-100">
-                            <img src="<%= ep.thumb %>" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <img src="<%= ep.thumb %>" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                         </div>
                         <div class="overflow-hidden">
                             <h4 class="text-xs font-bold text-slate-700 truncate group-hover:text-primary transition-colors"><%= ep.title %></h4>
@@ -159,7 +159,7 @@
 
         container.innerHTML = `
             <div class="flex flex-col items-center justify-center gap-4 h-full w-full">
-                <div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                <div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin hw-accelerate"></div>
                 <span class="text-xs font-black text-slate-500 uppercase tracking-widest">PuZero Play Engine...</span>
             </div>
         `;

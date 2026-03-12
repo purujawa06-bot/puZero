@@ -5,7 +5,7 @@
             hx-get="/category" 
             hx-target="#main-content" 
             hx-push-url="true"
-            class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-all group"
+            class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-all group hw-accelerate"
         >
             <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 group-hover:border-primary/30 group-hover:bg-primary/5 shadow-sm transition-all">
                 <i class="ph-bold ph-arrow-left"></i>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="text-center mb-10 md:mb-12">
-        <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-red-600/10 text-red-600 mb-4 md:mb-6 shadow-inner relative">
+        <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-red-600/10 text-red-600 mb-4 md:mb-6 shadow-inner relative hw-accelerate">
             <div class="absolute inset-0 bg-red-600/20 blur-xl rounded-full animate-pulse"></div>
             <i class="ph-bold ph-youtube-logo text-3xl md:text-4xl relative z-10"></i>
         </div>
@@ -23,7 +23,7 @@
         <p class="text-slate-500 mt-2 md:mt-3 text-base md:text-lg">Unduh video YouTube dengan kualitas tinggi dengan mudah.</p>
     </div>
 
-    <div class="bg-white p-1.5 md:p-2 rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 relative">
+    <div class="bg-white p-1.5 md:p-2 rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 relative hw-accelerate">
         <div class="p-6 md:p-8">
             <div class="space-y-4 md:space-y-5">
                 <div class="group">
@@ -66,7 +66,7 @@
 
             <div id="loading" class="hidden mt-8 md:mt-10 text-center py-8 md:py-12">
                 <div class="flex flex-col items-center justify-center space-y-4">
-                    <div class="w-10 h-10 md:w-12 md:h-12 border-4 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
+                    <div class="w-10 h-10 md:w-12 h-12 border-4 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
                     <p class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">Memproses Video...</p>
                 </div>
             </div>
@@ -104,8 +104,8 @@
             const result = data.result;
             resultContainer.innerHTML = `
                 <div class="animation-fade-in space-y-6">
-                    <div class="flex flex-col sm:flex-row gap-5 p-5 bg-slate-50 rounded-2xl md:rounded-[2rem] border border-slate-100">
-                        <img src="${result.thumbnail}" class="w-full sm:w-32 md:w-40 h-auto object-cover rounded-xl shadow-md shrink-0">
+                    <div class="flex flex-col sm:flex-row gap-5 p-5 bg-slate-50 rounded-2xl md:rounded-[2rem] border border-slate-100 hw-accelerate">
+                        <img src="${result.thumbnail}" loading="lazy" decoding="async" class="w-full sm:w-32 md:w-40 h-auto object-cover rounded-xl shadow-md shrink-0">
                         <div class="flex-grow space-y-2.5 flex flex-col justify-center">
                             <div>
                                 <span class="px-2.5 py-1 bg-red-600 text-white text-[10px] font-black rounded-md uppercase tracking-widest shadow-sm">${result.type} • ${result.quality}p</span>
