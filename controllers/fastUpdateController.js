@@ -6,7 +6,7 @@ const path = require('path');
 
 // --- FILTER KONFIGURASI ---
 const IGNORE_DIRS = ['node_modules', '.git', '.cache', '.config'];
-const IGNORE_FILES = ['package-lock.json'];
+const IGNORE_FILES = ['package-lock.json','tailwind.css'];
 const IGNORE_EXTENSIONS = [
     '.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.ico', '.bmp', '.tiff', '.avif',
     '.mp4', '.webm', '.mkv', '.avi', '.mov', '.flv',
