@@ -32,39 +32,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: { 
-                        primary: '#6366f1',
-                        secondary: '#0f172a',
-                        accent: '#f43f5e'
-                    },
-                    animation: {
-                        'blob': 'blob 7s infinite',
-                        'spin-slow': 'spin 3s linear infinite',
-                        'loading-bar': 'loading-bar 1.5s infinite linear',
-                    },
-                    keyframes: {
-                        blob: {
-                            '0%': { transform: 'translate3d(0px, 0px, 0) scale(1)' },
-                            '33%': { transform: 'translate3d(30px, -50px, 0) scale(1.1)' },
-                            '66%': { transform: 'translate3d(-20px, 20px, 0) scale(0.9)' },
-                            '100%': { transform: 'translate3d(0px, 0px, 0) scale(1)' },
-                        },
-                        'loading-bar': {
-                            '0%': { transform: 'translate3d(-100%, 0, 0)' },
-                            '100%': { transform: 'translate3d(100%, 0, 0)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS (production build) -->
+    <link rel="stylesheet" href="/css/tailwind.css">
     
     <!-- HTMX -->
     <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
