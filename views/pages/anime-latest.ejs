@@ -1,0 +1,59 @@
+<title><%= title %></title>
+<div class="relative overflow-hidden flex-grow fade-in pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-16">
+        
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-secondary tracking-tight mb-2">
+                    Update <span class="text-primary">Terbaru</span>
+                </h1>
+                <p class="text-slate-500 text-sm font-medium">Episode anime terbaru yang baru saja dirilis.</p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button hx-get="/anime" hx-target="#main-content" hx-push-url="true" class="px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary transition-all shadow-sm flex items-center gap-2 hw-accelerate">
+                    <i class="ph-bold ph-arrow-left"></i> Kembali
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 content-auto">
+            <% animeList.forEach(anime => { %>
+                <div hx-get="/anime/detail/<%= anime.slug %>" hx-target="#main-content" hx-push-url="true" class="group bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-300 cursor-pointer flex flex-col hw-accelerate">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-slate-100">
+                        <img src="<%= anime.thumb %>" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-2 left-2">
+                            <span class="px-2 py-1 bg-primary text-white text-[9px] font-black rounded-lg uppercase"><%= anime.ep %></span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-xs font-bold text-secondary line-clamp-2 mb-2 group-hover:text-primary transition-colors flex-grow"><%= anime.title %></h3>
+                        <div class="mt-auto pt-2 border-t border-slate-50">
+                            <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest"><%= anime.uploaded %></span>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- Pagination -->
+        <% if (pagination && pagination.length > 1) { %>
+            <div class="mt-12 flex flex-wrap justify-center gap-2 content-auto">
+                <% pagination.forEach(p => { %>
+                    <% if (p.pageNum) { %>
+                        <button 
+                            hx-get="/anime/terbaru?page=<%= p.pageNum %>"
+                            hx-target="#main-content"
+                            hx-push-url="true"
+                            class="w-10 h-10 flex items-center justify-center rounded-xl font-bold text-sm transition-all hw-accelerate <%= p.isCurrent ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-white border border-slate-200 text-slate-500 hover:border-primary hover:text-primary' %>"
+                        >
+                            <%= p.text %>
+                        </button>
+                    <% } else if(p.text) { %>
+                        <span class="w-10 h-10 flex items-center justify-center text-slate-300 font-bold"><%= p.text %></span>
+                    <% } %>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</div>

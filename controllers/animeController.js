@@ -96,6 +96,72 @@ exports.getAnimeList = async (req, res) => {
     }
 };
 
+exports.getAnimeLatest = async (req, res) => {
+    try {
+        const page = req.query.page || 1;
+        let url = `${BASE_URL}anime-terbaru/`;
+        if (page > 1) url += `page/${page}/`;
+
+        const response = await cloudscraper.get(url);
+        const $ = cheerio.load(response);
+        const animeList = [];
+
+        $('.post-show ul li').each((i, el) => {
+            const title = $(el).find('.dtla h2 a').text().trim();
+            const link = $(el).find('.dtla h2 a').attr('href') || '';
+            const thumb = $(el).find('.thumb img').attr('src');
+            const ep = $(el).find('.dtla span').eq(0).find('author').text().trim();
+            const released = $(el).find('.dtla span').eq(2).text().replace('Released on:', '').trim();
+
+            if (title && link) {
+                const slug = getSlug(link);
+                animeList.push({ 
+                    title, 
+                    slug, 
+                    thumb, 
+                    ep: ep ? `Ep ${ep}` : '?', 
+                    uploaded: released 
+                });
+            }
+        });
+
+        const pagination = [];
+        $('.pagination .page-numbers, .pagination .inactive, .pagination .arrow_pag').each((i, el) => {
+            const text = $(el).text().trim() || ($(el).find('i').length ? ( $(el).find('i').hasClass('fa-caret-right') ? '>' : '<' ) : '');
+            const href = $(el).attr('href');
+            const isCurrent = $(el).hasClass('current');
+            
+            let pageNum = null;
+            if (href) {
+                const match = href.match(/page\/(\d+)/);
+                pageNum = match ? match[1] : (text.match(/\d+/) ? text : null);
+            } else if (isCurrent) {
+                pageNum = text;
+            }
+
+            if (text || pageNum) {
+                pagination.push({ text, pageNum, isCurrent });
+            }
+        });
+
+        const data = {
+            title: `PuZero | Anime Terbaru - Page ${page}`,
+            page: 'pages/anime-latest',
+            animeList,
+            pagination
+        };
+
+        if (req.headers['hx-request']) {
+            res.render('pages/anime-latest', data);
+        } else {
+            res.render('layout', data);
+        }
+    } catch (error) {
+        console.error('Latest Anime Error:', error);
+        res.status(500).send('Gagal mengambil data anime terbaru.');
+    }
+};
+
 exports.searchAnime = async (req, res) => {
     try {
         const query = req.query.q;
