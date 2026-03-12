@@ -3,30 +3,51 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 
 const BASE_URL = 'https://v2.samehadaku.how/';
+const API_BASE = 'https://puruboy-api.vercel.app/api/anime/samehadaku';
+
+const getSlug = (url) => {
+    if (!url) return '';
+    return url.replace('https://v2.samehadaku.how/', '').replace(/\/$/, '');
+};
 
 exports.getAnimePage = async (req, res) => {
     try {
-        const response = await cloudscraper.get(BASE_URL);
-        const $ = cheerio.load(response);
-        const animeList = [];
+        const response = await axios.get(`${API_BASE}/home`);
+        const { result } = response.data;
 
-        $('.post-show ul li').each((i, el) => {
-            const title = $(el).find('.entry-title a').text().trim();
-            const link = $(el).find('.entry-title a').attr('href') || '';
-            const thumb = $(el).find('.thumb img').attr('src');
-            const ep = $(el).find('.dtla span author').first().text().trim();
-            const uploaded = $(el).find('.dtla span').last().text().replace('Released on:', '').trim();
+        // Map Latest Updates
+        const latestUpdates = result.latestUpdates.map(item => ({
+            title: item.title,
+            slug: getSlug(item.original_url),
+            thumb: item.thumbnail,
+            ep: `Ep ${item.episode}`,
+            uploaded: item.released
+        }));
 
-            if (title && link) {
-                const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
-                animeList.push({ title, slug, thumb, ep, uploaded });
-            }
-        });
+        // Map Top 10
+        const top10 = result.top10Weekly.map(item => ({
+            title: item.title,
+            slug: getSlug(item.original_url),
+            thumb: item.thumbnail,
+            rank: item.rank,
+            score: item.rating
+        }));
+
+        // Map Movies
+        const movies = result.projectMovies.map(item => ({
+            title: item.title,
+            slug: getSlug(item.original_url),
+            thumb: item.thumbnail,
+            genres: item.genres,
+            date: item.release_date
+        }));
 
         const data = {
-            title: 'PuZero | Anime Terbaru',
+            title: 'PuZero | Update Anime Terbaru',
             page: 'pages/anime',
-            animeList,
+            latestUpdates,
+            top10,
+            movies,
             query: ''
         };
 
@@ -36,8 +57,42 @@ exports.getAnimePage = async (req, res) => {
             res.render('layout', data);
         }
     } catch (error) {
-        console.error('Scraping Error:', error);
-        res.status(500).send('Gagal mengambil data anime.');
+        console.error('Home API Error:', error);
+        res.status(500).send('Gagal mengambil data dari PuruBoy API.');
+    }
+};
+
+exports.getAnimeList = async (req, res) => {
+    try {
+        const page = req.query.page || 1;
+        const response = await axios.get(`${API_BASE}/list?page=${page}`);
+        const { result } = response.data;
+
+        const animeList = result.data.map(item => ({
+            title: item.title,
+            slug: getSlug(item.original_url),
+            thumb: item.thumbnail,
+            score: item.score,
+            status: item.status,
+            type: item.type,
+            genres: item.genres
+        }));
+
+        const data = {
+            title: `PuZero | Daftar Semua Anime - Page ${page}`,
+            page: 'pages/anime-list',
+            animeList,
+            pagination: result.pagination
+        };
+
+        if (req.headers['hx-request']) {
+            res.render('pages/anime-list', data);
+        } else {
+            res.render('layout', data);
+        }
+    } catch (error) {
+        console.error('List API Error:', error);
+        res.status(500).send('Gagal mengambil daftar anime.');
     }
 };
 
@@ -60,7 +115,7 @@ exports.searchAnime = async (req, res) => {
             const status = $(el).find('.data .type').text().trim();
 
             if (title && link) {
-                const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+                const slug = getSlug(link);
                 animeList.push({ 
                     title, 
                     slug, 
@@ -73,13 +128,13 @@ exports.searchAnime = async (req, res) => {
 
         const data = {
             title: `PuZero | Hasil Pencarian: ${query}`,
-            page: 'pages/anime',
+            page: 'pages/anime-search',
             animeList,
             query
         };
 
         if (req.headers['hx-request']) {
-            res.render('pages/anime', data);
+            res.render('pages/anime-search', data);
         } else {
             res.render('layout', data);
         }
@@ -121,7 +176,7 @@ exports.getAnimeFilter = async (req, res) => {
             const statusText = $(el).find('.data .type').text().trim();
 
             if (titleText && link) {
-                const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+                const slug = getSlug(link);
                 animeList.push({ 
                     title: titleText, 
                     slug, 
@@ -191,7 +246,7 @@ exports.getAnimeSchedule = async (req, res) => {
         const rawData = JSON.parse(response);
         const schedule = rawData.map(item => ({
             ...item,
-            slug: item.url.replace(BASE_URL, '').replace(/\/$/, '')
+            slug: getSlug(item.url)
         }));
 
         const data = {
@@ -246,7 +301,7 @@ exports.getAnimeDetail = async (req, res) => {
 
         $('.lstepsiode ul li').each((i, el) => {
             const link = $(el).find('.lchx a').attr('href') || '';
-            const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+            const slug = getSlug(link);
             detail.episodes.push({
                 eps: $(el).find('.eps a').text().trim(),
                 title: $(el).find('.lchx a').text().trim(),
@@ -317,14 +372,11 @@ exports.getAnimeStream = async (req, res) => {
             if (format) stream.downloads.push({ format, items });
         });
 
-        // Terapkan logik FiledonExtractor Server PuruZero ⭐
-        // Filter Hanya cari kategori MP4 (Bukan MKV atau x265) dan resolusi MP4HD atau FULLHD
         let filedonLink = null;
         let filedonRes = null;
 
         const mp4Dl = stream.downloads.find(dl => dl.format && dl.format.trim().toUpperCase() === 'MP4');
         if (mp4Dl) {
-            // Prioritas 1: MP4HD
             const mp4hd = mp4Dl.items.find(item => item.resolution && item.resolution.toUpperCase().includes('MP4HD'));
             if (mp4hd) {
                 const linkObj = mp4hd.links.find(l => l.link && l.link.includes('filedon.co/'));
@@ -334,8 +386,6 @@ exports.getAnimeStream = async (req, res) => {
                     filedonRes = '720p';
                 }
             }
-
-            // Prioritas 2: FULLHD (Jika MP4HD tidak ada)
             if (!filedonLink) {
                 const fullhd = mp4Dl.items.find(item => item.resolution && item.resolution.toUpperCase().includes('FULLHD'));
                 if (fullhd) {
@@ -349,7 +399,6 @@ exports.getAnimeStream = async (req, res) => {
             }
         }
 
-        // Tambahkan server PuruZero ke daftar servers (Paling Depan) jika ditemukan di MP4HD/FULLHD
         if (filedonLink) {
             const embedUrl = filedonLink.includes('/view/') ? filedonLink.replace('/view/', '/embed/') : filedonLink;
             stream.servers.unshift({
@@ -362,7 +411,7 @@ exports.getAnimeStream = async (req, res) => {
 
         $('.lstepsiode ul li').each((i, el) => {
             const link = $(el).find('.lchx a').attr('href') || '';
-            const slug = link.replace(BASE_URL, '').replace(/\/$/, '');
+            const slug = getSlug(link);
             stream.episodes.push({
                 title: $(el).find('.lchx a').text().trim(),
                 slug: slug,
@@ -403,7 +452,6 @@ exports.getStreamPlayer = async (req, res) => {
         const { post, nume, type } = req.body;
         if (!post || !nume || !type) return res.status(400).send('Parameter tidak lengkap.');
 
-        // Handler khusus untuk Filedon Server
         if (type === 'filedon') {
             return res.json({ type: 'video', content: `/anime/filedon-stream?url=${encodeURIComponent(post)}` });
         }
@@ -428,7 +476,6 @@ exports.getStreamPlayer = async (req, res) => {
 
         if (iframeMatch && iframeMatch[1]) {
             const streamUrl = iframeMatch[1];
-
             if (/\.(mp4|m3u8|webm|mkv)(\?|$)/i.test(streamUrl)) {
                 finalType = 'video';
                 finalContent = streamUrl;
@@ -436,7 +483,6 @@ exports.getStreamPlayer = async (req, res) => {
                 try {
                     const streamPage = await cloudscraper.get(streamUrl);
                     const videoMatch = streamPage.match(/(https?:\/\/[^\s"'<>]+\.(?:mp4|m3u8|webm))/i) || streamPage.match(/<source[^>]+src="([^"]+)"/i) || streamPage.match(/file:\s*["']([^"']+)["']/i);
-                    
                     if (videoMatch && videoMatch[1] && /\.(mp4|m3u8|webm)/i.test(videoMatch[1])) {
                         finalType = 'video';
                         finalContent = videoMatch[1];
@@ -456,9 +502,7 @@ exports.getStreamPlayer = async (req, res) => {
                 finalContent = rawVideoMatch[1];
             }
         }
-
         res.json({ type: finalType, content: finalContent });
-
     } catch (error) {
         console.error('Player Fetch Error:', error);
         res.status(500).json({ type: 'error', content: 'Gagal mengambil player video.' });
@@ -469,18 +513,11 @@ exports.streamFiledon = async (req, res) => {
     try {
         const url = req.query.url;
         if (!url) return res.status(400).send('URL diperlukan.');
-        
         const FiledonExtractor = require('../utils/FiledonExtractor');
         const extractor = new FiledonExtractor();
         const extractRes = await extractor.extract(url);
-        
         if (!extractRes.success) return res.status(500).send('Gagal mengekstrak video: ' + extractRes.msg);
-        
-        const actualVideoUrl = extractRes.data.url;
-        
-        // Redirect langsung ke URL video asli tanpa proxying data di server PuZero
-        res.redirect(actualVideoUrl);
-        
+        res.redirect(extractRes.data.url);
     } catch (error) {
         console.error('Filedon Redirect Error:', error.message);
         res.status(500).send('Terjadi kesalahan saat mengalihkan ke server video.');
