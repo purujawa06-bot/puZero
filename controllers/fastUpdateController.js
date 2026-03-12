@@ -4,12 +4,19 @@
 const fs = require('fs');
 const path = require('path');
 
-// --- KONFIGURASI DOWNLOADER CONTEXT ---
-const IGNORE_DIRS = ['node_modules'];
+// --- FILTER KONFIGURASI ---
+const IGNORE_DIRS = ['node_modules', '.git', '.cache', '.config'];
 const IGNORE_FILES = ['package-lock.json'];
+const IGNORE_EXTENSIONS = [
+    '.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.ico', '.bmp', '.tiff', '.avif',
+    '.mp4', '.webm', '.mkv', '.avi', '.mov', '.flv',
+    '.mp3', '.wav', '.ogg', '.flac', '.aac',
+    '.woff', '.woff2', '.ttf', '.otf', '.eot',
+    '.zip', '.tar', '.gz', '.rar', '.7z', '.pdf', '.exe', '.bin',
+    '.map'
+];
 
 exports.getFastUpdatePage = (req, res) => {
-    // Render file fastupdate.ejs tanpa layout utama
     res.render('fastupdate');
 };
 
@@ -18,33 +25,33 @@ exports.downloadContext = (req, res) => {
     let contextData = "=== PUZERO PROJECT CONTEXT ===\n\n";
 
     function readDirectory(dir) {
-        const files = fs.readdirSync(dir);
+        let files;
+        try { files = fs.readdirSync(dir); } catch (e) { return; }
 
         for (const file of files) {
-            // Abaikan file/folder tersembunyi (dimulai dengan titik)
+            // Skip hidden files & folders
             if (file.startsWith('.')) continue;
 
             const fullPath = path.join(dir, file);
-            const stat = fs.statSync(fullPath);
+            let stat;
+            try { stat = fs.statSync(fullPath); } catch (e) { continue; }
+
             const relativePath = path.relative(rootDir, fullPath).replace(/\\/g, '/');
 
             if (stat.isDirectory()) {
-                // Abaikan direktori yang masuk blacklist
                 if (IGNORE_DIRS.includes(file)) continue;
                 readDirectory(fullPath);
             } else {
-                // Abaikan file yang masuk blacklist
                 if (IGNORE_FILES.includes(file)) continue;
+                const ext = path.extname(file).toLowerCase();
+                if (IGNORE_EXTENSIONS.includes(ext)) continue;
 
-                // Baca semua file sebagai UTF-8 (tanpa filter ekstensi ketat)
                 try {
                     const content = fs.readFileSync(fullPath, 'utf8');
                     contextData += `\n--- BEGIN: ${relativePath} ---\n`;
                     contextData += content;
                     contextData += `\n--- END: ${relativePath} ---\n`;
-                } catch (err) {
-                    console.error(`Gagal membaca file: ${relativePath}`);
-                }
+                } catch (err) { /* skip binary */ }
             }
         }
     }
@@ -61,64 +68,69 @@ exports.downloadContext = (req, res) => {
 
 exports.applyUpdate = (req, res) => {
     try {
-        // 1. Ambil body (Base64) dan Decode ke UTF-8
         const base64Data = req.body;
         const decodedText = Buffer.from(base64Data, 'base64').toString('utf8');
 
-        const rootDir = path.join(__dirname, '../');
+        const rootDir = path.resolve(path.join(__dirname, '../'));
         let report = [];
 
-        // 2. Ekstrak kode blok (Mendukung semua bahasa atau tanpa tag bahasa)
-        const blockRegex = /```(?:\w+)?\n([\s\S]*?)```/gi;
-        let match;
+        // Ekstrak blok <execution_N>...</execution_N>
+        const execBlockRegex = /<execution_\d+>([\s\S]*?)<\/execution_\d+>/gi;
+        let blockMatch;
 
-        while ((match = blockRegex.exec(decodedText)) !== null) {
-            const blockContent = match[1];
+        while ((blockMatch = execBlockRegex.exec(decodedText)) !== null) {
+            const blockContent = blockMatch[1].trim();
 
-            // 3. Cari @path dan @type di dalam blok
-            const pathMatch = blockContent.match(/\/\/\s*@path\s+(.+)/i);
-            const typeMatch = blockContent.match(/\/\/\s*@type\s+(write|delete)/i);
+            // IZINKAN: cat heredoc — cat << 'EOF' > path\ncontent\nEOF
+            const catMatch = blockContent.match(/^cat\s+<<\s+'?EOF'?\s+>\s+(\S+)\n([\s\S]*?)\nEOF\s*$/);
+            if (catMatch) {
+                const relPath = catMatch[1].trim();
+                const content = catMatch[2];
 
-            if (pathMatch && typeMatch) {
-                const filePath = path.join(rootDir, pathMatch[1].trim());
-                const actionType = typeMatch[1].trim().toLowerCase();
-
-                if (actionType === 'delete') {
-                    // --- LOGIKA DELETE ---
-                    if (fs.existsSync(filePath)) {
-                        fs.unlinkSync(filePath);
-                        report.push(`✅ Deleted: ${pathMatch[1].trim()}`);
-                    } else {
-                        report.push(`⚠️ Not Found (Delete Skip): ${pathMatch[1].trim()}`);
-                    }
-                } else if (actionType === 'write') {
-                    // --- LOGIKA WRITE ---
-                    // Buat folder jika belum ada
-                    const dirName = path.dirname(filePath);
-                    if (!fs.existsSync(dirName)) {
-                        fs.mkdirSync(dirName, { recursive: true });
-                    }
-
-                    // Bersihkan tag @path dan @type dari konten yang akan disave
-                    let cleanContent = blockContent
-                        .replace(/\/\/\s*@path\s+(.+)\n/i, '')
-                        .replace(/\/\/\s*@type\s+(.+)\n/i, '')
-                        .replace(/^\n/, ''); // Hapus baris kosong pertama jika ada
-
-                    fs.writeFileSync(filePath, cleanContent, 'utf8');
-                    report.push(`✅ Written: ${pathMatch[1].trim()}`);
+                const absPath = path.resolve(path.join(rootDir, relPath));
+                if (!absPath.startsWith(rootDir)) {
+                    report.push(`🚫 Blocked (Path Traversal): ${relPath}`);
+                    continue;
                 }
+
+                const dirName = path.dirname(absPath);
+                if (!fs.existsSync(dirName)) fs.mkdirSync(dirName, { recursive: true });
+                fs.writeFileSync(absPath, content, 'utf8');
+                report.push(`✅ Written: ${relPath}`);
+                continue;
             }
+
+            // IZINKAN: rm path
+            const rmMatch = blockContent.match(/^rm\s+(\S+)$/);
+            if (rmMatch) {
+                const relPath = rmMatch[1].trim();
+                const absPath = path.resolve(path.join(rootDir, relPath));
+
+                if (!absPath.startsWith(rootDir)) {
+                    report.push(`🚫 Blocked (Path Traversal): ${relPath}`);
+                    continue;
+                }
+
+                if (fs.existsSync(absPath)) {
+                    fs.unlinkSync(absPath);
+                    report.push(`✅ Deleted: ${relPath}`);
+                } else {
+                    report.push(`⚠️ Not Found (Delete Skip): ${relPath}`);
+                }
+                continue;
+            }
+
+            const preview = blockContent.split('\n')[0].substring(0, 60);
+            report.push(`🚫 Blocked (Command Not Allowed): ${preview}...`);
         }
 
         if (report.length === 0) {
-            return res.status(400).send("Format tidak valid atau tidak ada aksi yang ditemukan.");
+            return res.status(400).send("Tidak ada blok <execution_N> valid yang ditemukan.");
         }
 
-        // 4. Restart Server otomatis
         setTimeout(() => {
             console.log("🔄 Sistem di-restart oleh Fast Update...");
-            process.exit(0); 
+            process.exit(0);
         }, 1000);
 
         res.status(200).send(report.join('\n') + '\n\nSistem sedang memuat ulang...');

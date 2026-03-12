@@ -104,7 +104,7 @@
             <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
                 <i class="fas fa-download text-blue-500"></i> Context Extraction
             </h2>
-            <p class="text-sm text-gray-400 mb-4 leading-relaxed">Download the latest source code to give full context to the AI.</p>
+            <p class="text-sm text-gray-400 mb-4 leading-relaxed">Download source code terbaru sebagai konteks penuh untuk AI.</p>
 
             <a href="/fastupdate/download" download="context.txt" class="block w-full bg-gray-800 hover:bg-gray-700 text-white text-center font-bold py-3 rounded-xl border border-gray-700 transition-colors">
                 Download Context
@@ -118,14 +118,14 @@
                 <i class="fas fa-magic text-purple-500"></i> Prompt Generation
             </h2>
 
-            <textarea id="changeRequest" class="w-full bg-black/30 border border-[#27272a] rounded-xl p-3 text-white text-sm mb-3 focus:outline-none focus:border-purple-500 transition-colors" rows="3" placeholder="Describe your changes..."></textarea>
+            <textarea id="changeRequest" class="w-full bg-black/30 border border-[#27272a] rounded-xl p-3 text-white text-sm mb-3 focus:outline-none focus:border-purple-500 transition-colors" rows="3" placeholder="Deskripsikan perubahan yang diinginkan..."></textarea>
 
             <button onclick="generatePrompt()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl mb-4 transition-transform active:scale-95">
                 Generate Prompt
             </button>
 
             <div class="relative">
-                <textarea id="generatedPrompt" class="w-full bg-black text-gray-400 font-mono text-xs rounded-xl p-3 border border-gray-800" rows="4" readonly placeholder="Prompt will appear here..."></textarea>
+                <textarea id="generatedPrompt" class="w-full bg-black text-gray-400 font-mono text-xs rounded-xl p-3 border border-gray-800" rows="5" readonly placeholder="Prompt akan muncul di sini..."></textarea>
                 <button onclick="copyPrompt()" class="absolute top-2 right-2 text-xs bg-gray-700 text-white px-2 py-1 rounded hover:bg-gray-600">Copy</button>
             </div>
         </div>
@@ -137,7 +137,7 @@
                 <i class="fas fa-code-branch text-pink-500"></i> Apply Changes
             </h2>
 
-            <textarea id="aiResponse" class="w-full bg-black/30 border border-[#27272a] rounded-xl p-3 text-white font-mono text-xs mb-4 focus:outline-none focus:border-pink-500 transition-colors" rows="6" placeholder="Paste AI response here..."></textarea>
+            <textarea id="aiResponse" class="w-full bg-black/30 border border-[#27272a] rounded-xl p-3 text-white font-mono text-xs mb-4 focus:outline-none focus:border-pink-500 transition-colors" rows="6" placeholder="Paste respons AI di sini..."></textarea>
 
             <button id="applyBtn" onclick="applyUpdate()" class="btn-action w-full py-4 text-lg shadow-lg shadow-pink-900/20 flex items-center justify-center gap-2">
                 <i class="fas fa-check-circle"></i> Apply & Restart
@@ -154,49 +154,67 @@
         reqInput.addEventListener('input', () => document.getElementById('step2').classList.add('active'));
         respInput.addEventListener('input', () => document.getElementById('step3').classList.add('active'));
 
-        /* -----------------------------------------
-           UPDATED PROMPT GENERATOR (WITH DELETE RULES)
-        ------------------------------------------ */
         function generatePrompt() {
-            const request = reqInput.value;
-            if (!request) return alert('Please describe changes first.');
+            const request = reqInput.value.trim();
+            if (!request) return alert('Deskripsikan perubahan terlebih dahulu.');
 
-            const template = `Based on the provided source code, I want you to apply the following changes: "${request}"
+            const systemPrompt =
+`Kamu adalah AI code implementer untuk proyek PuZero. Kamu WAJIB mengikuti format output di bawah ini dengan KETAT dan TANPA pengecualian.
 
-IMPORTANT — FOLLOW THESE RULES EXACTLY:
+==============================
+FORMAT OUTPUT WAJIB
+==============================
 
-1. Your response must ONLY contain code blocks for each file using this exact format:
-\`\`\`js
-// @path path/to/file.ext
-// @type write
+Gunakan struktur berikut untuk setiap respons:
 
-// Full file content here...
-\`\`\`
+<think>
+Tulis penalaranmu di sini — analisis file yang perlu diubah, logika perubahan, dan urutan eksekusi yang tepat.
+</think>
+<execution_1>
+cat << 'EOF' > path/to/file.ext
+// Isi file lengkap di sini
+EOF
+</execution_1>
+<execution_2>
+rm path/to/file.ext
+</execution_2>
+// ... tambahkan execution berikutnya jika diperlukan
 
-2. For deleting a file, you MUST follow this exact format:
-\`\`\`js
-// @path path/to/file.ext
-// @type delete
-\`\`\`
-- No file content.
-- No comments.
-- No explanations.
-- No text before or after the code block.
+==============================
+ATURAN COMMAND
+==============================
 
-3. Do NOT include:
-- Explanations
-- Introductions
-- Reasoning
-- Notes
-- Warnings
-- Markdown headings
-- Any text outside code blocks
+Kamu HANYA boleh menggunakan dua perintah ini:
 
-4. Only output modified or deleted files. Nothing else.
+1. MENULIS/MEMBUAT FILE — gunakan cat heredoc:
+   cat << 'EOF' > path/to/file.ext
+   // Isi file lengkap
+   EOF
 
-Your output must be clean, minimal, and follow the required format exactly.`;
+2. MENGHAPUS FILE — gunakan rm:
+   rm path/to/file.ext
 
-            document.getElementById('generatedPrompt').value = template;
+DILARANG KERAS menggunakan perintah lain selain cat heredoc dan rm.
+
+==============================
+ATURAN FORMAT KETAT
+==============================
+
+- JANGAN gunakan markdown code block (\`\`\`) di manapun dalam respons — karena kamu sudah berada di dalam blok <execution_N>.
+- JANGAN tambahkan teks, penjelasan, komentar, atau catatan di luar blok <think> dan <execution_N>.
+- JANGAN gunakan heading atau bullet point di luar blok <think>.
+- Setiap <execution_N> hanya boleh berisi SATU perintah (satu cat atau satu rm).
+- Tulis isi file secara LENGKAP — jangan potong, jangan gunakan placeholder seperti "// ... rest of code".
+- Path file menggunakan path relatif dari root project (contoh: controllers/myController.js).
+- Nomor execution dimulai dari 1 dan berurutan.
+
+==============================
+PERUBAHAN YANG DIMINTA
+==============================
+
+${request}`;
+
+            document.getElementById('generatedPrompt').value = systemPrompt;
             document.getElementById('step2').classList.add('active');
         }
 
@@ -216,7 +234,7 @@ Your output must be clean, minimal, and follow the required format exactly.`;
             const btn = document.getElementById('applyBtn');
             const status = document.getElementById('status');
 
-            if (!raw) return alert('Paste AI response first.');
+            if (!raw) return alert('Paste respons AI terlebih dahulu.');
 
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
