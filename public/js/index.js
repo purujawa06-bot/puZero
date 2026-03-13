@@ -24,3 +24,10 @@ document.addEventListener('htmx:beforeRequest', function() {
         }
     }
 });
+
+// Handle Back-Forward Cache (BFCache)
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
