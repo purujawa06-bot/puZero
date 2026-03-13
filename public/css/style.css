@@ -18,12 +18,8 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #e2e8f0;
-    border-radius: 10px;
-}
-
-.dark .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #334155;
+    border-radius: 10px;
 }
 
 .fade-in {
@@ -47,28 +43,60 @@ body {
     backface-visibility: hidden;
 }
 
-/* Dark mode specific adjustments for EJS hardcoded whites */
+/* Forced Global Dark Mode Customization */
 .dark .bg-white {
     background-color: #0f172a !important; /* slate-900 */
 }
-
 .dark .text-secondary {
     color: #f8fafc !important; /* slate-50 */
 }
-
 .dark .border-slate-100, 
 .dark .border-slate-200,
 .dark .border-slate-200\/50,
-.dark .border-slate-200\/60 {
+.dark .border-slate-200\/60,
+.dark .border-slate-50 {
     border-color: #1e293b !important; /* slate-800 */
 }
-
-.dark .bg-slate-50 {
+.dark .bg-slate-50, .dark .bg-slate-100 {
     background-color: #1e293b !important; /* slate-800 */
 }
-
+.dark .text-slate-800, .dark .text-slate-700 {
+    color: #f1f5f9 !important; /* slate-100 */
+}
+.dark .text-slate-600 {
+    color: #cbd5e1 !important; /* slate-300 */
+}
+.dark .text-slate-500 {
+    color: #94a3b8 !important; /* slate-400 */
+}
 .dark .shadow-sm,
 .dark .shadow-md,
+.dark .shadow-lg,
 .dark .shadow-xl {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3) !important;
 }
+
+/* AI Chat Typography Enhancement */
+.dark .prose pre { 
+    background-color: #1e293b !important; 
+    color: #f8fafc !important; 
+    border-radius: 0.75rem !important; 
+    padding: 1rem !important; 
+    overflow-x: auto; 
+    margin-top: 0.5rem; 
+    margin-bottom: 0.5rem; 
+}
+.dark .prose code { 
+    color: rgb(var(--color-accent)) !important; 
+    background-color: #1e293b !important; 
+    padding: 0.1rem 0.3rem; 
+    border-radius: 0.25rem; 
+    font-size: 0.85em; 
+}
+.dark .prose pre code { 
+    color: inherit !important; 
+    background-color: transparent !important; 
+    padding: 0 !important; 
+}
+.dark .prose strong { color: rgb(var(--color-primary)) !important; }
+.dark .prose a { color: rgb(var(--color-accent)) !important; }

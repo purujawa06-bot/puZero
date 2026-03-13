@@ -8,9 +8,9 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                primary: '#6366f1',
+                primary: 'rgb(var(--color-primary) / <alpha-value>)',
                 secondary: '#0f172a',
-                accent: '#f43f5e',
+                accent: 'rgb(var(--color-accent) / <alpha-value>)',
             },
             animation: {
                 'blob': 'blob 7s infinite',

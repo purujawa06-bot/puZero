@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0f172a">
     <title><%= title %></title>
     
-    <!-- Theme Script (Prevent FOUC) -->
-    <script>
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
+    <!-- Theme & Colors Variables Script -->
+    <style>
+        :root {
+            /* Default: Purple + Cyan */
+            --color-primary: 168 85 247; 
+            --color-accent: 6 182 212;   
         }
+    </style>
+    <script>
+        const savedPrimary = localStorage.getItem('theme_primary');
+        const savedAccent = localStorage.getItem('theme_accent');
+        if (savedPrimary) document.documentElement.style.setProperty('--color-primary', savedPrimary);
+        if (savedAccent) document.documentElement.style.setProperty('--color-accent', savedAccent);
     </script>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="PuZero - Platform alat serbaguna bertenaga AI. Download video dari berbagai platform, konversi unit, dan tingkatkan produktivitas Anda dalam satu tempat.">
-    <meta name="keywords" content="AI Downloader, Video Downloader, Productivity Tools, PuZero, Puru Zero, Web Tools">
+    <meta name="description" content="PuruZero Alat sampe streaming anime sub indo semuanya ada">
+    <meta name="keywords" content="AI Downloader, Video Downloader, Productivity Tools, PuZero, Puru Zero, Web Tools, Anime Sub Indo, Streaming Anime">
     <meta name="author" content="Puru Zero">
     <meta name="robots" content="index, follow">
     
@@ -25,7 +31,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://puzero.vercel.app/">
     <meta property="og:title" content="<%= title %>">
-    <meta property="og:description" content="Platform alat serbaguna bertenaga AI for produktivitas maksimal.">
+    <meta property="og:description" content="PuruZero Alat sampe streaming anime sub indo semuanya ada">
     <meta property="og:image" content="/favicon.jpg">
 
     <!-- Preconnect for performance -->
@@ -57,7 +63,7 @@
     <style>
         [x-cloak] { display: none !important; }
         :root {
-            --primary-glow: radial-gradient(rgba(99, 102, 241, 0.15), rgba(99, 102, 241, 0));
+            --primary-glow: radial-gradient(rgba(var(--color-primary), 0.15), rgba(var(--color-primary), 0));
         }
 
         body { 
@@ -102,14 +108,17 @@
 <body 
     x-data="{ 
         loading: false, 
-        darkMode: localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
-        currentPath: window.location.pathname
+        currentPath: window.location.pathname.replace(/\/$/, '') || '/',
+        updatePath() {
+            this.currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+        }
     }" 
     @htmx:before-request.window="loading = true" 
     @htmx:after-request.window="loading = false"
-    @htmx:after-swap.window="currentPath = window.location.pathname"
-    @popstate.window="currentPath = window.location.pathname"
-    class="bg-[#f8fafc] text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary pb-safe transition-all duration-300"
+    @htmx:after-swap.window="updatePath()"
+    @htmx:history-restore.window="updatePath()"
+    @popstate.window="updatePath()"
+    class="bg-slate-950 text-slate-100 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary pb-safe transition-all duration-300"
     :class="currentPath.startsWith('/anime') ? 'pb-16 md:pb-0' : ''"
 >
 
@@ -122,9 +131,9 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed top-0 left-0 w-full h-1 z-[200] pointer-events-none bg-slate-100 dark:bg-slate-800 overflow-hidden hw-accelerate"
+        class="fixed top-0 left-0 w-full h-1 z-[200] pointer-events-none bg-slate-800 overflow-hidden hw-accelerate"
     >
-        <div class="h-full bg-emerald-50 w-1/3 animate-loading-bar hw-accelerate"></div>
+        <div class="h-full bg-primary w-1/3 animate-loading-bar hw-accelerate"></div>
     </div>
 
     <%- include('partials/navbar') %>
@@ -143,13 +152,56 @@
 
     <%- include('partials/bottom-nav') %>
 
+    <!-- Modal Custom Theme (Dark Mode Palette) -->
+    <div id="theme-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-md px-4 fade-in">
+        <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-[2rem] shadow-2xl w-full max-w-sm relative" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h3 class="text-xl font-black text-white">Custom Theme</h3>
+                    <p class="text-xs text-slate-400 font-medium mt-1">Pilih kombinasi warna favoritmu</p>
+                </div>
+                <button onclick="document.getElementById('theme-modal').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Primary Color Selection -->
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Warna Utama (Primary)</label>
+                    <div class="grid grid-cols-4 gap-3">
+                        <button onclick="setThemeColor('primary', '168 85 247')" class="w-12 h-12 rounded-2xl bg-[#a855f7] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                        <button onclick="setThemeColor('primary', '6 182 212')" class="w-12 h-12 rounded-2xl bg-[#06b6d4] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                        <button onclick="setThemeColor('primary', '244 63 94')" class="w-12 h-12 rounded-2xl bg-[#f43f5e] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                        <button onclick="setThemeColor('primary', '16 185 129')" class="w-12 h-12 rounded-2xl bg-[#10b981] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                    </div>
+                </div>
+                
+                <!-- Accent Color Selection -->
+                <div>
+                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Warna Aksen (Accent)</label>
+                    <div class="grid grid-cols-4 gap-3">
+                        <button onclick="setThemeColor('accent', '168 85 247')" class="w-12 h-12 rounded-2xl bg-[#a855f7] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                        <button onclick="setThemeColor('accent', '6 182 212')" class="w-12 h-12 rounded-2xl bg-[#06b6d4] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                        <button onclick="setThemeColor('accent', '244 63 94')" class="w-12 h-12 rounded-2xl bg-[#f43f5e] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                        <button onclick="setThemeColor('accent', '16 185 129')" class="w-12 h-12 rounded-2xl bg-[#10b981] border-2 border-transparent focus:border-white focus:scale-110 transition-all shadow-lg"></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-4 border-t border-slate-800 text-center">
+                <p class="text-[10px] text-slate-500">Tema akan otomatis diterapkan ✨</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Global Scripts -->
     <script src="/js/index.js" defer></script>
 
     <script>
         window.PuZeroState = {
             chatHistory: JSON.parse(localStorage.getItem('puzero_chat_history') || '[]'),
-            systemPrompt: localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu.",
+            systemPrompt: localStorage.getItem('puzero_system_prompt') || "Kamu adalah AI asisten dari PuZero yang ramah dan membantu. Balas menggunakan format markdown dengan rapih.",
             userId: localStorage.getItem('puzero_user_id') || ('user-' + Math.random().toString(36).substring(2, 15)),
             save() {
                 if (this.chatHistory.length > 20) {
@@ -185,22 +237,30 @@
             }
         };
 
-        window.toggleTheme = function() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.theme = isDark ? 'dark' : 'light';
-            return isDark;
-        };
-
+        // Modal and outside clicks logic
         document.addEventListener('click', (e) => {
             const menu = document.getElementById('mobile-menu');
             const btn = document.getElementById('mobile-menu-button');
+            const modal = document.getElementById('theme-modal');
             
             if (menu && menu.style.maxHeight && menu.style.maxHeight !== '0px') {
                 if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
                     window.toggleMobileMenu();
                 }
             }
+
+            if (modal && !modal.classList.contains('hidden')) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            }
         });
+
+        // Set custom theme variable function
+        function setThemeColor(type, rgb) {
+            document.documentElement.style.setProperty(`--color-${type}`, rgb);
+            localStorage.setItem(`theme_${type}`, rgb);
+        }
     </script>
 </body>
 </html>
