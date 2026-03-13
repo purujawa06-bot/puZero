@@ -3,9 +3,28 @@ const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
+const compression = require('compression');
+const minifyHTML = require('express-minify-html-2');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// 1. Gzip Compression
+app.use(compression());
+
+// 2. HTML Minifier
+app.use(minifyHTML({
+    override:      true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  true
+    }
+}));
 
 // Middleware
 app.use(cors());
