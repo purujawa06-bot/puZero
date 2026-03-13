@@ -23,6 +23,7 @@
         <!-- Filter Form -->
         <div 
             x-show="showFilters" 
+            x-init="showFilters = <%= (filters.title || filters.status || filters.type || filters.genre.length > 0) ? 'true' : 'false' %>"
             x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 -translate-y-4"
             x-transition:enter-end="opacity-100 translate-y-0"
@@ -74,7 +75,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Genre Pilihan</label>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Genre Pilihan (Warna Menyala = Aktif)</label>
                     <div class="flex flex-wrap gap-2">
                         <% const genreList = [
                             {id: 'fantasy', name: 'Fantasy'}, {id: 'action', name: 'Action'}, {id: 'adventure', name: 'Adventure'}, 
@@ -85,18 +86,24 @@
                             {id: 'historical', name: 'Historical'}, {id: 'mystery', name: 'Mystery'}, {id: 'harem', name: 'Harem'}, 
                             {id: 'ecchi', name: 'Ecchi'}, {id: 'slice-of-life', name: 'Slice of Life'}, {id: 'sports', name: 'Sports'}
                         ]; %>
-                        <% genreList.forEach(g => { %>
-                            <label class="cursor-pointer">
-                                <input type="checkbox" name="genre" value="<%= g.id %>" class="hidden peer" <%= filters.genre.includes(g.id) ? 'checked' : '' %>>
-                                <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-slate-500 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all block hw-accelerate">
+                        <% genreList.forEach(g => { 
+                            const isChecked = filters.genre && filters.genre.includes(g.id);
+                        %>
+                            <label class="cursor-pointer group/genre">
+                                <input type="checkbox" name="genre" value="<%= g.id %>" class="hidden peer" <%= isChecked ? 'checked' : '' %>>
+                                <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-slate-500 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/50 peer-checked:shadow-xl peer-checked:shadow-primary/50 transition-all block hw-accelerate hover:border-primary/50">
                                     <%= g.name %>
+                                    <% if (isChecked) { %>
+                                        <i class="ph-bold ph-check-circle ml-1"></i>
+                                    <% } %>
                                 </span>
                             </label>
                         <% }) %>
                     </div>
                 </div>
 
-                <div class="pt-4 flex justify-end">
+                <div class="pt-4 flex justify-between items-center gap-4">
+                    <a hx-get="/anime/filter" hx-target="#main-content" hx-push-url="true" class="text-xs font-bold text-slate-400 hover:text-red-500 transition-colors cursor-pointer">Reset Filter</a>
                     <button type="submit" class="w-full md:w-auto px-10 py-4 bg-secondary text-white rounded-2xl font-black shadow-lg hover:bg-slate-800 transition-all active:scale-95 hw-accelerate">
                         Terapkan Filter
                     </button>
