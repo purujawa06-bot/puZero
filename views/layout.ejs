@@ -110,14 +110,19 @@
         loading: false, 
         currentPath: window.location.pathname.replace(/\/$/, '') || '/',
         updatePath() {
-            this.currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+            // Gunakan timeout kecil untuk memastikan URL di address bar sudah sinkron
+            setTimeout(() => {
+                this.currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+            }, 50);
         }
     }" 
     @htmx:before-request.window="loading = true" 
     @htmx:after-request.window="loading = false"
     @htmx:after-swap.window="updatePath()"
     @htmx:history-restore.window="updatePath()"
+    @htmx:pushed-into-history.window="updatePath()"
     @popstate.window="updatePath()"
+    @load.window="updatePath()"
     class="bg-slate-950 text-slate-100 min-h-[100dvh] flex flex-col antialiased selection:bg-primary/20 selection:text-primary pb-safe transition-all duration-300"
     :class="currentPath.startsWith('/anime') ? 'pb-16 md:pb-0' : ''"
 >
