@@ -5,7 +5,7 @@
         <!-- Breadcrumb & Back -->
         <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
             <button hx-get="/manga" hx-target="#main-content" hx-push-url="true" class="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-bold text-sm">
-                <i class="ph-bold ph-arrow-left"></i> Kembali ke Manga
+                <i class="fas fa-arrow-left"></i> Kembali ke Manga
             </button>
 
             <% if (detail.chapters && detail.chapters.length > 0) { 
@@ -17,7 +17,7 @@
                     hx-push-url="true"
                     class="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-primary/20"
                 >
-                    <i class="ph-bold ph-play"></i> Baca Chapter 1
+                    <i class="fas fa-play"></i> Baca Chapter 1
                 </button>
             <% } %>
         </div>
@@ -39,7 +39,7 @@
 
                 <div class="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm">
                     <h3 class="text-lg font-black text-secondary mb-4 flex items-center gap-2">
-                        <i class="ph-bold ph-info text-primary"></i> Detail Informasi
+                        <i class="fas fa-info-circle text-primary"></i> Detail Informasi
                     </h3>
                     <div class="space-y-4">
                         <% Object.entries(detail.info).forEach(([key, val]) => { %>
@@ -91,7 +91,7 @@
                                 class="w-full pl-10 pr-4 py-2 bg-slate-100 border-none rounded-xl text-sm font-bold text-secondary focus:ring-2 focus:ring-primary/20 transition-all"
                                 onkeyup="filterChapters()"
                             >
-                            <i class="ph-bold ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         </div>
                     </div>
                     
@@ -110,7 +110,7 @@
                                     <span class="text-[10px] font-bold text-slate-400 uppercase mt-1"><%= chapter.date %></span>
                                 </div>
                                 <div class="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all">
-                                    <i class="ph-bold ph-book-open"></i>
+                                    <i class="fas fa-book-open"></i>
                                 </div>
                             </div>
                         <% }) %>

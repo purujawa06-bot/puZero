@@ -10,7 +10,7 @@
                 class="p-2 text-white/70 hover:text-primary transition-colors"
                 title="Kembali"
             >
-                <i class="ph-bold ph-arrow-left text-xl"></i>
+                <i class="fas fa-arrow-left text-xl"></i>
             </button>
             
             <div class="text-center overflow-hidden px-4">
@@ -19,7 +19,7 @@
 
             <div class="flex items-center gap-2">
                 <button hx-get="/manga" hx-target="#main-content" hx-push-url="true" class="p-2 text-white/70 hover:text-primary transition-colors">
-                    <i class="ph-bold ph-house-line text-xl"></i>
+                    <i class="fas fa-home text-xl"></i>
                 </button>
             </div>
         </div>
@@ -55,11 +55,11 @@
                     class="flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 text-white hover:bg-primary transition-all"
                     title="Chapter Sebelumnya"
                 >
-                    <i class="ph-bold ph-caret-left text-xl"></i>
+                    <i class="fas fa-chevron-left text-xl"></i>
                 </button>
             <% } else { %>
                 <div class="w-12 h-12 rounded-xl bg-white/5 text-white/20 flex items-center justify-center cursor-not-allowed">
-                    <i class="ph-bold ph-caret-left text-xl"></i>
+                    <i class="fas fa-chevron-left text-xl"></i>
                 </div>
             <% } %>
 
@@ -80,11 +80,11 @@
                     class="flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 text-white hover:bg-primary transition-all"
                     title="Chapter Selanjutnya"
                 >
-                    <i class="ph-bold ph-caret-right text-xl"></i>
+                    <i class="fas fa-chevron-right text-xl"></i>
                 </button>
             <% } else { %>
                 <div class="w-12 h-12 rounded-xl bg-white/5 text-white/20 flex items-center justify-center cursor-not-allowed">
-                    <i class="ph-bold ph-caret-right text-xl"></i>
+                    <i class="fas fa-chevron-right text-xl"></i>
                 </div>
             <% } %>
         </div>
@@ -102,9 +102,16 @@
         };
 
         let history = JSON.parse(localStorage.getItem('puzero_history') || '[]');
+        
+        // Mencegah duplikasi: hapus entri lama dengan URL yang sama
         history = history.filter(item => item.url !== historyData.url);
+        
+        // Tambahkan ke urutan paling atas
         history.unshift(historyData);
+        
+        // Batasi maksimal 20 item
         if (history.length > 20) history = history.slice(0, 20);
+        
         localStorage.setItem('puzero_history', JSON.stringify(history));
     })();
 </script>
