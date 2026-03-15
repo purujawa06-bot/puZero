@@ -10,9 +10,9 @@
                 hx-push-url="true"
                 class="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-all mb-2 hw-accelerate"
             >
-                <i class="fas fa-arrow-left"></i> Kembali ke Daftar
+                <i class="ph-bold ph-arrow-left"></i> Kembali ke Daftar
             </button>
-            <h1 class="text-2xl md:text-3xl font-black text-secondary leading-tight" id="stream-title"><%= stream.title %></h1>
+            <h1 class="text-2xl md:text-3xl font-black text-secondary leading-tight"><%= stream.title %></h1>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
         <div id="player-container" class="w-full h-full flex items-center justify-center">
             <div class="text-center p-10">
                 <div class="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl animate-pulse">
-                    <i class="fas fa-play text-4xl"></i>
+                    <i class="ph-fill ph-play text-4xl"></i>
                 </div>
                 <h3 class="text-white font-black text-2xl tracking-tighter">PuZero <span class="text-primary">Play</span></h3>
                 <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-3">Mempersiapkan Streaming...</p>
@@ -38,7 +38,7 @@
                 hx-push-url="true"
                 class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm hw-accelerate"
             >
-                <i class="fas fa-chevron-left"></i> Episode Sebelumnya
+                <i class="ph-bold ph-caret-left"></i> Episode Sebelumnya
             </button>
         <% } else { %>
             <div class="flex-1"></div>
@@ -51,7 +51,7 @@
                 hx-push-url="true"
                 class="flex-1 flex items-center justify-center gap-2 py-4 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:border-primary hover:text-primary transition-all shadow-sm hw-accelerate"
             >
-                Episode Berikutnya <i class="fas fa-chevron-right"></i>
+                Episode Berikutnya <i class="ph-bold ph-caret-right"></i>
             </button>
         <% } else { %>
             <div class="flex-1"></div>
@@ -61,7 +61,7 @@
     <!-- Server Selector -->
     <div class="mb-12">
         <h3 class="text-sm font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-            <i class="fas fa-server text-primary"></i> Pilih Server / Resolusi
+            <i class="ph-bold ph-hard-drives text-primary"></i> Pilih Server / Resolusi
         </h3>
         <div class="flex flex-wrap gap-2">
             <% stream.servers.forEach((srv, idx) => { %>
@@ -82,7 +82,7 @@
         <!-- Download Links -->
         <div class="lg:col-span-2 space-y-8 content-auto">
             <h3 class="text-xl font-black text-secondary flex items-center gap-2">
-                <i class="fas fa-download text-primary"></i>
+                <i class="ph-bold ph-download-simple text-primary"></i>
                 Link Download
             </h3>
 
@@ -114,7 +114,7 @@
         <!-- Episodes List -->
         <div class="space-y-6 content-auto">
             <h3 class="text-xl font-black text-secondary flex items-center gap-2">
-                <i class="fas fa-th-large text-primary"></i>
+                <i class="ph-bold ph-squares-four text-primary"></i>
                 Episode Lainnya
             </h3>
             <div class="space-y-3">
@@ -140,31 +140,6 @@
 </div>
 
 <script>
-    // Logic for History
-    (function saveToHistory() {
-        const historyData = {
-            title: document.getElementById('stream-title').innerText,
-            url: window.location.pathname,
-            type: 'anime',
-            thumb: '<%= (stream.episodes && stream.episodes.length > 0) ? stream.episodes[0].thumb : "" %>',
-            timestamp: Date.now()
-        };
-
-        let history = JSON.parse(localStorage.getItem('puzero_history') || '[]');
-        
-        // Cek apakah URL yang sama sudah ada untuk menghindari duplikasi
-        // Ini memastikan item yang sama akan dipindah ke posisi teratas (terbaru)
-        history = history.filter(item => item.url !== historyData.url);
-        
-        // Tambahkan ke awal array
-        history.unshift(historyData);
-        
-        // Simpan maksimal 20 item
-        if (history.length > 20) history = history.slice(0, 20);
-        
-        localStorage.setItem('puzero_history', JSON.stringify(history));
-    })();
-
     async function changeServer(btn) {
         const post = btn.getAttribute('data-post');
         const nume = btn.getAttribute('data-nume');
@@ -204,24 +179,24 @@
                     const vidType = data.content.includes('.m3u8') ? 'application/x-mpegURL' : 'video/mp4';
                     container.innerHTML = `
                         <video id="puzero-player" class="video-js vjs-default-skin vjs-big-play-centered w-full h-full" controls preload="auto" data-setup='{"fluid": true}'>
-                            <source src="\${data.content}" type="\${vidType}">
+                            <source src="${data.content}" type="${vidType}">
                         </video>
                     `;
                     if (window.videojs) {
                         videojs('puzero-player');
                     }
                 } else if (data.type === 'iframe') {
-                    container.innerHTML = `<iframe src="\${data.content}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+                    container.innerHTML = `<iframe src="${data.content}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
                 } else if (data.type === 'html') {
                     container.innerHTML = data.content;
                 } else {
-                    container.innerHTML = `<div class="text-red-500 text-xs font-bold text-center">\${data.content}</div>`;
+                    container.innerHTML = `<div class="text-red-500 text-xs font-bold text-center">${data.content}</div>`;
                 }
             } else {
                 const html = await res.text();
                 const match = html.match(/src="([^"]+)"/);
                 if (match && match[1]) {
-                    container.innerHTML = `<iframe src="\${match[1]}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+                    container.innerHTML = `<iframe src="${match[1]}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
                 } else {
                     container.innerHTML = html; 
                 }

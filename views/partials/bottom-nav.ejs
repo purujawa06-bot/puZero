@@ -10,70 +10,33 @@
     <div class="flex justify-around items-center h-16 px-2">
         <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" 
            class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath === '/anime' ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-house" :class="currentPath === '/anime' ? 'scale-110' : ''"></i>
+           :class="currentPath === '/anime' ? 'text-primary dark:text-primary' : 'text-slate-500 dark:text-slate-400'">
+            <i class="text-xl transition-all" :class="currentPath === '/anime' ? 'ph-fill ph-house scale-110' : 'ph-bold ph-house'"></i>
             <span class="text-[10px] font-bold">Home</span>
         </a>
         <a hx-get="/anime/terbaru" hx-target="#main-content" hx-push-url="true" 
            class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath === '/anime/terbaru' ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-lightning" :class="currentPath === '/anime/terbaru' ? 'scale-110' : ''"></i>
+           :class="currentPath === '/anime/terbaru' ? 'text-primary dark:text-primary' : 'text-slate-500 dark:text-slate-400'">
+            <i class="text-xl transition-all" :class="currentPath === '/anime/terbaru' ? 'ph-fill ph-lightning scale-110' : 'ph-bold ph-lightning'"></i>
             <span class="text-[10px] font-bold">Terbaru</span>
         </a>
         <a hx-get="/anime/list" hx-target="#main-content" hx-push-url="true" 
            class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath.startsWith('/anime/list') ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-list" :class="currentPath.startsWith('/anime/list') ? 'scale-110' : ''"></i>
+           :class="currentPath.startsWith('/anime/list') ? 'text-primary dark:text-primary' : 'text-slate-500 dark:text-slate-400'">
+            <i class="text-xl transition-all" :class="currentPath.startsWith('/anime/list') ? 'ph-fill ph-list scale-110' : 'ph-bold ph-list'"></i>
             <span class="text-[10px] font-bold">Semua</span>
         </a>
         <a hx-get="/anime/filter" hx-target="#main-content" hx-push-url="true" 
            class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath.startsWith('/anime/filter') ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-funnel" :class="currentPath.startsWith('/anime/filter') ? 'scale-110' : ''"></i>
+           :class="currentPath.startsWith('/anime/filter') ? 'text-primary dark:text-primary' : 'text-slate-500 dark:text-slate-400'">
+            <i class="text-xl transition-all" :class="currentPath.startsWith('/anime/filter') ? 'ph-fill ph-funnel scale-110' : 'ph-bold ph-funnel'"></i>
             <span class="text-[10px] font-bold">Filter</span>
         </a>
         <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true" 
            class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath.startsWith('/anime/schedule') ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-calendar-blank" :class="currentPath.startsWith('/anime/schedule') ? 'scale-110' : ''"></i>
+           :class="currentPath.startsWith('/anime/schedule') ? 'text-primary dark:text-primary' : 'text-slate-500 dark:text-slate-400'">
+            <i class="text-xl transition-all" :class="currentPath.startsWith('/anime/schedule') ? 'ph-fill ph-calendar scale-110' : 'ph-bold ph-calendar'"></i>
             <span class="text-[10px] font-bold">Jadwal</span>
-        </a>
-    </div>
-</div>
-
-<!-- Manga Bottom Nav -->
-<div x-show="currentPath.startsWith('/manga') && !currentPath.includes('/read')" 
-     x-cloak
-     x-transition:enter="transition ease-out duration-300"
-     x-transition:enter-start="opacity-0 translate-y-full"
-     x-transition:enter-end="opacity-100 translate-y-0"
-     x-transition:leave="transition ease-in duration-200"
-     x-transition:leave-start="opacity-100 translate-y-0"
-     x-transition:leave-end="opacity-0 translate-y-full"
-     class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200/60 dark:border-slate-800/60 z-[90] pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-    <div class="flex justify-around items-center h-16 px-2">
-        <a hx-get="/manga" hx-target="#main-content" hx-push-url="true" 
-           class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath === '/manga' ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-book-open" :class="currentPath === '/manga' ? 'scale-110' : ''"></i>
-            <span class="text-[10px] font-bold">Manga</span>
-        </a>
-        <a hx-get="/manga/popular" hx-target="#main-content" hx-push-url="true" 
-           class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath.startsWith('/manga/popular') ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-fire" :class="currentPath.startsWith('/manga/popular') ? 'scale-110' : ''"></i>
-            <span class="text-[10px] font-bold">Populer</span>
-        </a>
-        <a hx-get="/" hx-target="#main-content" hx-push-url="true" 
-           class="flex flex-col items-center justify-center w-full h-full gap-1 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors cursor-pointer">
-            <i class="ph-bold ph-house text-xl"></i>
-            <span class="text-[10px] font-bold">Beranda</span>
-        </a>
-        <a hx-get="/history" hx-target="#main-content" hx-push-url="true" 
-           class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath === '/history' ? 'text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all ph-bold ph-clock-counter-clockwise" :class="currentPath === '/history' ? 'scale-110' : ''"></i>
-            <span class="text-[10px] font-bold">History</span>
         </a>
     </div>
 </div>
