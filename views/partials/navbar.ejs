@@ -14,10 +14,10 @@
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
                 <a hx-get="/" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Home</a>
+                <a hx-get="/manga" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Manga</a>
+                <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Anime</a>
                 <a hx-get="/category" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Tools</a>
                 <a hx-get="/anime/terbaru" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Terbaru</a>
-                <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Update</a>
-                <a hx-get="/anime/filter" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Daftar</a>
                 <a hx-get="/anime/schedule" hx-target="#main-content" hx-push-url="true" class="cursor-pointer px-4 py-2.5 rounded-xl text-slate-400 hover:text-primary hover:bg-primary/10 font-bold transition-all text-sm lg:text-base">Jadwal</a>
                 
                 <!-- Theme Palette Button (Desktop) -->
@@ -44,11 +44,14 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="absolute top-16 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl transition-all duration-300 max-h-0 overflow-hidden md:hidden">
         <div class="p-4 space-y-1">
-            <a hx-get="/category" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
-                <i class="ph-bold ph-wrench text-xl text-slate-400"></i> Tools
+            <a hx-get="/manga" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
+                <i class="ph-bold ph-book-open text-xl text-slate-400"></i> Manga
             </a>
             <a hx-get="/anime" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
-                <i class="ph-bold ph-television text-xl text-slate-400"></i> Anime Home
+                <i class="ph-bold ph-television text-xl text-slate-400"></i> Anime
+            </a>
+            <a hx-get="/category" hx-target="#main-content" hx-push-url="true" onclick="window.toggleMobileMenu && window.toggleMobileMenu()" class="cursor-pointer block px-5 py-3.5 rounded-xl text-slate-300 hover:bg-primary/10 hover:text-primary font-bold transition-colors flex items-center gap-3">
+                <i class="ph-bold ph-wrench text-xl text-slate-400"></i> Tools
             </a>
         </div>
     </div>

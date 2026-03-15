@@ -1,0 +1,58 @@
+<title><%= title %></title>
+<div class="relative min-h-screen bg-slate-900 flex flex-col fade-in">
+    <!-- Reader Header -->
+    <div class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-white/10 px-4 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <button hx-get="/manga" hx-target="#main-content" hx-push-url="true" class="p-2 text-white/70 hover:text-primary transition-colors">
+                <i class="ph-bold ph-house-line text-xl"></i>
+            </button>
+            
+            <div class="text-center overflow-hidden px-4">
+                <h1 class="text-white font-bold text-sm md:text-base truncate"><%= result.title %></h1>
+            </div>
+
+            <div class="w-10"></div> <!-- Spacer for symmetry -->
+        </div>
+    </div>
+
+    <!-- Images Container -->
+    <div class="flex-grow flex flex-col items-center bg-black">
+        <div class="w-full max-w-3xl flex flex-col">
+            <% result.images.forEach(img => { %>
+                <div class="relative w-full">
+                    <img 
+                        src="<%= img.url %>" 
+                        alt="<%= img.alt %>" 
+                        loading="lazy" 
+                        decoding="async"
+                        class="w-full h-auto block select-none pointer-events-none"
+                        onerror="this.src='/favicon.jpg'; this.classList.add('opacity-20');"
+                    >
+                    <!-- Loading placeholder / spacer if needed -->
+                    <div class="absolute inset-0 -z-10 bg-slate-800 animate-pulse"></div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="sticky bottom-4 mx-auto mb-8 z-50">
+        <div class="bg-primary text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-6 font-black text-sm uppercase tracking-widest">
+            <span>Selesai Membaca</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hide scrollbar for clean reading experience but keep functionality */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+</style>

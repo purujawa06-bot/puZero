@@ -1,0 +1,2108 @@
+--https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https://komiku.org/manga/solo-leveling-id/--
+Example Code:
+async function getDetail() {
+   const res = await fetch('/api/anime/komiku/detail?url=https://komiku.org/manga/solo-leveling-id/');
+   const data = await res.json();
+   console.log(data);
+ }
+Code: 200
+Respon:
+{
+  "success": true,
+  "author": "PuruBoy",
+  "result": {
+    "title": "Komik Solo Leveling",
+    "indo_title": "Naik Level Sendiri",
+    "thumbnail": "https://thumbnail.komiku.org/uploads/manga/solo-leveling-sub-indo/manga_thumbnail-Head-I-Alone-Leveling.png?w=500",
+    "description": "Di dunia di mana para pemburu bertarung melawan makhluk dari dunia lain melalui portal misterius, Sung Jinwoo adalah pemburu dengan kekuatan yang sangat lemah. Sebagai pemburu kelas terendah, ia sering dianggap tidak berguna dan sering menghadapi bahaya yang mengancam nyawanya dalam setiap misi. Namun, semuanya berubah ketika ia mendapatkan kemampuan khusus yang memungkinkannya untuk naik level secara mandiri dan menjadi semakin kuat tanpa batas.\n\nDengan kekuatannya yang terus berkembang, Jinwoo mulai mengeksplorasi berbagai dungeon berbahaya dan menghadapi monster-monster menakutkan yang bahkan tidak bisa ditaklukkan oleh pemburu lain. Perjalanannya untuk menjadi pemburu terkuat membawa banyak tantangan serta intrik, termasuk menghadapi organisasi rahasia dan ancaman yang lebih besar dari dunia lain. Kisah ini mengeksplorasi perjuangan, pengorbanan, dan perubahan Jinwoo yang luar biasa di dunia penuh ancaman tersebut.",
+    "info": {
+      "judul_komik": "Solo Leveling",
+      "judul_indonesia": "Naik Level Sendiri",
+      "jenis_komik": "Manhwa",
+      "konsep_cerita": "Fantasi",
+      "pengarang": "Chugong",
+      "status": "End",
+      "umur_pembaca": "15 Tahun (minimal)",
+      "cara_baca": "Kiri ke kanan"
+    },
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama",
+      "Fantasy",
+      "Shounen",
+      "Super Power"
+    ],
+    "chapters": [
+      {
+        "title": "Chapter 180",
+        "date": "08/01/2024",
+        "views": "805087",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-180/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-180%2F"
+      },
+      {
+        "title": "Chapter 179",
+        "date": "08/01/2024",
+        "views": "450077",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-179/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-179%2F"
+      },
+      {
+        "title": "Chapter 178",
+        "date": "08/01/2024",
+        "views": "412401",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-178/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-178%2F"
+      },
+      {
+        "title": "Chapter 177",
+        "date": "08/01/2024",
+        "views": "391385",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-177/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-177%2F"
+      },
+      {
+        "title": "Chapter 175",
+        "date": "08/01/2024",
+        "views": "397466",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-175/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-175%2F"
+      },
+      {
+        "title": "Chapter 174",
+        "date": "08/01/2024",
+        "views": "380590",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-174/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-174%2F"
+      },
+      {
+        "title": "Chapter 173",
+        "date": "08/01/2024",
+        "views": "404546",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-173/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-173%2F"
+      },
+      {
+        "title": "Chapter 172",
+        "date": "30/04/2025",
+        "views": "397817",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-172/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-172%2F"
+      },
+      {
+        "title": "Chapter 171",
+        "date": "08/01/2024",
+        "views": "424739",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-171/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-171%2F"
+      },
+      {
+        "title": "Chapter 170",
+        "date": "08/01/2024",
+        "views": "435152",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-170/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-170%2F"
+      },
+      {
+        "title": "Chapter 169",
+        "date": "08/01/2024",
+        "views": "412863",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-169/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-169%2F"
+      },
+      {
+        "title": "Chapter 168",
+        "date": "08/01/2024",
+        "views": "439127",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-168/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-168%2F"
+      },
+      {
+        "title": "Chapter 167",
+        "date": "08/01/2024",
+        "views": "459579",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-167/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-167%2F"
+      },
+      {
+        "title": "Chapter 166",
+        "date": "08/01/2024",
+        "views": "472374",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-166/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-166%2F"
+      },
+      {
+        "title": "Chapter 165",
+        "date": "08/01/2024",
+        "views": "457267",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-165/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-165%2F"
+      },
+      {
+        "title": "Chapter 164",
+        "date": "08/01/2024",
+        "views": "454663",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-164/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-164%2F"
+      },
+      {
+        "title": "Chapter 163",
+        "date": "08/01/2024",
+        "views": "467111",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-163/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-163%2F"
+      },
+      {
+        "title": "Chapter 162",
+        "date": "08/01/2024",
+        "views": "466611",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-162/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-162%2F"
+      },
+      {
+        "title": "Chapter 161",
+        "date": "08/01/2024",
+        "views": "453068",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-161/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-161%2F"
+      },
+      {
+        "title": "Chapter 160",
+        "date": "08/01/2024",
+        "views": "446404",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-160/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-160%2F"
+      },
+      {
+        "title": "Chapter 159",
+        "date": "08/01/2024",
+        "views": "432883",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-159/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-159%2F"
+      },
+      {
+        "title": "Chapter 158",
+        "date": "13/07/2025",
+        "views": "37315",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-158/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-158%2F"
+      },
+      {
+        "title": "Chapter 157",
+        "date": "08/01/2024",
+        "views": "458003",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-157/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-157%2F"
+      },
+      {
+        "title": "Chapter 156",
+        "date": "08/01/2024",
+        "views": "440792",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-156/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-156%2F"
+      },
+      {
+        "title": "Chapter 155",
+        "date": "08/01/2024",
+        "views": "453298",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-155/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-155%2F"
+      },
+      {
+        "title": "Chapter 154",
+        "date": "08/01/2024",
+        "views": "499376",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-154/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-154%2F"
+      },
+      {
+        "title": "Chapter 153",
+        "date": "08/01/2024",
+        "views": "450003",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-153/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-153%2F"
+      },
+      {
+        "title": "Chapter 152",
+        "date": "08/01/2024",
+        "views": "445502",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-152/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-152%2F"
+      },
+      {
+        "title": "Chapter 151",
+        "date": "08/01/2024",
+        "views": "451965",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-151/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-151%2F"
+      },
+      {
+        "title": "Chapter 150",
+        "date": "08/01/2024",
+        "views": "460577",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-150/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-150%2F"
+      },
+      {
+        "title": "Chapter 149",
+        "date": "08/01/2024",
+        "views": "454246",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-149/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-149%2F"
+      },
+      {
+        "title": "Chapter 148",
+        "date": "08/01/2024",
+        "views": "477805",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-148/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-148%2F"
+      },
+      {
+        "title": "Chapter 147",
+        "date": "08/01/2024",
+        "views": "491004",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-147/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-147%2F"
+      },
+      {
+        "title": "Chapter 146",
+        "date": "08/01/2024",
+        "views": "487398",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-146/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-146%2F"
+      },
+      {
+        "title": "Chapter 145",
+        "date": "08/01/2024",
+        "views": "482509",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-145/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-145%2F"
+      },
+      {
+        "title": "Chapter 144",
+        "date": "08/01/2024",
+        "views": "464201",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-144/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-144%2F"
+      },
+      {
+        "title": "Chapter 143",
+        "date": "08/01/2024",
+        "views": "462488",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-143/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-143%2F"
+      },
+      {
+        "title": "Chapter 142",
+        "date": "08/01/2024",
+        "views": "448255",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-142/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-142%2F"
+      },
+      {
+        "title": "Chapter 141",
+        "date": "08/01/2024",
+        "views": "457191",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-141/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-141%2F"
+      },
+      {
+        "title": "Chapter 140",
+        "date": "08/01/2024",
+        "views": "463189",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-140/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-140%2F"
+      },
+      {
+        "title": "Chapter 139",
+        "date": "08/01/2024",
+        "views": "435851",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-139/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-139%2F"
+      },
+      {
+        "title": "Chapter 138",
+        "date": "08/01/2024",
+        "views": "456521",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-138/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-138%2F"
+      },
+      {
+        "title": "Chapter 137",
+        "date": "08/01/2024",
+        "views": "459488",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-137/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-137%2F"
+      },
+      {
+        "title": "Chapter 136",
+        "date": "08/01/2024",
+        "views": "459503",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-136/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-136%2F"
+      },
+      {
+        "title": "Chapter 135",
+        "date": "08/01/2024",
+        "views": "456724",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-135/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-135%2F"
+      },
+      {
+        "title": "Chapter 134",
+        "date": "08/01/2024",
+        "views": "460819",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-134/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-134%2F"
+      },
+      {
+        "title": "Chapter 133",
+        "date": "08/01/2024",
+        "views": "471675",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-133/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-133%2F"
+      },
+      {
+        "title": "Chapter 132",
+        "date": "08/01/2024",
+        "views": "452926",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-132/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-132%2F"
+      },
+      {
+        "title": "Chapter 131",
+        "date": "08/01/2024",
+        "views": "463892",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-131/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-131%2F"
+      },
+      {
+        "title": "Chapter 130",
+        "date": "08/01/2024",
+        "views": "479217",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-130/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-130%2F"
+      },
+      {
+        "title": "Chapter 129",
+        "date": "08/01/2024",
+        "views": "460120",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-129/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-129%2F"
+      },
+      {
+        "title": "Chapter 128",
+        "date": "08/01/2024",
+        "views": "480781",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-128/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-128%2F"
+      },
+      {
+        "title": "Chapter 127",
+        "date": "08/01/2024",
+        "views": "475776",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-127/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-127%2F"
+      },
+      {
+        "title": "Chapter 126",
+        "date": "08/01/2024",
+        "views": "457356",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-126/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-126%2F"
+      },
+      {
+        "title": "Chapter 125",
+        "date": "08/01/2024",
+        "views": "481985",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-125/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-125%2F"
+      },
+      {
+        "title": "Chapter 124",
+        "date": "08/01/2024",
+        "views": "457124",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-124/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-124%2F"
+      },
+      {
+        "title": "Chapter 123",
+        "date": "08/01/2024",
+        "views": "464466",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-123/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-123%2F"
+      },
+      {
+        "title": "Chapter 122",
+        "date": "08/01/2024",
+        "views": "504076",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-122/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-122%2F"
+      },
+      {
+        "title": "Chapter 121",
+        "date": "08/01/2024",
+        "views": "487088",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-121/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-121%2F"
+      },
+      {
+        "title": "Chapter 120",
+        "date": "08/01/2024",
+        "views": "499328",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-120/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-120%2F"
+      },
+      {
+        "title": "Chapter 119",
+        "date": "08/01/2024",
+        "views": "481564",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-119/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-119%2F"
+      },
+      {
+        "title": "Chapter 118",
+        "date": "08/01/2024",
+        "views": "491287",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-118/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-118%2F"
+      },
+      {
+        "title": "Chapter 117",
+        "date": "08/01/2024",
+        "views": "473543",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-117/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-117%2F"
+      },
+      {
+        "title": "Chapter 116",
+        "date": "08/01/2024",
+        "views": "503638",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-116/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-116%2F"
+      },
+      {
+        "title": "Chapter 115",
+        "date": "08/01/2024",
+        "views": "496073",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-115/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-115%2F"
+      },
+      {
+        "title": "Chapter 113",
+        "date": "08/01/2024",
+        "views": "516047",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-113/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-113%2F"
+      },
+      {
+        "title": "Chapter 112",
+        "date": "08/01/2024",
+        "views": "501492",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-112/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-112%2F"
+      },
+      {
+        "title": "Chapter 111",
+        "date": "08/01/2024",
+        "views": "515417",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-111/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-111%2F"
+      },
+      {
+        "title": "Chapter 110",
+        "date": "08/01/2024",
+        "views": "503512",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-110/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-110%2F"
+      },
+      {
+        "title": "Chapter 109",
+        "date": "08/01/2024",
+        "views": "492630",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-109/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-109%2F"
+      },
+      {
+        "title": "Chapter 108",
+        "date": "08/01/2024",
+        "views": "485209",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-108/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-108%2F"
+      },
+      {
+        "title": "Chapter 107",
+        "date": "08/01/2024",
+        "views": "510001",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-107/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-107%2F"
+      },
+      {
+        "title": "Chapter 106",
+        "date": "08/01/2024",
+        "views": "532783",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-106/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-106%2F"
+      },
+      {
+        "title": "Chapter 105",
+        "date": "08/01/2024",
+        "views": "488993",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-105/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-105%2F"
+      },
+      {
+        "title": "Chapter 104",
+        "date": "08/01/2024",
+        "views": "487110",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-104/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-104%2F"
+      },
+      {
+        "title": "Chapter 103",
+        "date": "08/01/2024",
+        "views": "469384",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-103/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-103%2F"
+      },
+      {
+        "title": "Chapter 102",
+        "date": "08/01/2024",
+        "views": "458475",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-102/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-102%2F"
+      },
+      {
+        "title": "Chapter 101",
+        "date": "08/01/2024",
+        "views": "463259",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-101/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-101%2F"
+      },
+      {
+        "title": "Chapter 100",
+        "date": "08/01/2024",
+        "views": "434552",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-100/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-100%2F"
+      },
+      {
+        "title": "Chapter 99",
+        "date": "08/01/2024",
+        "views": "376662",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-99/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-99%2F"
+      },
+      {
+        "title": "Chapter 98",
+        "date": "08/01/2024",
+        "views": "363195",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-98/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-98%2F"
+      },
+      {
+        "title": "Chapter 97",
+        "date": "08/01/2024",
+        "views": "358822",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-97/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-97%2F"
+      },
+      {
+        "title": "Chapter 96",
+        "date": "08/01/2024",
+        "views": "348588",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-96/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-96%2F"
+      },
+      {
+        "title": "Chapter 95",
+        "date": "08/01/2024",
+        "views": "348526",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-95/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-95%2F"
+      },
+      {
+        "title": "Chapter 94",
+        "date": "08/01/2024",
+        "views": "345163",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-94/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-94%2F"
+      },
+      {
+        "title": "Chapter 93",
+        "date": "08/01/2024",
+        "views": "371742",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-93/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-93%2F"
+      },
+      {
+        "title": "Chapter 92",
+        "date": "08/01/2024",
+        "views": "349830",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-92/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-92%2F"
+      },
+      {
+        "title": "Chapter 91",
+        "date": "08/01/2024",
+        "views": "341871",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-91/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-91%2F"
+      },
+      {
+        "title": "Chapter 90",
+        "date": "30/04/2025",
+        "views": "331536",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-90/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-90%2F"
+      },
+      {
+        "title": "Chapter 89",
+        "date": "08/01/2024",
+        "views": "295086",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-89/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-89%2F"
+      },
+      {
+        "title": "Chapter 88",
+        "date": "08/01/2024",
+        "views": "293286",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-88/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-88%2F"
+      },
+      {
+        "title": "Chapter 87",
+        "date": "08/01/2024",
+        "views": "290252",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-87/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-87%2F"
+      },
+      {
+        "title": "Chapter 86",
+        "date": "08/01/2024",
+        "views": "287150",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-86/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-86%2F"
+      },
+      {
+        "title": "Chapter 85.5",
+        "date": "08/01/2024",
+        "views": "305125",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-85-5/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-85-5%2F"
+      },
+      {
+        "title": "Chapter 85",
+        "date": "08/01/2024",
+        "views": "276716",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-85/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-85%2F"
+      },
+      {
+        "title": "Chapter 84",
+        "date": "08/01/2024",
+        "views": "272467",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-84/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-84%2F"
+      },
+      {
+        "title": "Chapter 83",
+        "date": "08/01/2024",
+        "views": "277404",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-83/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-83%2F"
+      },
+      {
+        "title": "Chapter 82",
+        "date": "08/01/2024",
+        "views": "282865",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-82/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-82%2F"
+      },
+      {
+        "title": "Chapter 81",
+        "date": "08/01/2024",
+        "views": "285632",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-81/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-81%2F"
+      },
+      {
+        "title": "Chapter 80",
+        "date": "08/01/2024",
+        "views": "292274",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-80/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-80%2F"
+      },
+      {
+        "title": "Chapter 79",
+        "date": "08/01/2024",
+        "views": "294594",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-79/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-79%2F"
+      },
+      {
+        "title": "Chapter 78",
+        "date": "08/01/2024",
+        "views": "302257",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-78/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-78%2F"
+      },
+      {
+        "title": "Chapter 77",
+        "date": "08/01/2024",
+        "views": "307902",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-77/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-77%2F"
+      },
+      {
+        "title": "Chapter 76",
+        "date": "08/01/2024",
+        "views": "296265",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-76/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-76%2F"
+      },
+      {
+        "title": "Chapter 75",
+        "date": "08/01/2024",
+        "views": "303998",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-75/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-75%2F"
+      },
+      {
+        "title": "Chapter 74",
+        "date": "08/01/2024",
+        "views": "292127",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-74/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-74%2F"
+      },
+      {
+        "title": "Chapter 73",
+        "date": "08/01/2024",
+        "views": "287942",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-73/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-73%2F"
+      },
+      {
+        "title": "Chapter 72",
+        "date": "08/01/2024",
+        "views": "284104",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-72/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-72%2F"
+      },
+      {
+        "title": "Chapter 71",
+        "date": "08/01/2024",
+        "views": "263316",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-71/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-71%2F"
+      },
+      {
+        "title": "Chapter 70",
+        "date": "08/01/2024",
+        "views": "256206",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-70/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-70%2F"
+      },
+      {
+        "title": "Chapter 69",
+        "date": "08/01/2024",
+        "views": "232932",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-69/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-69%2F"
+      },
+      {
+        "title": "Chapter 68",
+        "date": "08/01/2024",
+        "views": "225532",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-68/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-68%2F"
+      },
+      {
+        "title": "Chapter 67",
+        "date": "08/01/2024",
+        "views": "223726",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-67/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-67%2F"
+      },
+      {
+        "title": "Chapter 66",
+        "date": "08/01/2024",
+        "views": "220091",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-66/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-66%2F"
+      },
+      {
+        "title": "Chapter 65",
+        "date": "08/01/2024",
+        "views": "208859",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-65/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-65%2F"
+      },
+      {
+        "title": "Chapter 64",
+        "date": "08/01/2024",
+        "views": "199853",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-64/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-64%2F"
+      },
+      {
+        "title": "Chapter 63",
+        "date": "08/01/2024",
+        "views": "199546",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-63/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-63%2F"
+      },
+      {
+        "title": "Chapter 62",
+        "date": "08/01/2024",
+        "views": "197674",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-62/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-62%2F"
+      },
+      {
+        "title": "Chapter 61",
+        "date": "08/01/2024",
+        "views": "197836",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-61/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-61%2F"
+      },
+      {
+        "title": "Chapter 60",
+        "date": "08/01/2024",
+        "views": "196060",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-60/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-60%2F"
+      },
+      {
+        "title": "Chapter 59",
+        "date": "08/01/2024",
+        "views": "175079",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-59/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-59%2F"
+      },
+      {
+        "title": "Chapter 58",
+        "date": "08/01/2024",
+        "views": "169666",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-58/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-58%2F"
+      },
+      {
+        "title": "Chapter 57",
+        "date": "08/01/2024",
+        "views": "173472",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-57/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-57%2F"
+      },
+      {
+        "title": "Chapter 56",
+        "date": "08/01/2024",
+        "views": "179524",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-56/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-56%2F"
+      },
+      {
+        "title": "Chapter 55",
+        "date": "08/01/2024",
+        "views": "182672",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-55/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-55%2F"
+      },
+      {
+        "title": "Chapter 54",
+        "date": "08/01/2024",
+        "views": "164985",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-54/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-54%2F"
+      },
+      {
+        "title": "Chapter 53",
+        "date": "08/01/2024",
+        "views": "164196",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-53/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-53%2F"
+      },
+      {
+        "title": "Chapter 52",
+        "date": "08/01/2024",
+        "views": "167607",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-52/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-52%2F"
+      },
+      {
+        "title": "Chapter 51",
+        "date": "08/01/2024",
+        "views": "163597",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-51/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-51%2F"
+      },
+      {
+        "title": "Chapter 50",
+        "date": "08/01/2024",
+        "views": "172102",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-50/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-50%2F"
+      },
+      {
+        "title": "Chapter 49",
+        "date": "08/01/2024",
+        "views": "132692",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-49/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-49%2F"
+      },
+      {
+        "title": "Chapter 48",
+        "date": "08/01/2024",
+        "views": "135254",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-48/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-48%2F"
+      },
+      {
+        "title": "Chapter 47",
+        "date": "08/01/2024",
+        "views": "132196",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-47/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-47%2F"
+      },
+      {
+        "title": "Chapter 46",
+        "date": "08/01/2024",
+        "views": "136646",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-46/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-46%2F"
+      },
+      {
+        "title": "Chapter 45",
+        "date": "08/01/2024",
+        "views": "117388",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-45/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-45%2F"
+      },
+      {
+        "title": "Chapter 44",
+        "date": "08/01/2024",
+        "views": "97088",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-44/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-44%2F"
+      },
+      {
+        "title": "Chapter 43",
+        "date": "08/01/2024",
+        "views": "93629",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-43/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-43%2F"
+      },
+      {
+        "title": "Chapter 42",
+        "date": "08/01/2024",
+        "views": "90789",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-42/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-42%2F"
+      },
+      {
+        "title": "Chapter 41",
+        "date": "08/01/2024",
+        "views": "87652",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-41/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-41%2F"
+      },
+      {
+        "title": "Chapter 40",
+        "date": "15/07/2025",
+        "views": "93301",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-40/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-40%2F"
+      },
+      {
+        "title": "Chapter 39",
+        "date": "08/01/2024",
+        "views": "74178",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-39/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-39%2F"
+      },
+      {
+        "title": "Chapter 38",
+        "date": "08/01/2024",
+        "views": "73446",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-38/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-38%2F"
+      },
+      {
+        "title": "Chapter 37",
+        "date": "08/01/2024",
+        "views": "79748",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-37/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-37%2F"
+      },
+      {
+        "title": "Chapter 36",
+        "date": "08/01/2024",
+        "views": "79111",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-36/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-36%2F"
+      },
+      {
+        "title": "Chapter 35",
+        "date": "08/01/2024",
+        "views": "79987",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-35/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-35%2F"
+      },
+      {
+        "title": "Chapter 34",
+        "date": "08/01/2024",
+        "views": "77367",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-34/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-34%2F"
+      },
+      {
+        "title": "Chapter 33",
+        "date": "08/01/2024",
+        "views": "78329",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-33/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-33%2F"
+      },
+      {
+        "title": "Chapter 32",
+        "date": "08/01/2024",
+        "views": "79207",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-32/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-32%2F"
+      },
+      {
+        "title": "Chapter 31",
+        "date": "08/01/2024",
+        "views": "79452",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-31/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-31%2F"
+      },
+      {
+        "title": "Chapter 30",
+        "date": "08/01/2024",
+        "views": "79808",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-30/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-30%2F"
+      },
+      {
+        "title": "Chapter 29",
+        "date": "08/01/2024",
+        "views": "73118",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-29/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-29%2F"
+      },
+      {
+        "title": "Chapter 28",
+        "date": "08/01/2024",
+        "views": "73777",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-28/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-28%2F"
+      },
+      {
+        "title": "Chapter 27",
+        "date": "08/01/2024",
+        "views": "73810",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-27/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-27%2F"
+      },
+      {
+        "title": "Chapter 26",
+        "date": "08/01/2024",
+        "views": "77995",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-26/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-26%2F"
+      },
+      {
+        "title": "Chapter 25",
+        "date": "08/01/2024",
+        "views": "78160",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-25/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-25%2F"
+      },
+      {
+        "title": "Chapter 24",
+        "date": "08/01/2024",
+        "views": "76502",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-24/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-24%2F"
+      },
+      {
+        "title": "Chapter 23",
+        "date": "08/01/2024",
+        "views": "76686",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-23/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-23%2F"
+      },
+      {
+        "title": "Chapter 22",
+        "date": "08/01/2024",
+        "views": "74442",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-22/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-22%2F"
+      },
+      {
+        "title": "Chapter 21",
+        "date": "08/01/2024",
+        "views": "76632",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-21/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-21%2F"
+      },
+      {
+        "title": "Chapter 20",
+        "date": "08/01/2024",
+        "views": "78149",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-20/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-20%2F"
+      },
+      {
+        "title": "Chapter 19",
+        "date": "08/01/2024",
+        "views": "72005",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-19/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-19%2F"
+      },
+      {
+        "title": "Chapter 18",
+        "date": "08/01/2024",
+        "views": "74452",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-18/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-18%2F"
+      },
+      {
+        "title": "Chapter 17",
+        "date": "08/01/2024",
+        "views": "76317",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-17/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-17%2F"
+      },
+      {
+        "title": "Chapter 16",
+        "date": "08/01/2024",
+        "views": "73427",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-16/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-16%2F"
+      },
+      {
+        "title": "Chapter 15",
+        "date": "08/01/2024",
+        "views": "74046",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-15/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-15%2F"
+      },
+      {
+        "title": "Chapter 14",
+        "date": "08/01/2024",
+        "views": "74124",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-14/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-14%2F"
+      },
+      {
+        "title": "Chapter 13",
+        "date": "08/01/2024",
+        "views": "74238",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-13/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-13%2F"
+      },
+      {
+        "title": "Chapter 12",
+        "date": "08/01/2024",
+        "views": "78897",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-12/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-12%2F"
+      },
+      {
+        "title": "Chapter 11",
+        "date": "08/01/2024",
+        "views": "78689",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-11/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-11%2F"
+      },
+      {
+        "title": "Chapter 10",
+        "date": "08/01/2024",
+        "views": "81187",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-10/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-10%2F"
+      },
+      {
+        "title": "Chapter 9",
+        "date": "08/01/2024",
+        "views": "78078",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-9/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-9%2F"
+      },
+      {
+        "title": "Chapter 8",
+        "date": "08/01/2024",
+        "views": "79344",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-8/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-8%2F"
+      },
+      {
+        "title": "Chapter 7",
+        "date": "08/01/2024",
+        "views": "79499",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-7/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-7%2F"
+      },
+      {
+        "title": "Chapter 6",
+        "date": "08/01/2024",
+        "views": "83003",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-6/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-6%2F"
+      },
+      {
+        "title": "Chapter 5",
+        "date": "08/01/2024",
+        "views": "85912",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-5/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-5%2F"
+      },
+      {
+        "title": "Chapter 4",
+        "date": "08/01/2024",
+        "views": "90032",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-4/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-4%2F"
+      },
+      {
+        "title": "Chapter 3",
+        "date": "08/01/2024",
+        "views": "95435",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-3/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-3%2F"
+      },
+      {
+        "title": "Chapter 2",
+        "date": "08/01/2024",
+        "views": "109743",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-2/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-2%2F"
+      },
+      {
+        "title": "Chapter 1",
+        "date": "08/01/2024",
+        "views": "129471",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-1/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-1%2F"
+      },
+      {
+        "title": "Chapter .1",
+        "date": "08/01/2024",
+        "views": "162698",
+        "originalLink": "https://komiku.org/solo-leveling-chapter-00-1/",
+        "link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fsolo-leveling-chapter-00-1%2F"
+      }
+    ]
+  }
+}
+--End--
+
+--https://www.puruboy.kozow.com/api/anime/komiku/home--
+Example Code:
+async function getUpdates() {
+   const res = await fetch('/api/anime/komiku/home');
+   const data = await res.json();
+   console.log(data);
+ }
+Code: 200
+Respon:
+{
+  "success": true,
+  "author": "PuruBoy",
+  "result": [
+    {
+      "title": "Mercenary Enrollment",
+      "type": "Manhwa",
+      "chapter": "Chapter 279",
+      "update_info": "Manhwa Aksi  39 menit lalu",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/mercenary-enrollment/manga_img_horizontal-Komik-Mercenary-Enrollment-scaled.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/mercenary-enrollment/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fmercenary-enrollment%2F",
+      "originalChapterLink": "https://komiku.org/mercenary-enrollment-chapter-279/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fmercenary-enrollment-chapter-279%2F"
+    },
+    {
+      "title": "Mount Hua Sect’s Genius Phantom Swordsman",
+      "type": "Manhwa",
+      "chapter": "Chapter 54",
+      "update_info": "Manhwa Fantasi  39 menit lalu",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/mount-hua-sects-genius-phantom-swordsman/manga_img_horizontal-A1-Mount-Hua-Sects-Genius-Phantom-Swordsman.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/mount-hua-sects-genius-phantom-swordsman/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fmount-hua-sects-genius-phantom-swordsman%2F",
+      "originalChapterLink": "https://komiku.org/mount-hua-sects-genius-phantom-swordsman-chapter-54/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fmount-hua-sects-genius-phantom-swordsman-chapter-54%2F"
+    },
+    {
+      "title": "Magic Emperor",
+      "type": "Manhua",
+      "chapter": "Chapter 831",
+      "update_info": "Manhua Fantasi  39 menit lalu",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/magic-emperor/manga_img_horizontal-Manhua-Magic-Emperor.png?resize=240,171",
+      "originalLink": "https://komiku.org/manga/magic-emperor/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fmagic-emperor%2F",
+      "originalChapterLink": "https://komiku.org/magic-emperor-chapter-831/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fmagic-emperor-chapter-831%2F"
+    },
+    {
+      "title": "The Villain Wants To Live",
+      "type": "Manhwa",
+      "chapter": "Chapter 48",
+      "update_info": "Manhwa Fantasi  39 menit lalu",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/the-villain-wants-to-live/manga_img_horizontal-A1-The-Villain-Wants-To-Live.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/the-villain-wants-to-live/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fthe-villain-wants-to-live%2F",
+      "originalChapterLink": "https://komiku.org/the-villain-wants-to-live-chapter-48/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fthe-villain-wants-to-live-chapter-48%2F"
+    },
+    {
+      "title": "The Returnee’s Hidden Strategy Stream",
+      "type": "Manhwa",
+      "chapter": "Chapter 7",
+      "update_info": "Manhwa Fantasi  2 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315015303_56c0b8100bacda96_d058be60.webp?resize=240,171",
+      "originalLink": "https://komiku.org/manga/the-returnees-hidden-strategy-stream/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fthe-returnees-hidden-strategy-stream%2F",
+      "originalChapterLink": "https://komiku.org/the-returnees-hidden-strategy-stream-chapter-7/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fthe-returnees-hidden-strategy-stream-chapter-7%2F"
+    },
+    {
+      "title": "Castle 2: On Top of Everyone",
+      "type": "Manhwa",
+      "chapter": "Chapter 128",
+      "update_info": "Manhwa Aksi  3 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/img/upload/castle_2__on_top_of_everyone/img_686e182eb337f0.86659380.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/castle-2-on-top-of-everyone/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fcastle-2-on-top-of-everyone%2F",
+      "originalChapterLink": "https://komiku.org/castle-2-on-top-of-everyone-chapter-128/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fcastle-2-on-top-of-everyone-chapter-128%2F"
+    },
+    {
+      "title": "Auto-Hunting With Clones",
+      "type": "Manhwa",
+      "chapter": "Chapter 176",
+      "update_info": "Manhwa Aksi  3 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/auto-hunting-with-clones/manga_img_horizontal-Auto-Hunting-With-Clones-Panjang.png?resize=240,171",
+      "originalLink": "https://komiku.org/manga/auto-hunting-with-clones/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fauto-hunting-with-clones%2F",
+      "originalChapterLink": "https://komiku.org/auto-hunting-with-clones-chapter-176/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fauto-hunting-with-clones-chapter-176%2F"
+    },
+    {
+      "title": "Hell Mode: Yarikomi Suki no Gamer wa Hai Settei no Isekai de Musou Suru",
+      "type": "Manga",
+      "chapter": "Chapter 93",
+      "update_info": "Manga Isekai  3 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/hell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru/manga_img_horizontal-Komik-Hell-Mode-Yarikomi-Suki-no-Gamer-wa-Hai-Settei-no-Isekai-de-Musou-Suru-fix.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/hell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fhell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru%2F",
+      "originalChapterLink": "https://komiku.org/hell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru-chapter-93/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fhell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru-chapter-93%2F"
+    },
+    {
+      "title": "The Dark Mage’s Return to Enlistment",
+      "type": "Manhwa",
+      "chapter": "Chapter 75",
+      "update_info": "Manhwa Fantasi  3 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/the-dark-mages-return-to-enlistment/manga_img_horizontal-Back-The-Dark-Mages-Return-to-Enlistment.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/the-dark-mages-return-to-enlistment/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fthe-dark-mages-return-to-enlistment%2F",
+      "originalChapterLink": "https://komiku.org/the-dark-mages-return-to-enlistment-chapter-75/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fthe-dark-mages-return-to-enlistment-chapter-75%2F"
+    },
+    {
+      "title": "The Dutiful Kid Who Saved the Villainous Family",
+      "type": "Manhwa",
+      "chapter": "Chapter 21",
+      "update_info": "Manhwa Fantasi  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315020512_fef302a7f22dceeb_89022e05.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/the-dutiful-kid-who-saved-the-villainous-family/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fthe-dutiful-kid-who-saved-the-villainous-family%2F",
+      "originalChapterLink": "https://komiku.org/the-dutiful-kid-who-saved-the-villainous-family-chapter-21/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fthe-dutiful-kid-who-saved-the-villainous-family-chapter-21%2F"
+    },
+    {
+      "title": "Asobinin na Shoujo-tachi wa Kyou mo Houkago Yatteiru",
+      "type": "Manga",
+      "chapter": "Chapter 2",
+      "update_info": "Manga Komedi  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315020446_ad311beaafff6b8e_639a89e5.webp?resize=240,171",
+      "originalLink": "https://komiku.org/manga/asobinin-na-shoujo-tachi-wa-kyou-mo-houkago-yatteiru/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fasobinin-na-shoujo-tachi-wa-kyou-mo-houkago-yatteiru%2F",
+      "originalChapterLink": "https://komiku.org/asobinin-na-shoujo-tachi-wa-kyou-mo-houkago-yatteiru-chapter-2/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fasobinin-na-shoujo-tachi-wa-kyou-mo-houkago-yatteiru-chapter-2%2F"
+    },
+    {
+      "title": "Apocalypse Smuggler: Trading Spicy Strips for Gold Bars",
+      "type": "Manhua",
+      "chapter": "Chapter 4",
+      "update_info": "Manhua Fiksi Sains  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315020246_d7f55244a7c281a8_3c263ad7.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/apocalypse-smuggler-trading-spicy-strips-for-gold-bars/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fapocalypse-smuggler-trading-spicy-strips-for-gold-bars%2F",
+      "originalChapterLink": "https://komiku.org/apocalypse-smuggler-trading-spicy-strips-for-gold-bars-chapter-4/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fapocalypse-smuggler-trading-spicy-strips-for-gold-bars-chapter-4%2F"
+    },
+    {
+      "title": "Dungeon no Aru Sekai de Kashikoku Sukoyaka ni Ikiru Houhou",
+      "type": "Manga",
+      "chapter": "Chapter 7",
+      "update_info": "Manga Isekai  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315020221_31fa28e50be2ca77_dd174172.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/dungeon-no-aru-sekai-de-kashikoku-sukoyaka-ni-ikiru-houhou/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fdungeon-no-aru-sekai-de-kashikoku-sukoyaka-ni-ikiru-houhou%2F",
+      "originalChapterLink": "https://komiku.org/dungeon-no-aru-sekai-de-kashikoku-sukoyaka-ni-ikiru-houhou-chapter-7/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fdungeon-no-aru-sekai-de-kashikoku-sukoyaka-ni-ikiru-houhou-chapter-7%2F"
+    },
+    {
+      "title": "I’m a Super Rich Guy, So It’s Reasonable For Me to Be a Scumbag",
+      "type": "Manhua",
+      "chapter": "Chapter 28",
+      "update_info": "Manhua Komedi  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315015223_9901cc7a8ab0e33e_de7b07a4.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/im-a-super-rich-guy-so-its-reasonable-for-me-to-be-a-scumbag/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fim-a-super-rich-guy-so-its-reasonable-for-me-to-be-a-scumbag%2F",
+      "originalChapterLink": "https://komiku.org/im-a-super-rich-guy-so-its-reasonable-for-me-to-be-a-scumbag-chapter-28/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fim-a-super-rich-guy-so-its-reasonable-for-me-to-be-a-scumbag-chapter-28%2F"
+    },
+    {
+      "title": "Tsuma wa Boku wo Futorasetai!",
+      "type": "Manga",
+      "chapter": "Chapter 4",
+      "update_info": "Manga Cooking  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315015922_532566ea915203ee_b385b7c2.webp?resize=240,171",
+      "originalLink": "https://komiku.org/manga/tsuma-wa-boku-wo-futorasetai/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Ftsuma-wa-boku-wo-futorasetai%2F",
+      "originalChapterLink": "https://komiku.org/tsuma-wa-boku-wo-futorasetai-chapter-4/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Ftsuma-wa-boku-wo-futorasetai-chapter-4%2F"
+    },
+    {
+      "title": "Tier 1 Shimai: Yuumei Yonshimai wa Boku nashi de wa Ikirarenai",
+      "type": "Manga",
+      "chapter": "Chapter 1.2",
+      "update_info": "Manga Harem  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315020145_01a4b07642ac9360_34dabe09.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/tier-1-shimai-yuumei-yonshimai-wa-boku-nashi-de-wa-ikirarenai/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Ftier-1-shimai-yuumei-yonshimai-wa-boku-nashi-de-wa-ikirarenai%2F",
+      "originalChapterLink": "https://komiku.org/tier-1-shimai-yuumei-yonshimai-wa-boku-nashi-de-wa-ikirarenai-chapter-1-2/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Ftier-1-shimai-yuumei-yonshimai-wa-boku-nashi-de-wa-ikirarenai-chapter-1-2%2F"
+    },
+    {
+      "title": "Dan, the Bat-Wielding Knight",
+      "type": "Manhwa",
+      "chapter": "Chapter 24",
+      "update_info": "Manhwa Aksi  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315015547_ccbc297651cc474a_04d00ef4.webp?resize=240,171",
+      "originalLink": "https://komiku.org/manga/dan-the-bat-wielding-knight/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fdan-the-bat-wielding-knight%2F",
+      "originalChapterLink": "https://komiku.org/dan-the-bat-wielding-knight-chapter-24/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fdan-the-bat-wielding-knight-chapter-24%2F"
+    },
+    {
+      "title": "The Merciless Fairy Shall Become a Cultivation Vessel",
+      "type": "Manhua",
+      "chapter": "Chapter 2",
+      "update_info": "Manhua Martial Arts  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315015627_2018212118e89df0_1fa29c62.jpg?resize=240,171",
+      "originalLink": "https://komiku.org/manga/the-merciless-fairy-shall-become-a-cultivation-vessel/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fthe-merciless-fairy-shall-become-a-cultivation-vessel%2F",
+      "originalChapterLink": "https://komiku.org/the-merciless-fairy-shall-become-a-cultivation-vessel-chapter-2/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fthe-merciless-fairy-shall-become-a-cultivation-vessel-chapter-2%2F"
+    },
+    {
+      "title": "Golden Core Is a Star You Call This Cultivating Immortality",
+      "type": "Manhua",
+      "chapter": "Chapter 24",
+      "update_info": "Manhua Fantasi  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315020044_1d37abf9209f1ad3_179c4391.webp?resize=240,171",
+      "originalLink": "https://komiku.org/manga/golden-core-is-a-star-you-call-this-cultivating-immortality/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fgolden-core-is-a-star-you-call-this-cultivating-immortality%2F",
+      "originalChapterLink": "https://komiku.org/golden-core-is-a-star-you-call-this-cultivating-immortality-chapter-24/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fgolden-core-is-a-star-you-call-this-cultivating-immortality-chapter-24%2F"
+    },
+    {
+      "title": "Mysterious Revival: Starting with a Trillion Ghost Coins",
+      "type": "Manhua",
+      "chapter": "Chapter 3",
+      "update_info": "Manhua Horor  5 jam lalu",
+      "thumbnail": "https://thumbnail.komiku.org/new/img/images/2026/03/15/20260315020405_5c67ae9df8290a11_617d8d6a.webp?resize=240,171",
+      "originalLink": "https://komiku.org/manga/mysterious-revival-starting-with-a-trillion-ghost-coins/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fmysterious-revival-starting-with-a-trillion-ghost-coins%2F",
+      "originalChapterLink": "https://komiku.org/mysterious-revival-starting-with-a-trillion-ghost-coins-chapter-3/",
+      "chapter_link": "https://www.puruboy.kozow.com/api/anime/komiku/read?url=https%3A%2F%2Fkomiku.org%2Fmysterious-revival-starting-with-a-trillion-ghost-coins-chapter-3%2F"
+    }
+  ]
+}
+--End--
+
+--https://www.puruboy.kozow.com/api/anime/komiku/popular?page=1--
+Example Code:
+async function getPopular() {
+   const res = await fetch('/api/anime/komiku/popular?page=1');
+   const data = await res.json();
+   console.log(data);
+ }
+Code: 200
+Respon:
+{
+  "success": true,
+  "author": "PuruBoy",
+  "result": [
+    {
+      "title": "Mercenary Enrollment",
+      "type": "Manhwa",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/mercenary-enrollment/manga_img_horizontal-Komik-Mercenary-Enrollment-scaled.jpg?resize=450,235&quality=60",
+      "description": "Konflik masa lalu mengancam kehidupan sehari-hari seorang remaja yang biasa-biasa saja",
+      "originalLink": "https://komiku.org/manga/mercenary-enrollment/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fmercenary-enrollment%2F"
+    },
+    {
+      "title": "Magic Emperor",
+      "type": "Manhua",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/magic-emperor/manga_img_horizontal-Manhua-Magic-Emperor.png?resize=450,235&quality=60",
+      "description": "Perjalanan sihir dan kekuasaan dalam menghadapi intrik politik fantasi.",
+      "originalLink": "https://komiku.org/manga/magic-emperor/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fmagic-emperor%2F"
+    },
+    {
+      "title": "The Villain Wants To Live",
+      "type": "Manhwa",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/the-villain-wants-to-live/manga_img_horizontal-A1-The-Villain-Wants-To-Live.jpg?resize=450,235&quality=60",
+      "description": "Seorang tokoh antagonis berusaha menghindari mati dengan mengubah jalannya cerita.",
+      "originalLink": "https://komiku.org/manga/the-villain-wants-to-live/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fthe-villain-wants-to-live%2F"
+    },
+    {
+      "title": "Auto-Hunting With Clones",
+      "type": "Manhwa",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/auto-hunting-with-clones/manga_img_horizontal-Auto-Hunting-With-Clones-Panjang.png?resize=450,235&quality=60",
+      "description": "Penggabungan kekuatan unik menjadikan setiap pertempuran penuh kejutan tak terduga.",
+      "originalLink": "https://komiku.org/manga/auto-hunting-with-clones/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fauto-hunting-with-clones%2F"
+    },
+    {
+      "title": "Hell Mode: Yarikomi Suki no Gamer wa Hai Settei no Isekai de Musou Suru",
+      "type": "Manga",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/hell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru/manga_img_horizontal-Komik-Hell-Mode-Yarikomi-Suki-no-Gamer-wa-Hai-Settei-no-Isekai-de-Musou-Suru-fix.jpg?resize=450,235&quality=60",
+      "description": "Gamer fanatik menaklukkan dunia isekai dengan strategi dan keahlian unik",
+      "originalLink": "https://komiku.org/manga/hell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fhell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru%2F"
+    },
+    {
+      "title": "Grand Blue",
+      "type": "Manga",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/31514-grand-blue/manga_img_horizontal-Manga-Grand-Blue.png?resize=450,235&quality=60",
+      "description": "Iori memulai kehidupan kampusnya dengan pengalaman menyelam yang tak terlupakan.",
+      "originalLink": "https://komiku.org/manga/31514-grand-blue/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2F31514-grand-blue%2F"
+    },
+    {
+      "title": "Tsuki ga Michibiku Isekai Douchuu",
+      "type": "Manga",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/tsuki-ga-michibiku-isekai-douchuu/manga_img_horizontal-Manga-Tsuki-ga-Michibiku-Isekai-Douchuu.jpg?resize=450,235&quality=60",
+      "description": "Diusir oleh dewi yang memanggilnya, Tsukimichi membentuk jalan sendiri di dunia isekai.",
+      "originalLink": "https://komiku.org/manga/tsuki-ga-michibiku-isekai-douchuu/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Ftsuki-ga-michibiku-isekai-douchuu%2F"
+    },
+    {
+      "title": "Sekai Saikyou no Assassin, isekai kizoku ni tensei suru",
+      "type": "Manga",
+      "update_info": "Up 2",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/sekai-saikyou-no-assassin-isekai-kizoku-ni-tensei-suru/manga_img_horizontal-Manga-Sekai-Saikyou-no-Assassin-isekai-kizoku-ni-tensei-suru.png?resize=450,235&quality=60",
+      "description": "Perjalanan pembunuh bayaran di dunia lain penuh dengan aksi dan strategi.",
+      "originalLink": "https://komiku.org/manga/sekai-saikyou-no-assassin-isekai-kizoku-ni-tensei-suru/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fsekai-saikyou-no-assassin-isekai-kizoku-ni-tensei-suru%2F"
+    },
+    {
+      "title": "Dungeon Odyssey",
+      "type": "Manhwa",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/dungeon-odyssey/manga_img_horizontal-Komik-Dungeon-Odyssey.jpg?resize=450,235&quality=60",
+      "description": "Pencarian asal-usul sebuah dunia yang diselimuti teka-teki.",
+      "originalLink": "https://komiku.org/manga/dungeon-odyssey/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fdungeon-odyssey%2F"
+    },
+    {
+      "title": "Helmut: The Forsaken Child",
+      "type": "Manhwa",
+      "update_info": "Up 1",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/helmut-the-forsaken-child/manga_img_horizontal-Helmut-The-Forsaken-Child-Panjang.png?resize=450,235&quality=60",
+      "description": "Helmut menghadapi ancaman luar dan konflik batin yang mendalam.",
+      "originalLink": "https://komiku.org/manga/helmut-the-forsaken-child/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fhelmut-the-forsaken-child%2F"
+    }
+  ]
+}
+--End--
+
+--https://www.puruboy.kozow.com/api/anime/komiku/read?url=https://komiku.org/solo-leveling-ragnarok-chapter-68/--
+Example Code:
+async function readChapter() {
+   const res = await fetch('/api/anime/komiku/read?url=https://komiku.org/solo-leveling-ragnarok-chapter-68/');
+   const data = await res.json();
+   console.log(data);
+ }
+Code: 200
+Respon:
+{
+  "success": true,
+  "author": "PuruBoy",
+  "result": {
+    "title": "Solo Leveling: Ragnarok Chapter 68",
+    "images": [
+      {
+        "index": 1,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/1_a1bc02.webp",
+        "alt": "Komik Solo Leveling: Ragnarok Chapter 68 gambar 1"
+      },
+      {
+        "index": 2,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/2_part1_9512ae.webp",
+        "alt": "Manhwa Solo Leveling: Ragnarok Chapter 68 gambar 2"
+      },
+      {
+        "index": 3,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/2_part2_e5e2eb.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 3"
+      },
+      {
+        "index": 4,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/2_part3_93cacf.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 4"
+      },
+      {
+        "index": 5,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/2_part4_565a89.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 5"
+      },
+      {
+        "index": 6,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/2_part5_299d0a.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 6"
+      },
+      {
+        "index": 7,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/2_part6_359da6.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 7"
+      },
+      {
+        "index": 8,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/3_part1_d1757b.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 8"
+      },
+      {
+        "index": 9,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/3_part2_93a23b.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 9"
+      },
+      {
+        "index": 10,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/3_part3_ea47d8.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 10"
+      },
+      {
+        "index": 11,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/3_part4_56a619.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 11"
+      },
+      {
+        "index": 12,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/3_part5_50d7f6.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 12"
+      },
+      {
+        "index": 13,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/3_part6_e73ee9.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 13"
+      },
+      {
+        "index": 14,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/4_part1_c9b61e.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 14"
+      },
+      {
+        "index": 15,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/4_part2_ff11eb.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 15"
+      },
+      {
+        "index": 16,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/4_part3_bde402.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 16"
+      },
+      {
+        "index": 17,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/4_part4_500f27.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 17"
+      },
+      {
+        "index": 18,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/4_part5_a9fb51.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 18"
+      },
+      {
+        "index": 19,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/4_part6_28d973.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 19"
+      },
+      {
+        "index": 20,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/5_part1_e76091.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 20"
+      },
+      {
+        "index": 21,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/5_part2_9fedeb.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 21"
+      },
+      {
+        "index": 22,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/5_part3_ddb251.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 22"
+      },
+      {
+        "index": 23,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/5_part4_23383e.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 23"
+      },
+      {
+        "index": 24,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/5_part5_7b2a08.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 24"
+      },
+      {
+        "index": 25,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/5_part6_0b821e.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 25"
+      },
+      {
+        "index": 26,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/6_part1_5ea865.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 26"
+      },
+      {
+        "index": 27,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/6_part2_95cf18.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 27"
+      },
+      {
+        "index": 28,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/6_part3_51a381.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 28"
+      },
+      {
+        "index": 29,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/6_part4_c08911.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 29"
+      },
+      {
+        "index": 30,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/6_part5_016916.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 30"
+      },
+      {
+        "index": 31,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/6_part6_55d66d.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 31"
+      },
+      {
+        "index": 32,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/7_part1_ed63f0.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 32"
+      },
+      {
+        "index": 33,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/7_part2_f33b17.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 33"
+      },
+      {
+        "index": 34,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/7_part3_3fca22.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 34"
+      },
+      {
+        "index": 35,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/7_part4_34cea3.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 35"
+      },
+      {
+        "index": 36,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/7_part5_806459.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 36"
+      },
+      {
+        "index": 37,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/7_part6_3522cb.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 37"
+      },
+      {
+        "index": 38,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/8_part1_72a8d0.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 38"
+      },
+      {
+        "index": 39,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/8_part2_1f6303.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 39"
+      },
+      {
+        "index": 40,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/8_part3_4888b0.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 40"
+      },
+      {
+        "index": 41,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/8_part4_ce049f.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 41"
+      },
+      {
+        "index": 42,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/8_part5_45acf4.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 42"
+      },
+      {
+        "index": 43,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/8_part6_72fee6.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 43"
+      },
+      {
+        "index": 44,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/9_part1_cf9543.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 44"
+      },
+      {
+        "index": 45,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/9_part2_7ef326.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 45"
+      },
+      {
+        "index": 46,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/9_part3_18150f.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 46"
+      },
+      {
+        "index": 47,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/9_part4_d39826.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 47"
+      },
+      {
+        "index": 48,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/9_part5_75f326.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 48"
+      },
+      {
+        "index": 49,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/9_part6_8e115c.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 49"
+      },
+      {
+        "index": 50,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/10_part1_4dfa4b.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 50"
+      },
+      {
+        "index": 51,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/10_part2_fc69fd.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 51"
+      },
+      {
+        "index": 52,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/10_part3_b47f7e.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 52"
+      },
+      {
+        "index": 53,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/10_part4_e73ce1.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 53"
+      },
+      {
+        "index": 54,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/10_part5_8c8890.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 54"
+      },
+      {
+        "index": 55,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/10_part6_df1f8b.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 55"
+      },
+      {
+        "index": 56,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/11_part1_e92fd8.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 56"
+      },
+      {
+        "index": 57,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/11_part2_7c93a5.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 57"
+      },
+      {
+        "index": 58,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/11_part3_b8abe9.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 58"
+      },
+      {
+        "index": 59,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/11_part4_41fbba.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 59"
+      },
+      {
+        "index": 60,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/11_part5_cebd91.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 60"
+      },
+      {
+        "index": 61,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/11_part6_1edf97.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 61"
+      },
+      {
+        "index": 62,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/12_part1_f039cd.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 62"
+      },
+      {
+        "index": 63,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/12_part2_21aab4.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 63"
+      },
+      {
+        "index": 64,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/12_part3_61e3cf.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 64"
+      },
+      {
+        "index": 65,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/12_part4_677577.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 65"
+      },
+      {
+        "index": 66,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/12_part5_23dbf8.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 66"
+      },
+      {
+        "index": 67,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/12_part6_b5f378.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 67"
+      },
+      {
+        "index": 68,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/13_part1_9b5967.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 68"
+      },
+      {
+        "index": 69,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/13_part2_1ad69b.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 69"
+      },
+      {
+        "index": 70,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/13_part3_b6d704.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 70"
+      },
+      {
+        "index": 71,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/13_part4_be49cb.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 71"
+      },
+      {
+        "index": 72,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/13_part5_c2d3d6.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 72"
+      },
+      {
+        "index": 73,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/13_part6_e7f0db.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 73"
+      },
+      {
+        "index": 74,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/14_part1_175111.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 74"
+      },
+      {
+        "index": 75,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/14_part2_5e7c87.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 75"
+      },
+      {
+        "index": 76,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/14_part3_52121b.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 76"
+      },
+      {
+        "index": 77,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/14_part4_ba78ee.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 77"
+      },
+      {
+        "index": 78,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/14_part5_e31e8d.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 78"
+      },
+      {
+        "index": 79,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/14_part6_1cc185.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 79"
+      },
+      {
+        "index": 80,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/15_part1_281b58.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 80"
+      },
+      {
+        "index": 81,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/15_part2_cf61b9.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 81"
+      },
+      {
+        "index": 82,
+        "url": "https://img.komiku.org/upload5/solo-leveling-ragnarok/68/2026-01-08/16_3766c6.webp",
+        "alt": "Solo Leveling: Ragnarok Chapter 68 Gambar 82"
+      }
+    ]
+  }
+}
+--End--
+
+--https://www.puruboy.kozow.com/api/anime/komiku/search?q=Solo Leveling--
+Example Code:
+async function searchKomik() {
+   const res = await fetch('/api/anime/komiku/search?q=Solo Leveling');
+   const data = await res.json();
+   console.log(data);
+ }
+Code: 200
+Respon:
+{
+  "success": true,
+  "author": "PuruBoy",
+  "result": [
+    {
+      "title": "Solo Leveling: Ragnarok",
+      "type": "Manhwa",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/alone-leveling-ragnarok/manga_thumbnail-A2-Alone-Leveling-Ragnarok.jpg?resize=450,235&quality=60",
+      "description": "Update 2 bulan lalu.",
+      "originalLink": "https://komiku.org/manga/alone-leveling-ragnarok/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Falone-leveling-ragnarok%2F"
+    },
+    {
+      "title": "Solo Leveling",
+      "type": "Manhwa",
+      "thumbnail": "https://thumbnail.komiku.org/uploads/manga/solo-leveling-sub-indo/manga_thumbnail-Head-I-Alone-Leveling.png?resize=450,235&quality=60",
+      "description": "Update 11 bulan lalu.",
+      "originalLink": "https://komiku.org/manga/solo-leveling-id/",
+      "link": "https://www.puruboy.kozow.com/api/anime/komiku/detail?url=https%3A%2F%2Fkomiku.org%2Fmanga%2Fsolo-leveling-id%2F"
+    }
+  ]
+}
+--End--
+
