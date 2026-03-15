@@ -3,15 +3,25 @@
     <!-- Reader Header -->
     <div class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-white/10 px-4 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <button hx-get="/manga" hx-target="#main-content" hx-push-url="true" class="p-2 text-white/70 hover:text-primary transition-colors">
-                <i class="ph-bold ph-house-line text-xl"></i>
+            <button 
+                hx-get="<%= mangaUrl ? '/manga/detail?url=' + encodeURIComponent(mangaUrl) : '/manga' %>" 
+                hx-target="#main-content" 
+                hx-push-url="true" 
+                class="p-2 text-white/70 hover:text-primary transition-colors"
+                title="Kembali"
+            >
+                <i class="ph-bold ph-arrow-left text-xl"></i>
             </button>
             
             <div class="text-center overflow-hidden px-4">
                 <h1 class="text-white font-bold text-sm md:text-base truncate"><%= result.title %></h1>
             </div>
 
-            <div class="w-10"></div> <!-- Spacer for symmetry -->
+            <div class="flex items-center gap-2">
+                <button hx-get="/manga" hx-target="#main-content" hx-push-url="true" class="p-2 text-white/70 hover:text-primary transition-colors">
+                    <i class="ph-bold ph-house-line text-xl"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -28,7 +38,6 @@
                         class="w-full h-auto block select-none pointer-events-none"
                         onerror="this.src='/favicon.jpg'; this.classList.add('opacity-20');"
                     >
-                    <!-- Loading placeholder / spacer if needed -->
                     <div class="absolute inset-0 -z-10 bg-slate-800 animate-pulse"></div>
                 </div>
             <% }) %>
@@ -36,15 +45,53 @@
     </div>
 
     <!-- Navigation Footer -->
-    <div class="sticky bottom-4 mx-auto mb-8 z-50">
-        <div class="bg-primary text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-6 font-black text-sm uppercase tracking-widest">
-            <span>Selesai Membaca</span>
+    <div class="sticky bottom-6 mx-auto z-50 flex flex-col items-center gap-4 w-full px-4">
+        <div class="flex items-center gap-3 bg-slate-900/90 backdrop-blur-xl border border-white/10 p-2 rounded-2xl shadow-2xl">
+            <% if (prevUrl) { %>
+                <button 
+                    hx-get="/manga/read?url=<%= encodeURIComponent(prevUrl) %>&mangaUrl=<%= encodeURIComponent(mangaUrl) %>" 
+                    hx-target="#main-content" 
+                    hx-push-url="true"
+                    class="flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 text-white hover:bg-primary transition-all"
+                    title="Chapter Sebelumnya"
+                >
+                    <i class="ph-bold ph-caret-left text-xl"></i>
+                </button>
+            <% } else { %>
+                <div class="w-12 h-12 rounded-xl bg-white/5 text-white/20 flex items-center justify-center cursor-not-allowed">
+                    <i class="ph-bold ph-caret-left text-xl"></i>
+                </div>
+            <% } %>
+
+            <button 
+                hx-get="<%= mangaUrl ? '/manga/detail?url=' + encodeURIComponent(mangaUrl) : '/manga' %>" 
+                hx-target="#main-content" 
+                hx-push-url="true"
+                class="px-6 py-3 bg-primary text-white rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20"
+            >
+                Selesai Membaca
+            </button>
+
+            <% if (nextUrl) { %>
+                <button 
+                    hx-get="/manga/read?url=<%= encodeURIComponent(nextUrl) %>&mangaUrl=<%= encodeURIComponent(mangaUrl) %>" 
+                    hx-target="#main-content" 
+                    hx-push-url="true"
+                    class="flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 text-white hover:bg-primary transition-all"
+                    title="Chapter Selanjutnya"
+                >
+                    <i class="ph-bold ph-caret-right text-xl"></i>
+                </button>
+            <% } else { %>
+                <div class="w-12 h-12 rounded-xl bg-white/5 text-white/20 flex items-center justify-center cursor-not-allowed">
+                    <i class="ph-bold ph-caret-right text-xl"></i>
+                </div>
+            <% } %>
         </div>
     </div>
 </div>
 
 <style>
-    /* Hide scrollbar for clean reading experience but keep functionality */
     .custom-scrollbar::-webkit-scrollbar {
         width: 4px;
     }

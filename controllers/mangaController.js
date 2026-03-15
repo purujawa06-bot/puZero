@@ -104,16 +104,39 @@ exports.getMangaDetail = async (req, res) => {
 exports.readManga = async (req, res) => {
     try {
         const url = req.query.url;
+        const mangaUrl = req.query.mangaUrl;
         if (!url) return res.status(400).send('URL chapter diperlukan.');
 
         const response = await axios.get(`${API_BASE}/read?url=${encodeURIComponent(url)}`);
         const result = response.data.result;
 
+        let prevUrl = null;
+        let nextUrl = null;
+
+        if (mangaUrl) {
+            const detailRes = await axios.get(`${API_BASE}/detail?url=${encodeURIComponent(mangaUrl)}`);
+            const chapters = detailRes.data.result.chapters;
+            const currentIndex = chapters.findIndex(c => c.originalLink === url);
+            
+            if (currentIndex !== -1) {
+                // Chapters are descending (latest first)
+                if (currentIndex < chapters.length - 1) {
+                    prevUrl = chapters[currentIndex + 1].originalLink;
+                }
+                if (currentIndex > 0) {
+                    nextUrl = chapters[currentIndex - 1].originalLink;
+                }
+            }
+        }
+
         const data = {
             title: `PuZero | Baca ${result.title}`,
             page: 'pages/manga-read',
             result,
-            chapterUrl: url
+            chapterUrl: url,
+            mangaUrl: mangaUrl,
+            prevUrl,
+            nextUrl
         };
 
         if (req.headers['hx-request']) {
