@@ -14,7 +14,7 @@
             </button>
             
             <div class="text-center overflow-hidden px-4">
-                <h1 class="text-white font-bold text-sm md:text-base truncate"><%= result.title %></h1>
+                <h1 class="text-white font-bold text-sm md:text-base truncate" id="manga-title"><%= result.title %></h1>
             </div>
 
             <div class="flex items-center gap-2">
@@ -90,6 +90,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    (function saveToHistory() {
+        const historyData = {
+            title: document.getElementById('manga-title').innerText,
+            url: window.location.pathname + window.location.search,
+            type: 'manga',
+            thumb: '/favicon.jpg',
+            timestamp: Date.now()
+        };
+
+        let history = JSON.parse(localStorage.getItem('puzero_history') || '[]');
+        history = history.filter(item => item.url !== historyData.url);
+        history.unshift(historyData);
+        if (history.length > 20) history = history.slice(0, 20);
+        localStorage.setItem('puzero_history', JSON.stringify(history));
+    })();
+</script>
 
 <style>
     .custom-scrollbar::-webkit-scrollbar {

@@ -1,0 +1,121 @@
+<title><%= title %></title>
+
+<div class="max-w-6xl mx-auto px-4 py-10 fade-in">
+    <!-- Header -->
+    <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-black text-secondary tracking-tighter mb-2">
+                Riwayat <span class="text-primary">Aktivitas</span>
+            </h1>
+            <p class="text-slate-500 text-sm font-medium">Daftar 20 konten terakhir yang Anda akses.</p>
+        </div>
+        
+        <button 
+            onclick="clearAllHistory()"
+            class="flex items-center justify-center gap-2 px-6 py-3 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-2xl font-bold text-sm transition-all border border-red-500/20 active:scale-95"
+        >
+            <i class="ph-bold ph-trash"></i> Hapus Semua
+        </button>
+    </div>
+
+    <!-- History List -->
+    <div id="history-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Loading State -->
+        <div class="col-span-full py-20 flex flex-col items-center justify-center text-slate-400">
+            <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4"></div>
+            <p class="font-bold text-sm uppercase tracking-widest">Memuat Riwayat...</p>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="history-empty" class="hidden py-20 flex flex-col items-center justify-center text-center">
+        <div class="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
+            <i class="ph-bold ph-clock-counter-clockwise text-4xl text-slate-300"></i>
+        </div>
+        <h3 class="text-xl font-black text-secondary mb-2">Belum Ada Riwayat</h3>
+        <p class="text-slate-500 text-sm max-w-xs mx-auto mb-8">Anda belum menonton anime atau membaca manga apapun baru-baru ini.</p>
+        <button 
+            hx-get="/" hx-target="#main-content" hx-push-url="true"
+            class="px-8 py-3 bg-primary text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-primary/20"
+        >
+            Jelajahi Sekarang
+        </button>
+    </div>
+</div>
+
+<script>
+    function renderHistory() {
+        const container = document.getElementById('history-container');
+        const emptyState = document.getElementById('history-empty');
+        const history = JSON.parse(localStorage.getItem('puzero_history') || '[]');
+
+        if (history.length === 0) {
+            container.innerHTML = '';
+            emptyState.classList.remove('hidden');
+            return;
+        }
+
+        emptyState.classList.add('hidden');
+        container.innerHTML = history.map(item => {
+            const safeUrl = item.url.replace(/'/g, "\\'");
+            return `
+            <div class="group relative bg-white rounded-[2rem] border border-slate-100 p-3 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 hw-accelerate">
+                <div class="relative aspect-[16/10] rounded-[1.5rem] overflow-hidden mb-4">
+                    <img src="${item.thumb || '/favicon.jpg'}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.src='/favicon.jpg'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div class="absolute top-3 left-3 px-3 py-1 rounded-lg backdrop-blur-md bg-black/40 border border-white/20 text-[10px] font-black text-white uppercase tracking-wider">
+                        ${item.type}
+                    </div>
+
+                    <button onclick="event.stopPropagation(); removeHistoryItem('${safeUrl}')" class="absolute top-3 right-3 w-8 h-8 rounded-lg bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 active:scale-90">
+                        <i class="ph-bold ph-x"></i>
+                    </button>
+                </div>
+
+                <div class="px-2 pb-2">
+                    <div class="flex items-center gap-2 mb-2">
+                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            ${new Date(item.timestamp).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                         </span>
+                    </div>
+                    <h3 class="font-black text-secondary leading-tight line-clamp-2 group-hover:text-primary transition-colors cursor-pointer mb-4" 
+                        onclick="navigateTo('${safeUrl}')">
+                        ${item.title}
+                    </h3>
+                    
+                    <button 
+                        onclick="navigateTo('${safeUrl}')"
+                        class="w-full py-3 bg-slate-50 text-slate-600 rounded-xl text-xs font-black uppercase tracking-widest group-hover:bg-primary group-hover:text-white transition-all border border-slate-100 group-hover:border-primary"
+                    >
+                        Lanjutkan
+                    </button>
+                </div>
+            </div>
+        `}).join('');
+    }
+
+    function navigateTo(url) {
+        if (window.htmx) {
+            htmx.ajax('GET', url, {target: '#main-content', pushUrl: true});
+        } else {
+            window.location.href = url;
+        }
+    }
+
+    function removeHistoryItem(url) {
+        let history = JSON.parse(localStorage.getItem('puzero_history') || '[]');
+        history = history.filter(item => item.url !== url);
+        localStorage.setItem('puzero_history', JSON.stringify(history));
+        renderHistory();
+    }
+
+    function clearAllHistory() {
+        if (confirm('Apakah Anda yakin ingin menghapus semua riwayat?')) {
+            localStorage.removeItem('puzero_history');
+            renderHistory();
+        }
+    }
+
+    setTimeout(renderHistory, 100);
+</script>

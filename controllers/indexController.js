@@ -62,3 +62,16 @@ exports.getPrivacy = (req, res) => {
         res.render('layout', data);
     }
 };
+
+exports.getHistory = (req, res) => {
+    const data = {
+        title: 'PuZero | History',
+        page: 'pages/history'
+    };
+
+    if (req.headers['hx-request']) {
+        res.render('pages/history', data);
+    } else {
+        res.render('layout', data);
+    }
+};

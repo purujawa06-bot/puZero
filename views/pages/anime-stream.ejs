@@ -12,7 +12,7 @@
             >
                 <i class="ph-bold ph-arrow-left"></i> Kembali ke Daftar
             </button>
-            <h1 class="text-2xl md:text-3xl font-black text-secondary leading-tight"><%= stream.title %></h1>
+            <h1 class="text-2xl md:text-3xl font-black text-secondary leading-tight" id="stream-title"><%= stream.title %></h1>
         </div>
     </div>
 
@@ -140,6 +140,27 @@
 </div>
 
 <script>
+    // Logic for History
+    (function saveToHistory() {
+        const historyData = {
+            title: document.getElementById('stream-title').innerText,
+            url: window.location.pathname,
+            type: 'anime',
+            thumb: '<%= (stream.episodes && stream.episodes.length > 0) ? stream.episodes[0].thumb : "" %>',
+            timestamp: Date.now()
+        };
+
+        let history = JSON.parse(localStorage.getItem('puzero_history') || '[]');
+        // Remove existing if same URL
+        history = history.filter(item => item.url !== historyData.url);
+        // Add to beginning
+        history.unshift(historyData);
+        // Keep only 20
+        if (history.length > 20) history = history.slice(0, 20);
+        
+        localStorage.setItem('puzero_history', JSON.stringify(history));
+    })();
+
     async function changeServer(btn) {
         const post = btn.getAttribute('data-post');
         const nume = btn.getAttribute('data-nume');
