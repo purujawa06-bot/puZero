@@ -1,0 +1,132 @@
+<title><%= title %></title>
+<div class="max-w-3xl mx-auto py-10 md:py-16 px-4 sm:px-6 fade-in flex-grow">
+    <div class="mb-6 md:mb-8">
+        <button 
+            hx-get="/category" 
+            hx-target="#main-content" 
+            hx-push-url="true"
+            class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-primary transition-all group hw-accelerate"
+        >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 group-hover:border-primary/30 group-hover:bg-primary/5 shadow-sm transition-all">
+                <i class="ph-bold ph-arrow-left"></i>
+            </div>
+            Kembali ke Kategori
+        </button>
+    </div>
+
+    <div class="text-center mb-10 md:mb-12">
+        <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-slate-900 text-white mb-4 md:mb-6 shadow-inner relative hw-accelerate">
+            <div class="absolute inset-0 bg-slate-900/20 blur-xl rounded-full animate-pulse"></div>
+            <i class="ph-bold ph-x-logo text-3xl md:text-4xl relative z-10"></i>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-black text-secondary tracking-tight">X Downloader</h1>
+        <p class="text-slate-500 mt-2 md:mt-3 text-base md:text-lg">Download Video dan Media dari X (Twitter) dengan kualitas terbaik.</p>
+    </div>
+
+    <div class="bg-white p-1.5 md:p-2 rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 relative hw-accelerate">
+        <div class="p-6 md:p-8">
+            <div class="space-y-4 md:space-y-5">
+                <div class="group">
+                    <label for="x-url" class="block text-sm font-bold text-slate-700 mb-2 ml-1">X/Twitter Link</label>
+                    <div class="relative">
+                        <i class="ph-bold ph-link absolute left-4 md:left-5 top-1/2 -translate-y-1/2 text-slate-400 text-lg md:text-xl group-focus-within:text-slate-900 transition-colors"></i>
+                        <input 
+                            type="url" 
+                            id="x-url" 
+                            placeholder="https://x.com/user/status/..." 
+                            class="w-full pl-12 md:pl-14 pr-4 md:pr-6 py-4 md:py-5 bg-slate-50 border-2 border-slate-100 rounded-xl md:rounded-2xl focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 outline-none transition-all font-medium text-base md:text-sm"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button onclick="downloadX()" id="x-btn" class="w-full py-4 md:py-5 bg-secondary hover:bg-slate-800 text-white font-black rounded-xl md:rounded-2xl flex items-center justify-center gap-2 md:gap-3 transition-all hover:shadow-lg active:scale-[0.98] btn-hover-effect text-base">
+                    <i class="ph-bold ph-download-simple text-lg md:text-xl"></i>
+                    Ambil Video
+                </button>
+            </div>
+
+            <div id="loading" class="hidden mt-8 md:mt-10 text-center py-8 md:py-12">
+                <div class="flex flex-col items-center justify-center space-y-5">
+                    <div class="relative">
+                        <div class="w-16 h-16 md:w-20 md:h-20 border-4 border-slate-100 rounded-full"></div>
+                        <div class="absolute inset-0 w-16 h-16 md:w-20 md:h-20 border-4 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="ph-fill ph-x-logo text-slate-900 text-xl md:text-2xl animate-pulse"></i>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-xs md:text-sm font-black text-slate-800 tracking-widest uppercase">Fetching Tweet...</p>
+                        <p class="text-[10px] md:text-xs text-slate-400 italic">Memproses link dari server X.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-container" class="mt-8"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function downloadX() {
+        const urlInput = document.getElementById('x-url');
+        const url = urlInput.value.trim();
+        const resultContainer = document.getElementById('result-container');
+        const loading = document.getElementById('loading');
+        const btn = document.getElementById('x-btn');
+
+        if (!url) return alert('Masukkan URL X/Twitter dulu!');
+
+        resultContainer.innerHTML = '';
+        loading.classList.remove('hidden');
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('https://puruboy-api.vercel.app/api/downloader/x', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+            const data = await res.json();
+
+            if (!data.success || !data.result || !data.result.success) {
+                throw new Error('Gagal mengambil data. Pastikan URL valid dan publik.');
+            }
+
+            const result = data.result;
+            const mediaHtml = result.results.map(media => `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-xl shadow-sm mb-3 gap-4 hw-accelerate">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-black text-slate-500 uppercase tracking-wider">${media.type} #${media.id}</span>
+                        <span class="text-sm font-bold text-slate-700">Kualitas Standard</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="${media.url}" target="_blank" class="flex-grow sm:flex-grow-0 px-5 py-3 bg-primary hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2 active:scale-95">
+                            <i class="ph-bold ph-download-simple"></i> Download
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+
+            resultContainer.innerHTML = `
+                <div class="animation-fade-in space-y-6">
+                    <div class="relative group rounded-2xl overflow-hidden shadow-lg border-4 border-white hw-accelerate">
+                        <img src="${result.results[0].thumbnail}" onerror="this.src='https://placehold.co/600x400/0f172a/white?text=X+Video'" loading="lazy" decoding="async" class="w-full h-48 sm:h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-5">
+                            <p class="text-white font-medium text-sm line-clamp-2">${result.title || 'X Media'}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 content-auto">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Hasil Ditemukan</h4>
+                        ${mediaHtml}
+                    </div>
+                </div>
+            `;
+        } catch (err) {
+            resultContainer.innerHTML = `<div class="p-4 text-xs md:text-sm text-red-800 rounded-xl bg-red-50 border border-red-200 font-medium">❌ Error: ${err.message}</div>`;
+        } finally {
+            loading.classList.add('hidden');
+            btn.disabled = false;
+        }
+    }
+</script>
