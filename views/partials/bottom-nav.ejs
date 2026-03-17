@@ -14,11 +14,11 @@
             <i class="text-xl transition-all" :class="currentPath === '/anime' ? 'ph-fill ph-house scale-110' : 'ph-bold ph-house'"></i>
             <span class="text-[10px] font-bold">Home</span>
         </a>
-        <a hx-get="/anime/terbaru" hx-target="#main-content" hx-push-url="true" 
+        <a hx-get="/anime/tracking" hx-target="#main-content" hx-push-url="true" 
            class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"
-           :class="currentPath === '/anime/terbaru' ? 'text-primary dark:text-primary' : 'text-slate-500 dark:text-slate-400'">
-            <i class="text-xl transition-all" :class="currentPath === '/anime/terbaru' ? 'ph-fill ph-lightning scale-110' : 'ph-bold ph-lightning'"></i>
-            <span class="text-[10px] font-bold">Terbaru</span>
+           :class="currentPath.startsWith('/anime/tracking') ? 'text-primary dark:text-primary' : 'text-slate-500 dark:text-slate-400'">
+            <i class="text-xl transition-all" :class="currentPath.startsWith('/anime/tracking') ? 'ph-fill ph-clock-counter-clockwise scale-110' : 'ph-bold ph-clock-counter-clockwise'"></i>
+            <span class="text-[10px] font-bold">History</span>
         </a>
         <a hx-get="/anime/list" hx-target="#main-content" hx-push-url="true" 
            class="flex flex-col items-center justify-center w-full h-full gap-1 hover:text-primary transition-colors cursor-pointer"

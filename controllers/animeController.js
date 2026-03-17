@@ -373,7 +373,8 @@ exports.getAnimeDetail = async (req, res) => {
                 title: $(el).find('.lchx a').text().trim(),
                 slug: slug,
                 isEpisode: slug.includes('episode') || !slug.includes('anime'),
-                date: $(el).find('.date').text().trim()
+                date: $(el).find('.date').text().trim(),
+                thumb: detail.thumb
             });
         });
 
@@ -409,7 +410,8 @@ exports.getAnimeStream = async (req, res) => {
             downloads: [],
             episodes: [],
             prevEps: null,
-            nextEps: null
+            nextEps: null,
+            path: path
         };
 
         $('.east_player_option').each((i, el) => {
@@ -587,5 +589,18 @@ exports.streamFiledon = async (req, res) => {
     } catch (error) {
         console.error('Filedon Redirect Error:', error.message);
         res.status(500).send('Terjadi kesalahan saat mengalihkan ke server video.');
+    }
+};
+
+exports.getAnimeTracking = (req, res) => {
+    const data = {
+        title: 'PuZero | Riwayat Tontonan Anime',
+        page: 'pages/anime-tracking'
+    };
+
+    if (req.headers['hx-request']) {
+        res.render('pages/anime-tracking', data);
+    } else {
+        res.render('layout', data);
     }
 };

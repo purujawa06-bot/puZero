@@ -8,6 +8,7 @@ router.get('/list', animeController.getAnimeList);
 router.get('/search', animeController.searchAnime);
 router.get('/filter', animeController.getAnimeFilter);
 router.get('/schedule', animeController.getAnimeSchedule);
+router.get('/tracking', animeController.getAnimeTracking);
 router.get('/filedon-stream', animeController.streamFiledon);
 router.get('/detail/:path(*)', animeController.getAnimeDetail);
 router.get('/stream/:path(*)', animeController.getAnimeStream);

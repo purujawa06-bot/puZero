@@ -1,5 +1,5 @@
 <title><%= title %></title>
-<div class="relative overflow-hidden flex-grow fade-in pb-16">
+<div class="relative overflow-hidden flex-grow fade-in pb-16" x-data="{ history: JSON.parse(localStorage.getItem('puzero_anime_history') || '[]') }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-16">
         
         <!-- Header -->
@@ -21,6 +21,36 @@
                         <i class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors"></i>
                     </form>
                 </div>
+            </div>
+        </div>
+
+        <!-- Section: Tracking (Continue Watching) -->
+        <div class="mb-16" x-show="history.length > 0">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-black text-secondary flex items-center gap-2">
+                    <i class="ph-bold ph-play-circle text-primary"></i> Lanjutkan Menonton
+                </h2>
+                <a hx-get="/anime/tracking" hx-target="#main-content" class="text-xs font-bold text-primary hover:underline cursor-pointer">Lihat Semua</a>
+            </div>
+            <div class="flex overflow-x-auto gap-4 pb-4 custom-scrollbar">
+                <template x-for="anime in history.slice(0, 5)" :key="anime.slug">
+                    <div 
+                        hx-get="" :hx-get="'/anime/stream/' + anime.slug"
+                        hx-target="#main-content"
+                        hx-push-url="true"
+                        class="group min-w-[140px] max-w-[140px] sm:min-w-[180px] sm:max-w-[180px] bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all cursor-pointer hw-accelerate"
+                    >
+                        <div class="relative aspect-[3/4] overflow-hidden">
+                            <img :src="anime.thumb" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent">
+                                <span class="text-[10px] font-black text-white uppercase" x-text="'Episode ' + anime.ep"></span>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-[10px] sm:text-xs font-bold text-secondary line-clamp-1" x-text="anime.baseTitle"></h3>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
 

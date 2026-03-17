@@ -233,4 +233,46 @@
             changeServer(target);
         }
     })();
+
+    // Smart Anime Tracking Logic
+    (function trackAnime() {
+        const rawTitle = "<%= stream.title %>";
+        const path = "<%= stream.path %>";
+        const episodes = <%- JSON.stringify(stream.episodes) %>;
+        
+        // Ekstrak nomor episode dan judul dasar
+        const episodeMatch = rawTitle.match(/Episode\s+(\d+)/i);
+        const epNum = episodeMatch ? episodeMatch[1] : "?";
+        const baseTitle = rawTitle.replace(/Streaming\s+/i, '').replace(/Episode\s+\d+.*/i, '').replace(/Subtitle\s+Indonesia.*/i, '').trim();
+        
+        // Cari thumbnail dari daftar episode yang sesuai dengan path saat ini
+        const currentEp = episodes.find(e => e.slug === path) || episodes[0] || {};
+        const thumb = currentEp.thumb || "";
+
+        let history = JSON.parse(localStorage.getItem('puzero_anime_history') || '[]');
+        
+        // Cek apakah anime yang sama sudah ada
+        const existingIndex = history.findIndex(item => item.baseTitle === baseTitle);
+        
+        const trackingData = {
+            baseTitle,
+            ep: epNum,
+            slug: path,
+            thumb,
+            timestamp: Date.now()
+        };
+
+        if (existingIndex !== -1) {
+            // Update entri yang sudah ada (misal dari Ep 1 ke Ep 2)
+            history[existingIndex] = trackingData;
+        } else {
+            // Tambah baru di baris teratas
+            history.unshift(trackingData);
+        }
+
+        // Simpan max 10
+        if (history.length > 10) history = history.slice(0, 10);
+        
+        localStorage.setItem('puzero_anime_history', JSON.stringify(history));
+    })();
 </script>
