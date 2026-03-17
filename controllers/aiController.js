@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 exports.getChatPage = (req, res) => {
     const data = {
         title: 'PuZero | Gemini 3 Flash AI',
@@ -11,28 +13,44 @@ exports.getChatPage = (req, res) => {
     }
 };
 
-exports.tsundere = (req, res) => {
+exports.getTsunderePage = (req, res) => {
+    const data = {
+        title: 'PuZero | Tsundere AI',
+        page: 'pages/ai-tsundere'
+    };
+
+    if (req.headers['hx-request']) {
+        res.render('pages/ai-tsundere', data);
+    } else {
+        res.render('layout', data);
+    }
+};
+
+exports.tsundere = async (req, res) => {
     const { text } = req.body;
 
     if (!text) {
         return res.status(400).json({
-            status: false,
+            success: false,
             message: 'Mana teksnya? Dasar baka!'
         });
     }
 
-    const responses = [
-        `Bukannya aku peduli, tapi ini jawaban untuk "${text}"... Hmph!`,
-        `Baka! Kenapa kamu tanya "${text}" padaku? Tapi baiklah, aku jawab kali ini saja.`,
-        `Jangan senang dulu ya! Aku menjawab "${text}" bukan karena aku menyukaimu!`,
-        `Ugh, berisik! Ini: ${text}. Puas?`
-    ];
-    
-    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    try {
+        const response = await axios.post('https://puruboy-api.vercel.app/api/ai/tsundere', {
+            text: text
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    res.json({
-        status: true,
-        author: 'PuruAI',
-        result: randomResponse
-    });
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error in tsundere controller:', error.message);
+        res.status(500).json({
+            success: false,
+            message: 'Terjadi kesalahan saat menghubungi API. Gomen ne~'
+        });
+    }
 };
