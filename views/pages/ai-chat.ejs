@@ -231,6 +231,10 @@
         };
 
         function renderHistory() {
+            if (typeof marked === 'undefined') {
+                setTimeout(renderHistory, 50);
+                return;
+            }
             const hist = getLocalState().history;
             if (hist.length > 0) {
                 welcomeDiv.classList.add('hidden');
@@ -267,6 +271,12 @@
                 setTimeout(scrollToBottom, 100);
             }
         }
-        renderHistory();
+        
+        // Memastikan inisialisasi berjalan baik di HTMX maupun Direct Load
+        if (document.readyState === 'complete') {
+            renderHistory();
+        } else {
+            window.addEventListener('load', renderHistory);
+        }
     })();
 </script>

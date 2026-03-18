@@ -54,10 +54,10 @@
     
     <!-- Video.js -->
     <link href="https://cdn.jsdelivr.net/npm/video.js@8.10.0/dist/video-js.min.css" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/video.js@8.10.0/dist/video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/video.js@8.10.0/dist/video.min.js"></script>
 
-    <!-- Marked.js for Markdown Parsing -->
-    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Marked.js for Markdown Parsing (Removed defer to fix direct load race condition) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- Custom Style -->
     <link rel="stylesheet" href="/css/style.css">
