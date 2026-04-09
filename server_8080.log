@@ -1,0 +1,23 @@
+
+> puzero@1.0.0 start
+> node_modules/.bin/tailwindcss -i ./src/input.css -o ./public/css/tailwind.css --minify && node index.js
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+Rebuilding...
+
+Done in 1972ms.
+Bound route: /ai -> aiRoutes.js
+Bound route: /anime -> animeRoutes.js
+Bound route: /fastupdate -> fastUpdateRoutes.js
+Bound route: / -> indexRoutes.js
+Bound route: /instagram -> instagramRoutes.js
+Bound route: /soundcloud -> soundcloudRoutes.js
+Bound route: /tiktok -> tiktokRoutes.js
+Bound route: /tools -> toolsRoutes.js
+Bound route: /x -> xRoutes.js
+Bound route: /youtube -> youtubeRoutes.js
+🚀 PuZero berjalan di http://localhost:8080
+[0mHEAD / [32m200[0m 164.442 ms - 22665[0m

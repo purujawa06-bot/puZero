@@ -13,7 +13,7 @@
                 <i class="ph-bold ph-arrow-left text-lg md:text-xl"></i>
             </button>
             <div>
-                <h1 class="text-lg md:text-xl font-black text-white tracking-tight">Gemini 3 Flash</h1>
+                <h1 class="text-lg md:text-xl font-black text-white tracking-tight">Gemini V2</h1>
                 <div class="flex items-center gap-1.5 mt-0.5">
                     <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Online</span>
@@ -184,21 +184,18 @@
             loadingDiv.classList.remove('hidden');
 
             try {
-                const res = await fetch('https://puruboy-api.vercel.app/api/ai/puruai', {
+                const res = await fetch('https://puruboy-api.vercel.app/api/ai/gemini-v2', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        userid: currentState.uid,
-                        prompt: finalPrompt,
-                        model: "puruboy-flash",
-                        system: systemInput.value
+                        prompt: finalPrompt
                     })
                 });
 
                 const data = await res.json();
                 if (!data.success) throw new Error("Gagal mendapatkan respon");
 
-                const aiText = data.result[0].parts[0].text;
+                const aiText = data.result.answer;
                 const aiHtml = `
                     <div class="flex flex-col items-start space-y-1.5 group opacity-0 animate-fade-in w-full" style="animation: fadeIn 0.4s forwards">
                         <div class="max-w-[95%] md:max-w-[85%] bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl rounded-tl-sm shadow-sm relative overflow-hidden">

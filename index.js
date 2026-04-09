@@ -7,7 +7,7 @@ const compression = require('compression');
 const minifyHTML = require('express-minify-html-2');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 8080;
 
 // 1. Gzip Compression
 app.use(compression());

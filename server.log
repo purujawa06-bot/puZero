@@ -1,0 +1,48 @@
+
+> puzero@1.0.0 start
+> node_modules/.bin/tailwindcss -i ./src/input.css -o ./public/css/tailwind.css --minify && node index.js
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+Rebuilding...
+
+Done in 2245ms.
+Bound route: /ai -> aiRoutes.js
+Bound route: /anime -> animeRoutes.js
+Bound route: /fastupdate -> fastUpdateRoutes.js
+Bound route: / -> indexRoutes.js
+Bound route: /instagram -> instagramRoutes.js
+Bound route: /soundcloud -> soundcloudRoutes.js
+Bound route: /tiktok -> tiktokRoutes.js
+Bound route: /tools -> toolsRoutes.js
+Bound route: /x -> xRoutes.js
+Bound route: /youtube -> youtubeRoutes.js
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at Server.listen (node:net:2067:7)
+    at Function.listen (/tmp/workspace/1bdd8f33-a21e-4330-a097-b2a1b8483592/puZero/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/tmp/workspace/1bdd8f33-a21e-4330-a097-b2a1b8483592/puZero/index.js:71:5)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12)
+    at node:internal/main/run_main_module:28:49
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3001
+}
+
+Node.js v20.20.2

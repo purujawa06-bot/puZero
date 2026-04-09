@@ -1,6 +1,6 @@
 exports.getChatPage = (req, res) => {
     const data = {
-        title: 'PuZero | Gemini 3 Flash AI',
+        title: 'PuZero | Gemini V2 AI',
         page: 'pages/ai-chat'
     };
 
