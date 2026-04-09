@@ -145,7 +145,26 @@
         const state = getLocalState();
         systemInput.value = state.system;
         
-        const scrollToBottom = () => scrollAnchor.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        const chatWindow = document.getElementById('chat-window');
+
+        // Scroll ulang jika ada gambar yang baru dimuat (mencegah scroll terhenti di tengah)
+        chatMessages.addEventListener('load', (e) => {
+            if (e.target.tagName === 'IMG') scrollToBottom(false, false);
+        }, true);
+
+        const scrollToBottom = (instant = false, force = false) => {
+            // Threshold ditingkatkan ke 500px agar pesan panjang tidak menghentikan scroll otomatis
+            const isNearBottom = chatWindow.scrollHeight - chatWindow.scrollTop - chatWindow.clientHeight < 500;
+            
+            if (isNearBottom || instant || force) {
+                setTimeout(() => {
+                    chatWindow.scrollTo({
+                        top: chatWindow.scrollHeight,
+                        behavior: instant ? 'auto' : 'smooth'
+                    });
+                }, 50); // Delay lebih cepat untuk respon yang lebih instan
+            }
+        };
 
         window.setReply = function(text) {
             currentReply = text;
@@ -202,7 +221,7 @@
             sendBtn.disabled = true;
             const replyToSnapshot = currentReply;
             cancelReply();
-            scrollToBottom();
+            scrollToBottom(false, true); // Force scroll ke pesan user yang baru masuk
             loadingDiv.classList.remove('hidden');
 
             try {
@@ -240,6 +259,7 @@
                     </div>
                 `;
                 chatMessages.insertAdjacentHTML('beforeend', aiHtml);
+                scrollToBottom(false, false);
                 
                 const updatedHistory = currentState.history;
                 updatedHistory.push({ role: 'user', text: prompt, replyTo: replyToSnapshot });
@@ -297,7 +317,7 @@
                     }
                     chatMessages.insertAdjacentHTML('beforeend', html);
                 });
-                setTimeout(scrollToBottom, 100);
+                scrollToBottom(true);
             }
         }
         
