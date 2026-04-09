@@ -71,7 +71,7 @@
                         <summary class="list-none cursor-pointer flex items-center gap-1.5 text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors select-none">
                             <i class="ph-bold ph-gear text-sm transition-transform group-open:rotate-90"></i> Custom Instructions
                         </summary>
-                        <textarea id="system-prompt" class="w-full mt-2 bg-slate-800/50 border border-white/5 rounded-2xl p-3 text-xs md:text-sm text-slate-300 focus:outline-none focus:border-primary/50 transition-colors" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
+                        <textarea id="system-prompt" class="w-full mt-2 bg-slate-950/40 border border-white/5 rounded-2xl p-3 text-xs md:text-sm text-slate-500 placeholder:text-slate-600 focus:outline-none focus:border-primary/30 transition-colors" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
                     </details>
 
                     <div class="flex items-end gap-2 px-2 pb-1">
@@ -147,24 +147,33 @@
         
         const chatWindow = document.getElementById('chat-window');
 
-        // Scroll ulang jika ada gambar yang baru dimuat (mencegah scroll terhenti di tengah)
-        chatMessages.addEventListener('load', (e) => {
-            if (e.target.tagName === 'IMG') scrollToBottom(false, false);
-        }, true);
-
-        const scrollToBottom = (instant = false, force = false) => {
-            // Threshold ditingkatkan ke 500px agar pesan panjang tidak menghentikan scroll otomatis
-            const isNearBottom = chatWindow.scrollHeight - chatWindow.scrollTop - chatWindow.clientHeight < 500;
+        /**
+         * Menggulirkan chat ke posisi paling bawah
+         * @param {string|boolean} behavior - 'smooth', 'auto', atau boolean (true untuk auto)
+         * @param {boolean} force - Jika true, akan mengabaikan posisi scroll saat ini
+         */
+        const scrollToBottom = (behavior = 'smooth', force = false) => {
+            const threshold = 500; 
+            const isNearBottom = chatWindow.scrollHeight - chatWindow.scrollTop - chatWindow.clientHeight < threshold;
             
-            if (isNearBottom || instant || force) {
+            if (isNearBottom || force) {
                 setTimeout(() => {
                     chatWindow.scrollTo({
                         top: chatWindow.scrollHeight,
-                        behavior: instant ? 'auto' : 'smooth'
+                        behavior: (behavior === 'auto' || behavior === true) ? 'auto' : 'smooth'
                     });
-                }, 50); // Delay lebih cepat untuk respon yang lebih instan
+                }, 50);
             }
         };
+
+        // Observer untuk mendeteksi pesan baru secara otomatis (Auto-scroll reaktif)
+        const observer = new MutationObserver(() => scrollToBottom('smooth'));
+        observer.observe(chatMessages, { childList: true, subtree: true });
+
+        // Handler untuk gambar yang dimuat belakangan agar tidak memotong posisi scroll
+        chatMessages.addEventListener('load', (e) => {
+            if (e.target.tagName === 'IMG') scrollToBottom('smooth');
+        }, true);
 
         window.setReply = function(text) {
             currentReply = text;
@@ -221,7 +230,7 @@
             sendBtn.disabled = true;
             const replyToSnapshot = currentReply;
             cancelReply();
-            scrollToBottom(false, true); // Force scroll ke pesan user yang baru masuk
+            scrollToBottom('smooth', true); // Paksa scroll saat user mengirim pesan
             loadingDiv.classList.remove('hidden');
 
             try {
@@ -259,7 +268,7 @@
                     </div>
                 `;
                 chatMessages.insertAdjacentHTML('beforeend', aiHtml);
-                scrollToBottom(false, false);
+                // Tidak perlu panggil scrollToBottom manual karena ada MutationObserver
                 
                 const updatedHistory = currentState.history;
                 updatedHistory.push({ role: 'user', text: prompt, replyTo: replyToSnapshot });
@@ -317,7 +326,7 @@
                     }
                     chatMessages.insertAdjacentHTML('beforeend', html);
                 });
-                scrollToBottom(true);
+                scrollToBottom('auto', true); // Gunakan scroll instan untuk riwayat
             }
         }
         
