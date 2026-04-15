@@ -1,46 +1,48 @@
 <div class="w-full h-[100dvh] flex flex-col fade-in relative overflow-hidden">
     
     <!-- Top Header -->
-    <div class="flex items-center justify-between px-4 sm:px-6 py-4 bg-slate-900/90 backdrop-blur-md sticky top-0 z-10 border-b border-slate-800 shadow-sm shrink-0">
+    <div class="flex items-center justify-between px-4 sm:px-6 py-4 bg-white/70 dark:bg-slate-950/70 backdrop-blur-md sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800 shadow-sm shrink-0 transition-colors duration-300">
         <div class="flex items-center gap-3 md:gap-4">
             <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-accent text-white shadow-lg shadow-primary/20">
                 <i class="ph-fill ph-sparkle text-xl"></i>
             </div>
             <div>
-                <h1 class="text-lg md:text-xl font-black text-white tracking-tight">Puzero AI</h1>
+                <h1 class="text-lg md:text-xl font-black text-slate-900 dark:text-white tracking-tight">Puzero AI</h1>
                 <div class="flex items-center gap-1.5 mt-0.5">
                     <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Gemini V2 • Online</span>
+                    <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Gemini V2 • Online</span>
                 </div>
             </div>
         </div>
 
         <button 
             onclick="resetChat()" 
-            class="px-3 md:px-4 py-2 bg-slate-800 border border-slate-700 text-slate-300 rounded-xl text-xs font-bold hover:border-primary hover:text-primary transition-all flex items-center gap-2 active:scale-95 shadow-sm"
+            class="px-3 md:px-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-bold hover:border-primary hover:text-primary transition-all flex items-center gap-2 active:scale-95 shadow-sm"
         >
             <i class="ph-bold ph-plus"></i> <span class="hidden sm:inline">New Chat</span>
         </button>
     </div>
 
     <!-- Chat Area -->
-    <div id="chat-window" class="flex-grow overflow-y-auto px-4 sm:px-6 py-6 space-y-6 custom-scrollbar pb-32">
-        <div id="welcome" class="text-center py-12 md:py-20 max-w-lg mx-auto">
-            <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-tr from-primary/20 to-accent/20 text-primary rounded-3xl mx-auto flex items-center justify-center mb-6 border border-slate-800 shadow-sm">
-                <i class="ph-fill ph-brain text-3xl md:text-4xl"></i>
+    <div id="chat-window" class="flex-grow overflow-y-auto px-4 sm:px-6 py-6 custom-scrollbar pb-40">
+        <!-- Empty State (Welcome) -->
+        <div id="welcome" class="flex flex-col items-center justify-center min-h-[60vh] text-center max-w-lg mx-auto py-12">
+            <div class="w-20 h-20 bg-gradient-to-tr from-primary/20 to-accent/20 text-primary rounded-3xl flex items-center justify-center mb-6 border border-primary/10 shadow-xl shadow-primary/5">
+                <i class="ph-fill ph-brain text-4xl"></i>
             </div>
-            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">Apa yang bisa saya bantu?</h2>
-            <p class="text-slate-400 text-sm md:text-base mt-3 leading-relaxed">Tanyakan apapun, mulai dari coding, penulisan kreatif, hingga ringkasan data kompleks.</p>
+            <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Apa yang bisa saya bantu?</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-sm md:text-base mt-3 leading-relaxed">Tanyakan apapun, mulai dari coding, penulisan kreatif, hingga ringkasan data kompleks.</p>
         </div>
         
         <div id="chat-messages" class="flex flex-col space-y-6"></div>
         
+        <!-- Loading State -->
         <div id="chat-loading" class="hidden mb-4">
             <div class="flex items-start gap-3">
-                <div class="w-8 h-8 bg-slate-800 rounded-xl animate-pulse flex items-center justify-center shrink-0">
+                <div class="w-8 h-8 bg-slate-200 dark:bg-slate-800 rounded-xl animate-pulse flex items-center justify-center shrink-0">
                     <i class="ph-bold ph-lightning text-slate-400"></i>
                 </div>
-                <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl rounded-tl-none w-24 shadow-sm">
+                <div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl rounded-tl-none w-24 shadow-sm">
                     <div class="flex gap-1.5 justify-center">
                         <span class="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style="animation-delay: 0s"></span>
                         <span class="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
@@ -52,45 +54,47 @@
         <div id="scroll-anchor" class="h-4 w-full"></div>
     </div>
 
-    <!-- Input Area -->
-    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-slate-950 via-slate-950 to-transparent shrink-0">
-        <div class="max-w-3xl mx-auto">
-            <div id="reply-container" class="hidden bg-slate-900 border border-slate-800 border-b-0 rounded-t-2xl p-3 flex items-center justify-between shadow-sm">
+    <!-- Floating Input Area -->
+    <div class="fixed bottom-0 left-0 w-full p-4 pointer-events-none z-50">
+        <div class="max-w-3xl mx-auto pointer-events-auto">
+            <!-- Reply Container -->
+            <div id="reply-container" class="hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 border-b-0 rounded-t-2xl p-3 flex items-center justify-between shadow-lg mb-1">
                 <div class="flex items-center gap-3 overflow-hidden">
                     <i class="ph-bold ph-arrow-u-up-left text-primary shrink-0"></i>
-                    <p id="reply-text" class="text-xs text-slate-400 italic truncate font-medium"></p>
+                    <p id="reply-text" class="text-xs text-slate-500 dark:text-slate-400 italic truncate font-medium"></p>
                 </div>
-                <button onclick="cancelReply()" class="text-slate-500 hover:text-red-500 transition-colors shrink-0">
+                <button onclick="cancelReply()" class="text-slate-400 hover:text-red-500 transition-colors shrink-0">
                     <i class="ph-bold ph-x-circle text-lg"></i>
                 </button>
             </div>
 
-            <div class="bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/5 p-2 transition-all focus-within:border-primary/40 focus-within:ring-1 focus-within:ring-primary/20">
+            <!-- Main Input Box -->
+            <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-slate-200 dark:border-slate-800 p-2 transition-all focus-within:border-primary/40 focus-within:ring-1 focus-within:ring-primary/20">
                 <div class="flex flex-col gap-2">
-                    <details class="group px-2">
-                        <summary class="list-none cursor-pointer flex items-center gap-1.5 text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-primary transition-colors select-none">
+                    <details class="group px-4">
+                        <summary class="list-none cursor-pointer flex items-center gap-1.5 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-primary transition-colors select-none">
                             <i class="ph-bold ph-gear text-sm transition-transform group-open:rotate-90"></i> Custom Instructions
                         </summary>
-                        <textarea id="system-prompt" class="w-full mt-2 bg-slate-950/40 border border-white/5 rounded-2xl p-3 text-xs md:text-sm text-slate-500 placeholder:text-slate-600 focus:outline-none focus:border-primary/30 transition-colors" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
+                        <textarea id="system-prompt" class="w-full mt-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 text-xs md:text-sm text-slate-600 dark:text-slate-400 placeholder:text-slate-400 focus:outline-none focus:border-primary/30 transition-colors" rows="2" placeholder="Contoh: Jawab dalam bahasa gaul..."></textarea>
                     </details>
 
-                    <div class="flex items-end gap-2 px-2 pb-1">
+                    <div class="flex items-end gap-2 px-3 pb-1">
                         <textarea 
                             id="prompt-textarea"
-                            class="w-full bg-transparent border-none focus:ring-0 text-slate-200 text-base md:text-sm py-3 resize-none max-h-48 overflow-y-auto custom-scrollbar placeholder:text-slate-500" 
+                            class="w-full bg-transparent border-none focus:ring-0 text-slate-900 dark:text-slate-100 text-base md:text-sm py-3 resize-none max-h-48 overflow-y-auto custom-scrollbar placeholder:text-slate-400" 
                             rows="1" 
                             placeholder="Tanya apa saja..."
                             oninput="this.style.height = ''; this.style.height = Math.min(this.scrollHeight, 180) + 'px'"
                             onkeydown="handleKeyDown(event)"
                         ></textarea>
                         
-                        <button id="send-btn" onclick="sendMessage()" class="w-10 h-10 bg-white text-slate-950 rounded-full flex items-center justify-center hover:bg-slate-200 transition-all shadow-lg active:scale-90 shrink-0 mb-1 disabled:opacity-50 disabled:scale-100" disabled>
+                        <button id="send-btn" onclick="sendMessage()" class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 transition-all shadow-lg shadow-primary/20 active:scale-90 shrink-0 mb-1 disabled:opacity-50 disabled:scale-100" disabled>
                             <i class="ph-fill ph-arrow-up text-xl"></i>
                         </button>
                     </div>
                 </div>
             </div>
-            <p class="text-[10px] text-center text-slate-500 mt-3 font-medium opacity-60">Puzero AI Gemini V2 • Menghargai privasi dan kreativitas.</p>
+            <p class="text-[10px] text-center text-slate-400 dark:text-slate-500 mt-3 font-medium opacity-60">Puzero AI Gemini V2 • Menghargai privasi dan kreativitas.</p>
         </div>
     </div>
 </div>
@@ -124,7 +128,6 @@
                     event.preventDefault();
                     sendMessage();
                 }
-                // Di mobile, biarkan default (baris baru)
             }
         };
 
@@ -137,7 +140,7 @@
         };
 
         const saveLocalState = (data) => {
-            if (data.history) localStorage.setItem('puzero_chat_history', JSON.stringify(data.history.slice(-30))); // Simpan lebih banyak untuk diproses
+            if (data.history) localStorage.setItem('puzero_chat_history', JSON.stringify(data.history.slice(-30)));
             if (data.system) localStorage.setItem('puzero_system_prompt', data.system);
             if (data.uid) localStorage.setItem('puzero_user_id', data.uid);
         };
@@ -147,11 +150,6 @@
         
         const chatWindow = document.getElementById('chat-window');
 
-        /**
-         * Menggulirkan chat ke posisi paling bawah
-         * @param {string|boolean} behavior - 'smooth', 'auto', atau boolean (true untuk auto)
-         * @param {boolean} force - Jika true, akan mengabaikan posisi scroll saat ini
-         */
         const scrollToBottom = (behavior = 'smooth', force = false) => {
             const threshold = 500; 
             const isNearBottom = chatWindow.scrollHeight - chatWindow.scrollTop - chatWindow.clientHeight < threshold;
@@ -166,11 +164,9 @@
             }
         };
 
-        // Observer untuk mendeteksi pesan baru secara otomatis (Auto-scroll reaktif)
         const observer = new MutationObserver(() => scrollToBottom('smooth'));
         observer.observe(chatMessages, { childList: true, subtree: true });
 
-        // Handler untuk gambar yang dimuat belakangan agar tidak memotong posisi scroll
         chatMessages.addEventListener('load', (e) => {
             if (e.target.tagName === 'IMG') scrollToBottom('smooth');
         }, true);
@@ -206,17 +202,16 @@
             const safePrompt = escapeHtml(prompt);
             const safeReplyPreview = currentReply ? escapeHtml(currentReply).substring(0, 50) + "..." : "";
             
-            // Tambahkan pesan user ke UI
+            // User Message Bubble
             chatMessages.insertAdjacentHTML('beforeend', `
                 <div class="flex flex-col items-end space-y-2 group animate-fade-in w-full mb-2">
-                    <div class="max-w-[85%] bg-slate-800 text-slate-100 p-3 md:p-4 rounded-3xl rounded-tr-sm border border-white/5 shadow-sm">
-                        ${currentReply ? `<div class="text-[10px] opacity-50 border-l-2 border-primary/50 pl-2 mb-2 italic truncate">Replying to: ${safeReplyPreview}</div>` : ''}
+                    <div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-md">
+                        ${currentReply ? `<div class="text-[10px] opacity-70 border-l-2 border-white/30 pl-2 mb-2 italic truncate">Replying to: ${safeReplyPreview}</div>` : ''}
                         <p class="text-sm md:text-base whitespace-pre-wrap break-words leading-relaxed">${safePrompt}</p>
                     </div>
                 </div>
             `);
 
-            // Membangun Konteks Memori (20 pesan terakhir = 10 percakapan)
             const memoryContext = currentState.history.slice(-20).map(m => {
                 const role = m.role === 'user' ? 'User' : 'Assistant';
                 return `${role}: ${m.text}`;
@@ -230,7 +225,7 @@
             sendBtn.disabled = true;
             const replyToSnapshot = currentReply;
             cancelReply();
-            scrollToBottom('smooth', true); // Paksa scroll saat user mengirim pesan
+            scrollToBottom('smooth', true);
             loadingDiv.classList.remove('hidden');
 
             try {
@@ -249,26 +244,25 @@
                 const aiHtml = `
                     <div class="flex flex-col items-start space-y-2 group w-full mb-4 animate-fade-in">
                         <div class="flex items-center gap-2.5 ml-1">
-                            <div class="w-7 h-7 bg-white text-slate-950 rounded-full flex items-center justify-center shadow-sm">
+                            <div class="w-7 h-7 bg-white dark:bg-slate-700 text-slate-950 dark:text-white rounded-full flex items-center justify-center shadow-sm">
                                 <i class="ph-fill ph-sparkle text-sm"></i>
                             </div>
                             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Puzero AI</span>
                         </div>
-                        <div class="max-w-[95%] md:max-w-[85%] bg-transparent p-1 md:p-2 ml-8">
-                            <div class="prose prose-sm md:prose-base prose-slate dark:prose-invert max-w-none text-slate-200 leading-relaxed overflow-x-auto break-words ai-content">${marked.parse(aiText)}</div>
+                        <div class="max-w-[90%] md:max-w-[85%] bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl rounded-tl-none shadow-sm">
+                            <div class="prose prose-sm md:prose-base prose-slate dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 leading-relaxed overflow-x-auto break-words ai-content">${marked.parse(aiText)}</div>
                         </div>
                         <div class="flex items-center gap-4 ml-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button data-reply="${encodeURIComponent(aiText.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-white transition-colors">
+                            <button data-reply="${encodeURIComponent(aiText.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-primary transition-colors">
                                 <i class="ph-bold ph-arrow-u-up-left"></i> Reply
                             </button>
-                            <button onclick="navigator.clipboard.writeText(\`${aiText.replace(/`/g, '\\`')}\`)" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-white transition-colors">
+                            <button onclick="navigator.clipboard.writeText(\`${aiText.replace(/`/g, '\\`')}\`)" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-primary transition-colors">
                                 <i class="ph-bold ph-copy"></i> Copy
                             </button>
                         </div>
                     </div>
                 `;
                 chatMessages.insertAdjacentHTML('beforeend', aiHtml);
-                // Tidak perlu panggil scrollToBottom manual karena ada MutationObserver
                 
                 const updatedHistory = currentState.history;
                 updatedHistory.push({ role: 'user', text: prompt, replyTo: replyToSnapshot });
@@ -276,7 +270,7 @@
                 saveLocalState({ history: updatedHistory, system: systemInput.value });
                 
             } catch (err) {
-                chatMessages.insertAdjacentHTML('beforeend', `<div class="p-3 text-red-400 text-xs md:text-sm bg-red-900/20 rounded-xl max-w-[80%] border border-red-800/50">❌ Error: ${err.message}</div>`);
+                chatMessages.insertAdjacentHTML('beforeend', `<div class="p-3 text-red-500 text-xs md:text-sm bg-red-50 dark:bg-red-900/20 rounded-xl max-w-[80%] border border-red-200 dark:border-red-800/50">❌ Error: ${err.message}</div>`);
             } finally {
                 loadingDiv.classList.add('hidden');
                 scrollToBottom();
@@ -297,8 +291,8 @@
                         const safeReplyPreview = msg.replyTo ? escapeHtml(msg.replyTo).substring(0, 50) + "..." : "";
                         html = `
                             <div class="flex flex-col items-end space-y-2 group w-full mb-4">
-                                <div class="max-w-[85%] bg-slate-800 text-slate-100 p-3 md:p-4 rounded-3xl rounded-tr-sm border border-white/5 shadow-sm">
-                                    ${msg.replyTo ? `<div class="text-[10px] opacity-50 border-l-2 border-primary/50 pl-2 mb-2 italic truncate">Replying to: ${safeReplyPreview}</div>` : ''}
+                                <div class="max-w-[85%] bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-md">
+                                    ${msg.replyTo ? `<div class="text-[10px] opacity-70 border-l-2 border-white/30 pl-2 mb-2 italic truncate">Replying to: ${safeReplyPreview}</div>` : ''}
                                     <p class="text-sm md:text-base whitespace-pre-wrap break-words leading-relaxed">${escapeHtml(msg.text)}</p>
                                 </div>
                             </div>`;
@@ -306,19 +300,19 @@
                         html = `
                             <div class="flex flex-col items-start space-y-2 group w-full mb-6">
                                 <div class="flex items-center gap-2.5 ml-1">
-                                    <div class="w-7 h-7 bg-white text-slate-950 rounded-full flex items-center justify-center shadow-sm">
+                                    <div class="w-7 h-7 bg-white dark:bg-slate-700 text-slate-950 dark:text-white rounded-full flex items-center justify-center shadow-sm">
                                         <i class="ph-fill ph-sparkle text-sm"></i>
                                     </div>
                                     <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Puzero AI</span>
                                 </div>
-                                <div class="max-w-[95%] md:max-w-[85%] bg-transparent p-1 md:p-2 ml-8">
-                                    <div class="prose prose-sm md:prose-base prose-slate dark:prose-invert max-w-none text-slate-200 leading-relaxed overflow-x-auto break-words ai-content">${marked.parse(msg.text)}</div>
+                                <div class="max-w-[90%] md:max-w-[85%] bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl rounded-tl-none shadow-sm">
+                                    <div class="prose prose-sm md:prose-base prose-slate dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 leading-relaxed overflow-x-auto break-words ai-content">${marked.parse(msg.text)}</div>
                                 </div>
                                 <div class="flex items-center gap-4 ml-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button data-reply="${encodeURIComponent(msg.text.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-white transition-colors">
+                                    <button data-reply="${encodeURIComponent(msg.text.replace(/\n/g, ' '))}" onclick="setReply(decodeURIComponent(this.getAttribute('data-reply')))" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-primary transition-colors">
                                         <i class="ph-bold ph-arrow-u-up-left"></i> Reply
                                     </button>
-                                    <button onclick="navigator.clipboard.writeText(\`${msg.text.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-white transition-colors">
+                                    <button onclick="navigator.clipboard.writeText(\`${msg.text.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" class="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 hover:text-primary transition-colors">
                                         <i class="ph-bold ph-copy"></i> Copy
                                     </button>
                                 </div>
@@ -326,11 +320,10 @@
                     }
                     chatMessages.insertAdjacentHTML('beforeend', html);
                 });
-                scrollToBottom('auto', true); // Gunakan scroll instan untuk riwayat
+                scrollToBottom('auto', true);
             }
         }
         
-        // Memastikan inisialisasi berjalan baik di HTMX maupun Direct Load
         if (document.readyState === 'complete') {
             renderHistory();
         } else {
